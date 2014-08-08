@@ -1,1 +1,13 @@
-/home/larry/dotfiles/.vimperatorrc
+"3.4 (created: 2012/04/02 20:07:29)
+
+source! /home/larry/.vimperatorrc.local
+
+set titlestring=Firefox
+
+set visualbell
+" set visualbellstyle=display:none;
+
+js liberator.beep=function()(void 0)
+
+
+" vim: set ft=vimperator:

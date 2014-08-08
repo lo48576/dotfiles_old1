@@ -1,1 +1,2 @@
-dotfiles/.vimrc
+" set runtimepath+=~/.vim/
+runtime! conf.d/*.vim
