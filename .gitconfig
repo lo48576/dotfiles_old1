@@ -1,0 +1,10 @@
+[user]
+	name = Larry
+	email = nu11p0.6477@gmail.com
+[github]
+	user = L1048576
+	token = a042337777e7e1dbbc4b011e3a7e7544
+[color]
+	ui = auto
+[core]
+	excludesfile = /home/larry/.gitignore_global
