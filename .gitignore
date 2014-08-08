@@ -43,6 +43,7 @@
 !/.vim/bundle/neobundle_install.sh
 !/.vim/conf.d
 !/.vim/colors
+/.vim/colors/README.txt
 !/.vim/ftdetect
 
 !/.vimrc
