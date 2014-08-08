@@ -1,0 +1,7 @@
+!! henkan key
+keycode 100 = Super_L NoSymbol Super_L
+!! backslash
+!keycode 132 = Zenkaku_Hankaku Kanji grave asciitilde dead_grave dead_tilde
+!keycode 132 = grave asciitilde dead_grave dead_tilde
+!! Zenkaku_Hankaku
+!keycode  49 = Escape NoSymbol Escape

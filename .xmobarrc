@@ -1,0 +1,19 @@
+Config { font = "xft:IPA UIGothic-9:bold"
+       , bgColor = "black"
+       , fgColor = "grey"
+       --, position = TopW L 80
+       -- 1920 * 0.80 = 1536
+       -- 2560 * 0.80 = 2048
+       -- height: trayer(height:20)
+       , position = Static { xpos = 0, ypos = 0, width = 2048, height = 20 }
+       , lowerOnStart = True
+       , commands = [ Run Cpu ["-L","15","-H","85","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Swap [] 10
+                    , Run Date "%Y/%m/%d %a %k:%M" "date" 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{  %cpu% | %memory% * %swap%  <fc=#ee9a00>%date%</fc>"
+}

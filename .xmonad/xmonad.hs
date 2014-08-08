@@ -1,0 +1,1 @@
+../dotfiles/each/.xmonad/xmonad.hs

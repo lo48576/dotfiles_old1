@@ -1,0 +1,132 @@
+### .conkyrc for xmonad
+# バックグラウンドで動かす
+background yes
+# xftが無効な場合のフォント
+font Sans:size=10
+# フォントを指定するか
+use_xft yes
+# フォントを指定
+xftfont monospace-9
+#xftfont Sans:size=10
+# テキストの透過(アルファチャネル)(0-1)
+xftalpha 0.9
+# 情報の更新間隔(秒)
+update_interval 1.5
+# 終了前にアップデートする頻度(起動回数)
+# 0の場合は無効化
+total_run_times 0
+# 以下の4つの設定はCompiz fusionとの共存に必要
+# 独立したウィンドウで表示するか
+# (nautilusではyesにしないとデスクトップがおかしくなる)
+# xmonadでもyesにしないとおかしくなる
+own_window yes
+# normal | desktop | dock | panel | override
+# xmonadにて
+#	normal:ポップアップウィンドウ扱い
+#	desktop:手前に出る。ウィンドウとしては使えない
+#	dock:手前に出る。ウィンドウとしては使えない。位置の指定が効かない
+#	panel:ステータスバー領域として扱われる。
+#	override:背景に描画される。ウィンドウとしては使えない
+#own_window_type normal
+own_window_type override
+# Use pseudo transparency with own_window?
+# 擬似的に背景透過をするか?
+# (正しくは透過ではなく壁紙をコピーして、背景に張り付けている。
+#  よって裏に隠れたアイコンなどは見えない)
+#own_window_transparent yes
+# これをtrueにすると、本当の透過が有効になる
+own_window_argb_visual true
+# 0-255でアルファチャネルを設定
+own_window_argb_value 224
+# システムに提示された最適な位置・サイズの値を使用するか?
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+# own_window_transparentをnoにしたなら、背景色を指定できる
+#own_window_colour hotpink
+# ダブルバッファリングを有効化して、ちらつきを軽減するか?
+# (全ての環境で動くとは限らない)
+double_buffer yes
+# テキストエリアの最低限のサイズ
+minimum_size 500 5
+# 最大幅
+#maximum_width 500
+maximum_width 800
+# 影を描画するか
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+# デフォルトの文字色
+default_color white
+default_shade_color black
+#default_outline_color black
+# 表示位置
+# top_left | top_right | bottom_left | bottom_right | none
+alignment top_right
+# ディスプレイの端とconkyの表示の端の間隔
+gap_x 520
+gap_y 30
+# Subtract file system buffers from used memory?
+no_buffers yes
+# CPUの平均を出すのに使用するCPUの数
+# 1にすると、平均は計算されない(というかCPU1の値そのままだ)
+cpu_avg_samples 4
+# number of net samples to average
+# set to 1 to disable averaging
+#net_avg_samples 2
+# Force UTF8? note that UTF8 support required XFT
+# 日本語を使うのならばおそらく必須 (yes | no)
+override_utf8_locale yes
+# アルファベットを全て大文字で表示するか?
+uppercase no
+# Add spaces to keep things from moving about? This only affects certain objects.
+#use_spacer none
+# Allow each port monitor to track at most this many connections (if 0 or not set, default is 256
+#max_port_monitor_connections 256
+# Maximum number of special things, e.g. fonts, offsets, aligns, etc.
+#max_specials 512
+# Maximum size of buffer for user text. i.e. below TEXT line. default is 16384.
+max_user_text 32768
+
+lua_load ~/.conky_rings.lua
+lua_draw_hook_pre rings
+
+TEXT
+${voffset 20}${offset 10}CPU${offset 250}MEM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+${entropy_perc}
+
+
+${hddtemp /dev/sda}
+Temp: CPU ${hwmon temp 1}℃, Core0 ${hwmon temp 2}℃, Core1 ${hwmon temp 3}℃
+${acpifan}  /  ${acpitemp}
+CPU${alignr}${cpu cpu0}% / ${freq}MHz
+${cpugraph 30 33f5f5 f0ff33}
+Load: $alignr $loadavg
+
+RAM: ($memperc%) $alignr $mem / $memmax
+${membar 3}
+Swap: ($swapperc%) $alignr $swap / $swapmax
+${swapbar 3}
+
+root: $alignr ${fs_free /} / ${fs_size /}
+${fs_bar 3 /}
+home: $alignr ${fs_free /home} / ${fs_size /home}
+${fs_bar 3 /home}
+data1: $alignr ${fs_free /data1} / ${fs_size /data1}
+${fs_bar 3 /data1}
