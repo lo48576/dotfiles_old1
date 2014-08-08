@@ -68,7 +68,7 @@
 
 !/.zshrc*
 !/.zprofile
-!/.zshenv
+!/.zshenv*
 !/.zlogin
 !/.zlogout
 

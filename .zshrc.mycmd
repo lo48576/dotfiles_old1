@@ -1,0 +1,209 @@
+# exit like vim
+alias :q="exit"
+# I sometimes press 'q' with Shift because ':' is Shift-; ...
+alias :Q="exit"
+# edit file with vim like vim
+alias :e="vim"
+
+# unzip all given zip archives
+unzip-list()
+{
+	while [ $# -ge 1 ] ; do
+		unzip $1
+		shift
+	done
+}
+# unrar all given rar archives
+unrar-list()
+{
+	while [ $# -ge 1 ] ; do
+		unrar x $1
+		shift
+	done
+}
+
+# expand all zip files in directory $1.
+# if you don't specify $1, expand files in current directory.
+unzip-all()
+{
+	local dir=${1:-./}
+	local list=$( find ${dir} -maxdepth 1 -type f -name '*.zip' -print0 \
+	         | sed -e "s/\\\\/\\\\\\\\\\\\\\\\/g" -e "s/'/\\\\'/g" -e "s/\\x00/\\/\\//g" \
+			 | gawk '{print $0"\\\\n"}' \
+			 | tr -d '\n' \
+			 | sed -e "s/\\\\\\\\n$//" \
+			 | sed -e "s/\\/\\//\\\\n/g" )
+	echo $list | while read LINE ; do
+		[ "x$LINE" != x ] && unzip $LINE
+	done
+	unset LINE
+}
+# expand all rar files in directory $1.
+# if you don't specify $1, expand files in current directory.
+unrar-all()
+{
+	local dir=${1:-./}
+	local list=$( find ${dir} -maxdepth 1 -type f -name '*.rar' -print0 \
+	         | sed -e "s/\\\\/\\\\\\\\\\\\\\\\/g" -e "s/'/\\\\'/g" -e "s/\\x00/\\/\\//g" \
+			 | gawk '{print $0"\\\\n"}' \
+			 | tr -d '\n' \
+			 | sed -e "s/\\\\\\\\n$//" \
+			 | sed -e "s/\\/\\//\\\\n/g" )
+	echo $list | while read LINE ; do
+		[ "x$LINE" != x ] && unrar x $LINE
+	done
+	unset LINE
+}
+
+# make a directory, then pushd there.
+## mkdir + pushd => mkpushd => mpd
+# mkdir + pushd => dpd
+dpd()
+{
+	if [ $# -lt 1 ] ; then
+		echo "usage: dpd <new directory>"
+	fi
+	mkdir -p $1
+	pushd $1
+}
+#zstyle ':completion:*:*:dpd' completer _mkdir _dir_list
+_dpd() {
+	_arguments -s : \
+		'1:directory:_dir_list _mkdir'
+}
+compdef _dpd dpd
+
+# pushd & popd => pd
+# hard to type "pushd" in dvorak...
+pd()
+{
+	if [ $# -lt 1 ] ; then
+		popd
+	else
+		pushd "$1"
+	fi
+}
+#zstyle ':completion:*:*:pd' completer _dir_list
+_pd() {
+	_arguments -s : \
+		'1:local directory:_dir_list'
+}
+compdef _pd pd
+
+
+# ps & grep => pgr
+# not pgrep!
+pgr()
+{
+	if [ $# -lt 1 ] ; then
+		ps aux
+	else
+		# 'ps aux | grep foo' shows 'grep foo' process.
+		# 'ps aux | grep [f]oo' doesn't shows 'grep [f]oo' process!
+		ps aux | grep '['"${1:0:1}"']'"${1:1}"
+	fi
+}
+
+dvorakey()
+{
+	# for virtual console
+	sudo loadkeys dvorak
+	# for X session
+	xmodmap ~/.xmodmap_mydvorak_hhkb_dmain
+}
+alias dv="dvorakey"
+
+# u_nyah
+# いつもニコニコあなたの隣に這い寄る混沌
+# The Crawling Chaos, Nyarlathotep.
+# 一部環境(tmuxを通さない生のmltermとか)では、
+#   RPROMPTに全角文字(?あるいはambiguous char?、ωや▽など)があると、
+#   プロンプト文字列の末尾がおかしくなることがある。
+# you can disable this feature with setting $u_nyah_disabled to not null.
+u_nyah_prompt()
+{
+	if [[ "$LANG" == "ja_JP.UTF-8" ]] && [[ -z "$u_nyah_disabled" ]] ; then
+		export u_nyah_count=${u_nyah_count:-"1"}
+		pstr[1]='(」・ω・)」うー！  '
+		pstr[2]='(／・ω・)／にゃー！'
+		pstr[3]='(」・ω・)」うー！  '
+		pstr[4]='(／・ω・)／にゃー！'
+		pstr[5]='(」・ω・)」うー！  '
+		pstr[6]='(／・ω・)／にゃー！'
+		pstr[7]="Let's＼(・ω・)／にゃー！"
+		RPROMPT="$pstr[$u_nyah_count]"
+		u_nyah_count=$(( $u_nyah_count + 1 ))
+		if [ $u_nyah_count -gt 7 ] ; then
+			export u_nyah_count=$(( $u_nyah_count - 7 ))
+		fi
+	fi
+}
+
+mytmux()
+{
+	# run tmux
+	local COLOR_OPTION=
+	local session_name=
+	if [ -n "${COLORTERM}" ] ; then
+		COLOR_OPTION="-2"
+	fi
+	while [ $# -ge 1 ] ; do
+		case "$1" in
+			-2|-8)
+				COLOR_OPTION="$1"
+				shift
+				;;
+			*)
+				session_name="$1"
+				shift
+				;;
+		esac
+	done
+	if [ -z "$session_name" ] ; then
+		LANG="$LANG" tmux attach || LANG="$LANG" tmux $COLOR_OPTION -f $HOME/.tmux.conf
+	else
+		LANG="$LANG" tmux attach -t "${session_name}" || LANG="$LANG" tmux $COLOR_OPTION -f $HOME/.tmux.conf new-session -s "${session_name}"
+	fi
+#	if [ $SHLVL = 1 ]; then
+#		# use current $LANG
+#		LANG="$LANG" tmux attach || LANG="$LANG" tmux $COLOR_OPTION -f $HOME/.tmux.conf
+#	fi
+}
+
+alias ::="mytmux"
+
+
+# temporary
+gcc89() {
+	MAIN="$1"
+	BASE="`basename "$MAIN" .c`"
+	shift
+	gcc -Wall --std=c89 -o "$BASE" "$MAIN" $@
+}
+gcc99() {
+	MAIN="$1"
+	BASE="`basename "$MAIN" .c`"
+	shift
+	gcc -Wall --std=c99 -o "$BASE" "$MAIN" $@
+}
+
+g++03() {
+	MAIN="$1"
+	BASE="`basename "$MAIN" .cpp`"
+	shift
+	g++ -Wall --std=c++03 -o "$BASE" "$MAIN" $@
+}
+dgcc89() {
+	MAIN="$1"
+	BASE="`basename "$MAIN" .c`"
+	shift
+	gcc -g -Wall --std=c89 -o "$BASE" "$MAIN" $@ && objdump -DS "$BASE" >"${BASE}.dump"
+}
+
+dg++03() {
+	MAIN="$1"
+	BASE="`basename "$MAIN" .cpp`"
+	shift
+	g++ -g -fdump-class-hierarchy -Wall --std=c++03 -o "$BASE" "$MAIN" $@ && objdump -DS "$BASE" >"${BASE}.dump"
+}
+

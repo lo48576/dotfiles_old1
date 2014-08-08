@@ -1,0 +1,63 @@
+## Alias configuration
+#
+# expand aliases before completing
+#
+setopt complete_aliases # aliased ls needs if file/dir completions work
+
+# enable alias expansion of commands after sudo command with a space after "sudo".
+alias sudo="sudo "
+
+alias where="command -v"
+alias j="jobs -l"
+
+#LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
+LS_COMMON_OPT="--time-style=long-iso"
+case "${OSTYPE}" in
+linux*)
+	alias ls="ls --color=auto ${LS_COMMON_OPT}"
+	;;
+freebsd*|darwin*)
+	alias ls="ls -G -w ${LS_COMMON_OPT}"
+	;;
+esac
+
+alias la="ls -a"
+alias lf="ls -F"
+alias ll="ls -l"
+alias llh="ls -lh"
+alias lla="ls -la"
+alias llah="ls -lha"
+alias llha="ls -lha"
+
+alias du="du -h"
+alias df="df -h"
+
+alias su="su -l"
+
+alias pa="ps aux"
+
+# restart zsh
+alias zz="exec zsh"
+# vim with saved Session
+alias vv="vim -S"
+
+# When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
+#alias udon="sudo emerge -uDNv --keep-going"
+alias udon="sudo emerge -uDNv --exclude sys-kernel/gentoo-sources --keep-going"
+
+alias cman="LANG='C' man"
+
+autoload -Uz zmv
+alias zmv="noglob zmv"
+alias zmvw="noglob zmv -W"
+alias zcp="noglob zmv -C"
+alias zcpw="noglob zmv -C -W"
+alias zln="noglob zmv -L"
+alias zlnw="noglob zmv -L -W"
+
+alias hist-all="history -E 1"
+alias histgrep="history -E 1 | grep"
+
+alias ag="ag -S --stats"
+alias agh="ag --hidden"
+
