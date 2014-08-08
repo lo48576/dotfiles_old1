@@ -1,0 +1,74 @@
+termtype = mlterm
+################################
+# font
+################################
+# use xft to enable anti alias
+type_engine = xft
+# enable anti alias
+use_anti_alias = true
+# font size
+fontsize = 16
+# true to use propotional font
+use_variable_column_width = false
+# true to forbid using Unicode font
+not_use_unicode_font = true
+only_use_unicode_font = false
+receive_string_via_ucs = true
+# use multi column character (Hiragana, Kanji, etc)
+use_multi_column_char = true
+# width of ambiguous width character (like U+25CB(WHITE CIRCLE))
+#   setting which will prevent part of unicode figures collapsing.
+#   Ambiguous Width Characters are the characters whose width isn't stipulated by Unicode.
+#   Their width changes by where they appears in context.
+col_size_of_width_a = 2
+use_cp932_ucs_for_xft = true
+iso88591_font_for_usascii = false
+# compose font to display special character (like border)
+compose_dec_special_font = true
+input_method = xim
+
+# don't use scrollbar
+use_scrollbar = false
+# don't show scrollbar
+scrollbar_mode = none
+# scrollbar foreground color
+sb_fg_color = gray
+# scrollbar background color
+sb_bg_color = black
+scrollbar_view_name = simple
+
+# meta key is alt
+mod_meta_key = alt
+# use meta in emacs
+mod_meta_mode = esc
+
+# tabsize is 4
+tabsize = 4
+
+# use bell
+bel_mode = sound
+
+################################
+# color
+################################
+# foreground color
+fg_color = lightgray
+# background color
+bg_color = black
+
+#brightness=80
+#fade_ratio=90
+
+#wall_picture=path/to/background-image
+
+# alpha (0-255)
+alpha = 212
+use_transbg = true
+wall_picture = 
+# brightness (0-100)
+brightness = 80
+# contrast (0-100)
+contrast = 100
+# gamma (0-100)
+gamma = 100
+ENCODING = UTF-8
