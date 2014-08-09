@@ -146,5 +146,5 @@ Battery capacity: $alignr ${exec echo "scale=4; $(cat /sys/class/power_supply/CM
 
 Wireless ${hr 1}
 ESSID: $alignr ${wireless_essid wlp2s0} (${wireless_ap wlp2s0})
-Link quality:
-${wireless_link_qual wlp2s0} / ${wireless_link_qual_max wlp2s0} (${wireless_bitrate wlp2s0}) ${wireless_link_bar 4 wlp2s0}
+Link quality: $alignr ${wireless_link_qual wlp2s0} / ${wireless_link_qual_max wlp2s0} (${wireless_bitrate wlp2s0})
+${wireless_link_bar 4 wlp2s0}
