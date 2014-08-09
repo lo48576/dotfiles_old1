@@ -407,14 +407,6 @@ bindkey '^^' cdup
 # if you want to type "^", Ctrl-V ^
 #bindkey '\^' cdup
 
-# run this when $LANG is not "C" in non-Japanese environment.
-virtual_console_mode()
-{
-	echo "entering Virtual Console Mode"
-	LANG="C" TERM="linux" MLTERM= COLORTERM= exec zsh
-}
-alias vc=virtual_console_mode
-
 # show 'time' result when a process uses more than 30 cpu time
 REPORTTIME=30
 TIMEFMT="job: %J

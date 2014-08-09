@@ -61,3 +61,9 @@ alias histgrep="history -E 1 | grep"
 alias ag="ag -S --stats"
 alias agh="ag --hidden"
 
+# exit like vim
+alias :q="exit"
+# I sometimes press 'q' with Shift because ':' is Shift-; ...
+alias :Q="exit"
+# edit file with vim like vim
+alias :e="vim"

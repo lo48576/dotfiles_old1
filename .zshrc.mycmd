@@ -1,9 +1,10 @@
-# exit like vim
-alias :q="exit"
-# I sometimes press 'q' with Shift because ':' is Shift-; ...
-alias :Q="exit"
-# edit file with vim like vim
-alias :e="vim"
+# run this when $LANG is not "C" in non-Japanese environment.
+virtual_console_mode()
+{
+	echo "entering Virtual Console Mode"
+	LANG="C" TERM="linux" MLTERM= COLORTERM= exec zsh
+}
+alias vc=virtual_console_mode
 
 # unzip all given zip archives
 unzip-list()
@@ -169,7 +170,6 @@ mytmux()
 #		LANG="$LANG" tmux attach || LANG="$LANG" tmux $COLOR_OPTION -f $HOME/.tmux.conf
 #	fi
 }
-
 alias ::="mytmux"
 
 
