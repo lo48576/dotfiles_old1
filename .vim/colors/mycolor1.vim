@@ -20,10 +20,6 @@ highlight Todo			guifg=#d14a14 guibg=#1248d1						ctermfg=red	ctermbg=darkblue
 highlight Search		guifg=#90fff0 guibg=#2050d0						ctermfg=white ctermbg=darkblue cterm=underline term=underline
 highlight IncSearch		guifg=#b0ffff guibg=#2050d0						ctermfg=darkblue ctermbg=gray
 
-" ZenkakuSpace : 全角スペース
-"highlight ZenkakuSpace	guibg=#333333									cterm=underline
-"match ZenkakuSpace /　/
-
 " SpecialKey : 不可視文字の一部
 highlight SpecialKey	guifg=#666600									ctermfg=darkgray
 "highlight Directory		

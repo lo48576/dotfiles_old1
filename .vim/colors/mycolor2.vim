@@ -23,14 +23,6 @@ highlight Todo			guifg=#d14a14 guibg=#1248d1						ctermfg=166	ctermbg=26
 highlight Search		guifg=#90fff0 guibg=#2050d0						ctermfg=123 ctermbg=26 cterm=underline term=underline
 highlight IncSearch		guifg=#b0ffff guibg=#2050d0						ctermfg=159 ctermbg=26
 
-" ZenkakuSpace : 全角スペース
-highlight ZenkakuSpace	guibg=#333333									ctermbg=237 cterm=underline
-"match ZenkakuSpace /　/
-augroup zenkakuSpaceHighlight
-	autocmd!
-	autocmd Vimenter,WinEnter,BufRead * match ZenkakuSpace /　/
-augroup END
-
 " SpecialKey : 不可視文字の一部
 highlight SpecialKey	guifg=#666600						ctermfg=58
 "highlight Directory		
