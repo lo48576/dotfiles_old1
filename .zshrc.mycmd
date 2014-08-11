@@ -177,6 +177,20 @@ mytmux()
 #		LANG="$LANG" tmux attach || LANG="$LANG" tmux $COLOR_OPTION -f $HOME/.tmux.conf
 #	fi
 }
+_mytmux() {
+	# see /usr/share/zsh/5.0.5/functions/Completion/Unix/_tmux
+	__tmux-sessions(){
+		local expl sdir
+		local -a sessions
+		sessions=( ${${(f)"$(command tmux 2>/dev/null list-sessions)"}/:[ $'\t']##/:} )
+		_describe -t sessions 'sessions' sessions "$@"
+	}
+	_arguments -s : \
+		'(-8)-2[force using 256 colours]' \
+		'(-2)-8[force using 88 colours]' \
+		'*:target session:__tmux-sessions'
+}
+compdef _mytmux mytmux
 alias ::="mytmux"
 
 
