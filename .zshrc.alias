@@ -1,8 +1,4 @@
 ## Alias configuration
-#
-# expand aliases before completing
-#
-setopt complete_aliases # aliased ls needs if file/dir completions work
 
 # enable alias expansion of commands after sudo command with a space after "sudo".
 alias sudo="sudo "
