@@ -11,6 +11,7 @@ alias where="command -v"
 alias j="jobs -l"
 
 #LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
+# --time-style=long-iso : "+%Y-%m-%d %H:%M" format
 LS_COMMON_OPT="--time-style=long-iso"
 case "${OSTYPE}" in
 linux*)
@@ -21,30 +22,39 @@ freebsd*|darwin*)
 	;;
 esac
 
+# -a (--all): list entries starting with .
 alias la="ls -a"
+# -F (--classify): append file type indicators
 alias lf="ls -F"
+# -l: long listing
 alias ll="ls -l"
+# -h (--human-readable): print sizez in human readable form
 alias llh="ls -lh"
 alias lla="ls -la"
 alias llah="ls -lha"
 alias llha="ls -lha"
 
+# -h (--human-readable): print sizes in human readable format
 alias du="du -h"
 alias df="df -h"
 
+# -l: use a login shell
 alias su="su -l"
 
+# a: Lift the BSD-style "only yourself" restriction
+# u: Display user-oriented format
+# x: Lift the BSD-style "must have a tty" restriction
 alias pa="ps aux"
 
 # restart zsh
 alias zz="exec zsh"
-# vim with saved Session
+# vim with saved session
 alias vv="vim -S"
 
 # When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
-#alias udon="sudo emerge -uDNv --keep-going"
-alias udon="sudo emerge -uDNv --exclude sys-kernel/gentoo-sources --keep-going"
+alias udon="sudo emerge -uDNv --keep-going --exclude sys-kernel/gentoo-sources"
 
+# Always show man page in English
 alias cman="LANG='C' man"
 
 autoload -Uz zmv
@@ -58,12 +68,18 @@ alias zlnw="noglob zmv -L -W"
 alias hist-all="history -E 1"
 alias histgrep="history -E 1 | grep"
 
+# ag: sys-apps/the_silver_searcher
+#     A code-searching tool similar to ack, but faster
+# -S (--smart-case): Match case sensitively if there are any uppercase letters in PATTERN,
+#                    or case nsensitively otherwise.
+# --stats: Print stats (files scanned, time taken, etc)
 alias ag="ag -S --stats"
-alias agh="ag --hidden"
+# --hidden: Search hidden files. This option obeys ignore files.
+alias agh="ag -S --stats --hidden"
 
-# exit like vim
+# Quit zsh like vim
 alias :q="exit"
 # I sometimes press 'q' with Shift because ':' is Shift-; ...
 alias :Q="exit"
-# edit file with vim like vim
+# Edit file with vim like vim
 alias :e="vim"

@@ -100,7 +100,7 @@ for X in {16..255}; do
 done
 unset X
 
-# distinguish terminal software
+# Distinguish terminal software
 check_term_emulator() {
 	case "${TERM}" in
 		linux)
@@ -192,6 +192,7 @@ case ${UID} in
 	;;
 esac
 
+# Show information about terminal
 show_term_basic_info()
 {
 	echo "terminal emulator: ${TERMINAL_EMULATOR} ${TERM_VERSION}"
@@ -228,6 +229,7 @@ precmd_vcs_info () {
 }
 
 
+# set PROMPTs.
 prompt_string_init() {
 # prompt settings
 # 16 colors
@@ -238,60 +240,27 @@ prompt_string_init() {
 	local prompt_default_escseq="$yellow"
 	local bold=1
 	local reset=0
-	if [ -z 0 ] ; then
-:<<'#COMMENT_OUT_PROMPT_SETTING'
-		# This version is not used.
-		# See 'else' block below.
-		# [ user@host | Time: 2012/05/03-22:05:14+0900 (1336050314) | Ret: 0 | ssh | pts/2 ]
-		local prompt_ssh=""
-		case ${UID} in
-		0)
-			#local prompt_userhost="${STYLE_BOLD}${fg[green]}%n${STYLE_DEFAULT}${fg[red]}@${STYLE_BOLD}%M${STYLE_DEFAULT}${prompt_default_color}"
-			local prompt_userhost="\e[${reset};${green}m%n\e[${reset};${red}m@\e[${bold}m%M\e[${reset};${prompt_default_escseq}m"
-			;;
-		*)
-			#local prompt_userhost="%n${fg[red]}@%M${prompt_default_color}"
-			local prompt_userhost="%n\e[${red}m@%M\e[${prompt_default_escseq}m"
-			;;
-		esac
-		#local prompt_ret="%(?.%?.${fg[red]}${STYLE_BOLD}%?${STYLE_DEFAULT}${prompt_default_color})"
-		local prompt_ret="%(?.%?.\e[${red};${bold}m%?\e[${reset};${prompt_default_escseq})"
-		if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] ; then
-			#prompt_ssh=" | ${fg[green]}${STYLE_BOLD}ssh${STYLE_DEFAULT}${prompt_default_color}"
-			prompt_ssh=" | \e[${bold};${green}mssh\e[${reset};${prompt_default_escseq}"
-		fi
-		# *Don't* imply escape sequence on last line of prompt!
-		#  or completion doesn't work correctly.
-#		PROMPT="${STYLE_DEFAULT}${prompt_default_color}[ ${prompt_userhost} | Time: %D{%Y/%m/%d-%H:%M:%S%z (%s)} | Ret: ${prompt_ret}${prompt_ssh} | %y ]${STYLE_DEFAULT}
-#[ Path: %/ ]
-#%# "
-		PROMPT="\e[${reset};${prompt_default_escseq}m[ ${prompt_userhost} | Time: %D{%Y/%m/%d-%H:%M:%S%z (%s)} | Ret: ${prompt_ret}${prompt_ssh} | %y ]${STYLE_DEFAULT}
-[ Path: %/ ]
-%# "
-#COMMENT_OUT_PROMPT_SETTING
-	else
-		# use %B and %b instead of escape sequences.
-		local prompt_ssh=""
-		case ${UID} in
-		0)
-			#local prompt_userhost="%B${fg[green]}%n%b${fg[red]}@%B%M%b${prompt_default_color}"
-			local prompt_userhost="%B${fg[green]}%n%b${fg[red]}@%B%M%b${prompt_default_color}"
-			;;
-		*)
-			local prompt_userhost="%n${fg[red]}@%M${prompt_default_color}"
-			;;
-		esac
-		local prompt_ret="%(?.%?.${fg[red]}%B%?%b${prompt_default_color})"
-		if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] ; then
-			prompt_ssh=" | ${fg[green]}%Bssh%b${prompt_default_color}"
-		fi
-		PROMPT="%{${prompt_default_color}[ ${prompt_userhost} | Time: %D{%Y/%m/%d-%H:%M:%S%z (%s)} | Ret: ${prompt_ret}${prompt_ssh} | %y ]${STYLE_DEFAULT}%}
-[ Path: %/ ]
-%# "
+	# use %B and %b instead of escape sequences.
+	local prompt_ssh=""
+	case ${UID} in
+	0)
+		local prompt_userhost="%B${fg[green]}%n%b${fg[red]}@%B%M%b${prompt_default_color}"
+		;;
+	*)
+		local prompt_userhost="%n${fg[red]}@%M${prompt_default_color}"
+		;;
+	esac
+	local prompt_ret="%(?.%?.${fg[red]}%B%?%b${prompt_default_color})"
+	if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] ; then
+		prompt_ssh=" | ${fg[green]}%Bssh%b${prompt_default_color}"
 	fi
+	PROMPT="%{${prompt_default_color}[ ${prompt_userhost} | Time: %D{%Y/%m/%d-%H:%M:%S%z (%s)} | Ret: ${prompt_ret}${prompt_ssh} | %y ]${STYLE_DEFAULT}%}
+[ Path: %/ ]
+%# "
 	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
 	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-	RPROMPT="%1(v|%F{green}%1v%f|)"
+	# RPROMPT is set by set_rprompt().
+	#RPROMPT="%1(v|%F{green}%1v%f|)"
 } # prompt_string_init()
 prompt_string_init
 
@@ -302,6 +271,7 @@ set_rprompt() {
 	fi
 }
 
+# Build $LS_COROLS with specific settings and print it.
 ls_colors_gnu()
 {
 	STR_BASE='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'

@@ -1,4 +1,4 @@
-# run this when $LANG is not "C" in non-Japanese environment.
+# Run this when $LANG is not "C" in non-Japanese environment.
 virtual_console_mode()
 {
 	echo "entering Virtual Console Mode"
@@ -6,7 +6,7 @@ virtual_console_mode()
 }
 alias vc=virtual_console_mode
 
-# unzip all given zip archives
+# Unzip all given zip archives
 unzip-list()
 {
 	while [ $# -ge 1 ] ; do
@@ -14,7 +14,7 @@ unzip-list()
 		shift
 	done
 }
-# unrar all given rar archives
+# Unrar all given rar archives
 unrar-list()
 {
 	while [ $# -ge 1 ] ; do
@@ -23,8 +23,8 @@ unrar-list()
 	done
 }
 
-# expand all zip files in directory $1.
-# if you don't specify $1, expand files in current directory.
+# Expand all zip files in directory $1.
+# If $1 is omitted, expand files in current directory.
 unzip-all()
 {
 	local dir=${1:-./}
@@ -39,8 +39,8 @@ unzip-all()
 	done
 	unset LINE
 }
-# expand all rar files in directory $1.
-# if you don't specify $1, expand files in current directory.
+# Expand all rar files in directory $1.
+# If $1 is omitted, expand files in current directory.
 unrar-all()
 {
 	local dir=${1:-./}
@@ -57,7 +57,6 @@ unrar-all()
 }
 
 # make a directory, then pushd there.
-## mkdir + pushd => mkpushd => mpd
 # mkdir + pushd => dpd
 dpd()
 {
@@ -118,7 +117,7 @@ alias dv="dvorakey"
 # いつもニコニコあなたの隣に這い寄る混沌
 # The Crawling Chaos, Nyarlathotep.
 # 一部環境(tmuxを通さない生のmltermとか)では、
-#   RPROMPTに全角文字(?あるいはambiguous char?、ωや▽など)があると、
+#   RPROMPTにambiguous width character(ωや▽など)があると、
 #   プロンプト文字列の末尾がおかしくなることがある。
 # you can disable this feature with setting $u_nyah_disabled to not null.
 u_nyah_prompt()
@@ -140,6 +139,14 @@ u_nyah_prompt()
 	fi
 }
 
+# Run tmux. Create a new session or attach to a existing session.
+# options:
+#   -2: pass -2 option to tmux ("force using 256 colours")
+#   -8: pass -8 option to tmux ("force using 88 colours")
+#   (otherwise): session name (optional)
+# Attach to the session whith specified name if exist.
+# If the session with specified name exists, attach to it.
+# If not, create new session with the name.
 mytmux()
 {
 	# run tmux
