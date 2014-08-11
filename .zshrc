@@ -229,7 +229,7 @@ precmd_vcs_info () {
 }
 
 
-# set PROMPTs.
+# Set PROMPTs
 prompt_string_init() {
 # prompt settings
 # 16 colors
@@ -264,6 +264,7 @@ prompt_string_init() {
 } # prompt_string_init()
 prompt_string_init
 
+# Set RPROMPT
 set_rprompt() {
 	# show vcs info if there's any info to show
 	if [ -n "$vcs_info_msg_0_" ] ; then
