@@ -8,11 +8,6 @@ if has('vim_starting')
 	call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
-" vim-scripts repos
-" neco-ghc depends on vimproc.
-" and needs ghc-mod to be able to accessed with $PATH.
-"     (Bad English...)
-"NeoBundle 'neco-ghc'
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimshell'
@@ -60,6 +55,8 @@ NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
 "" edit
 NeoBundle 'glidenote/memolist.vim'
+NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'vim-scripts/VOoM'
 "" filetype
 """ binary
 NeoBundle 'Shougo/vinarise'
