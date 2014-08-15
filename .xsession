@@ -41,7 +41,8 @@ if [ -x "$XMONAD_PATH" ] ; then
 	if [ ! -x "${TRAYER_BIN}" ] ; then
 		TRAYER_BIN="`which trayer`"
 	fi
-	[ -x "${TRAYER_BIN}" ] && ${TRAYER_BIN} --edge top --align right --SetDockType true --SetPartialStrut false --expand true --widthtype percent --width 20 --transparent true --alpha 64 --tint 0x666666 --height 20 --monitor 0 &
+	# trayer leaves the edge of window on restart of xmonad, if "--SetPartialStrut false"
+	[ -x "${TRAYER_BIN}" ] && ${TRAYER_BIN} --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 20 --transparent true --alpha 64 --tint 0x666666 --height 20 --monitor 0 &
 #	gnome-settings-daemon &
 	# uim
 	uim-xim &
