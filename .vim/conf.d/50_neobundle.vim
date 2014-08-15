@@ -73,13 +73,16 @@ NeoBundle 'haskell.vim'
 NeoBundle 'pbrisbin/vim-syntax-shakespeare'
 """ ruby
 NeoBundle 'tpope/vim-rails'
+""" glsl
+NeoBundle 'glsl.vim'
+""" reST
+NeoBundle 'Rykka/riv.vim'
 """ others
 " c.vim needs modifying script files...
 "NeoBundle 'vim-scripts/c.vim'
 NeoBundle 'vim-scripts/vimwiki'
 NeoBundle 'vim-scripts/brainfuck-syntax'
 NeoBundle 'tpope/vim-markdown'
-NeoBundle 'Rykka/riv.vim'
 "" colors
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'vim-scripts/Wombat'
