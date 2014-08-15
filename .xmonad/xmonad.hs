@@ -198,6 +198,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ++
     [ ((0                 , xF86XK_MonBrightnessUp ), spawn "xbacklight -steps 1 -inc 9")
     , ((0                 , xF86XK_MonBrightnessDown ), spawn "xbacklight -steps 1 -dec 9")
+    , ((0                 , xF86XK_AudioMute ), spawn "~/scripts/local/volumecontrol.sh toggle")
+    , ((0                 , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/volumecontrol.sh 1%+")
+    , ((0                 , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/volumecontrol.sh 1%-")
     ]
 
 
