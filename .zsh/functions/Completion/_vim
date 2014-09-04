@@ -61,6 +61,8 @@ _vim_files() {
   local host user port
   if compset -P 'sudo:' ; then
     _wanted vim-file expl 'files' _files
+  elif compset -P 'binary:' ; then
+    _wanted vim-file expl 'files' _files
   elif compset -P 'scp://' ; then
     if compset -P 1 '*/'; then
       user="${IPREFIX#scp://}"
