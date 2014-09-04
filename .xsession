@@ -56,13 +56,13 @@ if [ -x "$XMONAD_PATH" ] ; then
 	BACKGROUND_APPLICATIONS="`which volumeicon` `which polkit-gnome-authentication-agent-1`"
 	for APP in $BACKGROUND_APPLICATIONS ; do
 		if [ -x "$APP" ] ; then
-			$APP &
+			"$APP" &
 		fi
 	done
 	# FIXME: Sometimes .xmodmaprc settings is not applied... why?
 	xmodmap ~/.xmodmaprc &
 	# backlight setting
-	xbacklight -step 1 -set 40
+	xbacklight -steps 1 -set 40
 
 	conky &
 #	sleep 1; conky -c ~/.conkyrc_ring &
