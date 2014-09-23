@@ -3,7 +3,7 @@ termtype = mlterm
 # font
 ################################
 # use xft to enable anti alias
-type_engine = xft
+type_engine = cairo
 # enable anti alias
 use_anti_alias = true
 # font size

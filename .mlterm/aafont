@@ -1,4 +1,6 @@
 DEFAULT = 14,Ricty 14;12,Ricty 12;13,Ricty 13
+ISO10646_UCS4_1 = ricty
+ISO10646_UCS4_1_FULLWIDTH = ricty
 ISO8859_1 = ricty
 JISX0201_KATA = ricty
 JISX0201_ROMAN = ricty
