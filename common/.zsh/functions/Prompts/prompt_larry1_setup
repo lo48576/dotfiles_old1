@@ -1,0 +1,68 @@
+# larry1 prompt theme
+
+prompt_larry1_help() {
+	cat <<'#HELP_END'
+This prompt is color-scheme-able.  You can invoke it thus:
+
+  prompt larry1 [<base color> <host color> <username color> <path color> <ssh color> <PS2 color> <sprompt base color> <sprompt command color>]
+
+#HELP_END
+}
+
+prompt_larry1_setup() {
+	autoload -Uz vcs_info
+	zstyle ':vcs_info:*' enable git svn hg bzr
+	zstyle ':vcs_info:*' formats '(%s)-[%b]'
+	zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+	zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
+	zstyle ':vcs_info:bzr:*' use-simple true
+
+	local color_base=${1:-'yellow'}
+	local color_host=${2:-'red'}
+	local color_user=${3:-$color_base}
+	local color_path=${4:-'white'}
+	local color_ssh=${5:-'green'}
+	local color_ps2=${6:-'red'}
+	local color_sprompt_base=${7:-'red'}
+	local color_sprompt_command=${8:-$color_sprompt_base}
+
+	local prompt_line_prefix="%F{$color_base}[%f "
+	local prompt_line_suffix=" %F{$color_base}]%f"
+	local sep=" %F{$color_base}|%f "
+
+	local userhost="%(!.%B%F{green}.%F{$color_user})%n%(!.%b.)%F{$color_host}@%M%f"
+	local time="${sep}%F{$color_base}%D{%Y/%m/%d-%H:%M:%S%z (%s)}%f"
+	local ret_code="${sep}%F{$color_base}Ret:%f %(?.%F{$color_base}%?.%F{red}%B%?%b)%f"
+	local tty="${sep}%F{$color_base}%y%f"
+	local ssh=
+	if [ x != x"$SSH_CLIENT" ] ; then
+		# connected via ssh
+		ssh="${sep}%B%F{$color_ssh}ssh%f%b"
+	fi
+	local current_path="Path: %F{$color_path}%/%f"
+	local tmux_pane=
+
+	local base_prompt_line1="${prompt_line_prefix}$userhost$time$ret_code$ssh$tty${prompt_line_suffix}"
+	local base_prompt_line2="${prompt_line_prefix}${current_path}${prompt_line_suffix}"
+	local base_prompt_line3="%# "
+
+	PS1="${base_prompt_line1}${prompt_newline}${base_prompt_line2}${prompt_newline}${base_prompt_line3}"
+	PS2="%F{$color_ps2}%_%%%f "
+	local sp_cmd_prefix="%B%F{$color_sprompt_command}"
+	local sp_cmd_suffix="%f%b"
+	SPROMPT="${sp_cmd_prefix}%R${sp_cmd_suffix} %F{$color_sprompt_base}=>%f ${sp_cmd_prefix}%r${sp_cmd_suffix} %F{$color_sprompt_base}[nyae]?:%f "
+
+	# show vcs info if there's any info to show
+	RPROMPT="%1(v|%F{green}%1v%f|)"
+	add-zsh-hook precmd prompt_larry1_precmd
+}
+
+prompt_larry1_precmd() {
+	psvar=()
+	LANG=en_US.UTF-8 vcs_info
+	[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+prompt_larry1_setup "$@"
+
+# vim: set ft=sh :

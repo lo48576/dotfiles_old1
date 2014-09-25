@@ -55,36 +55,24 @@ export PATH="${PATH}:/usr/local/sbin:/usr/sbin:/sbin"
 if [ -x "`whence -p gem`" ] ; then
 	# ruby gem
 	export PATH="${PATH}:`gem environment gemdir`/bin"
-	# you can use `ruby -e 'require "rubygems"; puts Gem::bindir'`.
+	# you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead.
 fi
 
-## Completion configuration
-fpath=(~/.zsh/functions/Completion ${fpath})
+## path to completion and prompts configuration
+fpath=(~/.zsh/functions/Completion ~/.zsh/functions/Prompts ${fpath})
 
 autoload -Uz compinit
-compinit
+# -C: skip security check (see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#index-compinit )
+compinit -C
 # End of lines added by compinstall
 
 # enable cache for the completions.
 zstyle ':completion::complete:*' use-cache 1
 
-autoload colors
-colors
+#autoload -Uz colors && colors
+autoload -Uz promptinit && promptinit
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn hg bzr
-zstyle ':vcs_info:*' formats '(%s)-[%b]'
-zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
-zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
-zstyle ':vcs_info:bzr:*' use-simple true
-
-STYLE_DEFAULT="$(echo '\e[0m')"
-STYLE_BOLD="$(echo '\e[1m')"
-#STYLE_LINE='\e[4m'
-#STYLE_BLINK='\e[5m'
-#STYLE_NEGA='\e[7m'
-#STYLE_NOLINE='\e[24m'
-
+:<<'#COLOR_SETTING_1'
 #define 16 colors -> COL(FG|BG)16[]
 for X in {0..7}; do
 	COLFG16[$(( ${X} + 1 ))]=$(echo "\e[3${X}m")
@@ -99,6 +87,7 @@ for X in {16..255}; do
 	COLBG256[${X}]=$(echo "\e[48;5;${X}m")
 done
 unset X
+#COLOR_SETTING_1
 
 # Distinguish terminal software
 check_term_emulator() {
@@ -220,57 +209,8 @@ setopt dvorak
 disable r
 
 
-# special functions
-
-precmd_vcs_info () {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-}
-
-
 # Set PROMPTs
-prompt_string_init() {
-# prompt settings
-# 16 colors
-	local prompt_default_color="${fg[yellow]}"
-	local red=31
-	local green=32
-	local yellow=33
-	local prompt_default_escseq="$yellow"
-	local bold=1
-	local reset=0
-	# use %B and %b instead of escape sequences.
-	local prompt_ssh=""
-	case ${UID} in
-	0)
-		local prompt_userhost="%B${fg[green]}%n%b${fg[red]}@%B%M%b${prompt_default_color}"
-		;;
-	*)
-		local prompt_userhost="%n${fg[red]}@%M${prompt_default_color}"
-		;;
-	esac
-	local prompt_ret="%(?.%?.${fg[red]}%B%?%b${prompt_default_color})"
-	if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] ; then
-		prompt_ssh=" | ${fg[green]}%Bssh%b${prompt_default_color}"
-	fi
-	PROMPT="%{${prompt_default_color}[ ${prompt_userhost} | Time: %D{%Y/%m/%d-%H:%M:%S%z (%s)} | Ret: ${prompt_ret}${prompt_ssh} | %y ]${STYLE_DEFAULT}%}
-[ Path: %/ ]
-%# "
-	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
-	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-	# RPROMPT is set by set_rprompt().
-	#RPROMPT="%1(v|%F{green}%1v%f|)"
-} # prompt_string_init()
-prompt_string_init
-
-# Set RPROMPT
-set_rprompt() {
-	# show vcs info if there's any info to show
-	if [ -n "$vcs_info_msg_0_" ] ; then
-		RPROMPT="%1(v|%F{green}%1v%f|)"
-	fi
-}
+prompt larry1
 
 # Build $LS_COROLS with specific settings and print it.
 ls_colors_gnu()
@@ -388,8 +328,6 @@ CPU: %P"
 
 init()
 {
-	# precmd for vcs_info
-	precmd_functions=($precmd_functions precmd_vcs_info)
 	# fortune
 	#fortune ~/Documents/fortune
 	u_nyah_disabled=1
@@ -398,14 +336,11 @@ init()
 		# u_nyah_prompt is defined in .zshrc.mycmd
 		precmd_functions=($precmd_functions u_nyah_prompt)
 	fi
-	precmd_functions=($precmd_functions set_rprompt)
-	# bkp
-	# HISTFILE_MIRROR must be on the same partition.
-	#HISTFILE_MIRROR=~/dotfiles_local/.zsh_histfile
-	#if [ ! $HISTFILE -ef $HISTFILE_MIRROR ] ; then
-	#	ln -f $HISTFILE $HISTFILE_MIRROR
-	#fi
 }
 
 # initialize
 init
+
+#if (which zprof >/dev/null) ; then
+#	zprof | less
+#fi

@@ -1,3 +1,4 @@
+#zmodload zsh/zprof && zprof
 # $PATH will be set by /etc/zsh/zprofile (loading /etc/profile.env which overwrites $PATH).
 # Don't set PATH here.
 
