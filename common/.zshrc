@@ -57,6 +57,10 @@ if [ -x "`whence -p gem`" ] ; then
 	export PATH="${PATH}:`gem environment gemdir`/bin"
 	# you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead.
 fi
+if [ -x "`whence -p python`" ] ; then
+	# pip
+	export PATH="${PATH}:`python -m site --user-base`/bin"
+fi
 
 ## path to completion and prompts configuration
 fpath=(~/.zsh/functions/Completion ~/.zsh/functions/Prompts ${fpath})
