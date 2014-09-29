@@ -23,6 +23,8 @@ NeoBundle 'Shougo/vimfiler'
 "" editing
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'Yggdroot/indentLine'
+"" style
+NeoBundle 'itchyny/lightline.vim'
 "" tools
 """ ssh
 NeoBundle 'ujihisa/vimshell-ssh'

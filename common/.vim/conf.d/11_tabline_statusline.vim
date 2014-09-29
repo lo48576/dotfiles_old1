@@ -16,18 +16,17 @@ function! s:tabpage_label(n)
 	" change highlight when current
 	let hi=a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 	let bufno=len(bufnrs)
-	if bufno is 0
-		let bufno=''
-	endif
 	" if there's modified buffer in tabpage, append '+'
 	let mod=len(filter(copy(bufnrs),'getbufvar(v:val,"&modified")')) ? '+' : ''
-	" make gaps
-	let sp=(bufno . mod) ==# '' ? '' : ' '
 	" current buffer
 	" tabpagewinnr() begins from 1
 	let curbufnr=bufnrs[tabpagewinnr(a:n)-1]
 	let fname=pathshorten(bufname(curbufnr))
-	let label=' ' . a:n . '>' . bufno . mod . sp . fname . ' |'
+	if bufno <= 1
+		let label=' ' . a:n  . mod . ' ' . fname . ' |'
+	else
+		let label=' ' . a:n . '>' . bufno . mod . ' ' . fname . ' |'
+	endif
 	return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
 
@@ -52,8 +51,11 @@ set tabline=%!MakeTabLine()
 "highlight! User1		term=bold	guifg=#005FFF guibg=fg		ctermfg=27 ctermbg=fg cterm=bold
 "highlight! User1		term=bold	ctermfg=12 ctermbg=fg
 set laststatus=2
-set statusline=%1*%f%m%r%h%w%*
-			\%=%{fugitive#statusline()}[br=%1*%{&ff}%*]\ [type=%1*%Y%*]\ [ASCII=%1*\%05.b%*]\ [HEX=%1*\%04.B%*]\ [POS=%1*%04l%*/%1*%04L%*,%1*%04v%*]
+
+" comment out: use lightline.vim instead.
+"set statusline=%1*%f%m%r%h%w%*
+"			\%=%{fugitive#statusline()}[br=%1*%{&ff}%*]\ [type=%1*%Y%*]\ [ASCII=%1*\%05.b%*]\ [HEX=%1*\%04.B%*]\ [POS=%1*%04l%*/%1*%04L%*,%1*%04v%*]
+
 "			\%=[enc=%1*%{&fenc}%*]\ [br=%1*%{&ff}%*]\ [type=%1*%Y%*]\ [ASCII=%1*\%05.b%*]\ [HEX=%1*\%04.B%*]\ [POS=%1*%04l%*/%1*%04L%*,%1*%04v%*]
 " if you want to display info like '[:1/3]' , write this.
 " %{winnr('$')>1?'[:'.winnr().'/'.winnr('$').']':''}
