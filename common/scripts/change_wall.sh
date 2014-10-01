@@ -4,7 +4,7 @@ THEME="$( cat "$0".conf )"
 
 DISPLAY_NUM=3
 #FILENAMES="\"$( find ~/Pictures/backgrounds/${THEME}/ -print0 -type f -or -type l | shuf -z -n "${DISPLAY_NUM}" | head -c -1 | sed -e 's/\x0/" "/g' )\""
-FILENAMES="$( find ~/Pictures/backgrounds/${THEME}/ -print0 -type f -or -type l | shuf -z -n "${DISPLAY_NUM}" | tr '\0' ' ' )"
+FILENAMES="$( find ~/Pictures/backgrounds/${THEME}/ \( -type f -o -type l \) -print0 | shuf -z -n "${DISPLAY_NUM}" | tr '\0' ' ' )"
 
 feh --bg-scale ${FILENAMES}
 echo ${FILENAMES}
