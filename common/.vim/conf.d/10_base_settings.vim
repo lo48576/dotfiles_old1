@@ -29,6 +29,8 @@ endif
 
 "" ///* settings *///
 
+"set encoding=utf-8
+
 " use highlight 'CursorLineNr'
 set cursorline
 
