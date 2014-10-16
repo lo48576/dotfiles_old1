@@ -5,7 +5,9 @@ filetype off
 
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim/
-	call neobundle#rc(expand('~/.vim/bundle'))
+	" neobundle#rc() is deprecated.
+	"call neobundle#rc(expand('~/.vim/bundle'))
+	call neobundle#begin(expand('~/.vim/bundle'))
 endif
 
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -100,3 +102,6 @@ NeoBundle 'thinca/vim-splash'
 " non github repos
 "NeoBundle 'git://git.wincent.com/command-t.git'
 
+if has('vim_starting')
+	call neobundle#end()
+endif
