@@ -50,7 +50,8 @@ if [ -x "$XMONAD_PATH" ] ; then
 	# Run status bar from xmonad, not here
 	# because I want to restart status bar when xmonad restarts.
 #	~/scripts/local/status.sh | dzen2 -fn '7x13bold' -h 16 -ta r -y $(( $(xrandr | sed -e '/Screen 0/! d;s/Sc[^c]*current [0-9]* x \([0-9]*\).*/\1/') - 16)) &
-	#xcompmgr -c &
+	# urxvt requires this to use alpha
+	#xcompmgr -cC -r 0 &
 	# Applications to run in background
 	#BACKGROUND_APPLICATIONS="/usr/bin/gnome-sound-applet /usr/bin/system-config-printer-applet /usr/libexec/polkit-gnome-authentication-agent-1"
 	BACKGROUND_APPLICATIONS="`which volumeicon` `which polkit-gnome-authentication-agent-1`"
