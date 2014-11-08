@@ -343,6 +343,11 @@ CPU: %P"
 #[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f ~/.zsh/zsh-syntax-highlighting.zsh.local ] && source ~/.zsh/zsh-syntax-highlighting.zsh.local
 
+#tmux_set_current_dir()
+#{
+	#[ -n "$TMUX" ] && tmux set-environment "TMUXPWD_$(tmux display -p '#D' | tr -d '%')" "$PWD"
+#}
+
 init()
 {
 	# fortune
@@ -353,6 +358,8 @@ init()
 		# u_nyah_prompt is defined in .zshrc.mycmd
 		precmd_functions=($precmd_functions u_nyah_prompt)
 	fi
+	# tmux
+	#precmd_functions=($precmd_functions tmux_set_current_dir)
 }
 
 # initialize
