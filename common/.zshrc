@@ -338,6 +338,11 @@ Kernel: %S
 Elapsed: %E
 CPU: %P"
 
+
+# zsh-syntax-highlighting
+#[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f ~/.zsh/zsh-syntax-highlighting.zsh.local ] && source ~/.zsh/zsh-syntax-highlighting.zsh.local
+
 init()
 {
 	# fortune
