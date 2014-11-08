@@ -79,3 +79,6 @@ alias :q="exit"
 alias :Q="exit"
 # Edit file with vim like vim
 alias :e="vim"
+
+# bundle exec
+alias be="bundle exec"
