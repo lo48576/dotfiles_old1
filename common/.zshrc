@@ -35,10 +35,21 @@ zstyle ':completion:*' group-name ''
 ##zstyle ':completion::complete:*:dirs' fake '.zfs'
 ##zstyle ':completion::complete:*:dir_list' fake '.zfs'
 
-export EDITOR=vim
+#
+# default options for commands
+#
+if [ -x "`whence -p vim`" ] ; then
+	export EDITOR="vim"
+elif [ -x "`whence -p vi`" ] ; then
+	export EDITOR="vi"
+fi
 # If mojibake (like '^[[0m') appears on linux tty,
 #   use "-c" option with lv.
-export PAGER="lv -c"
+if [ -x "`whence -p lv`" ] ; then
+	export PAGER="lv -c -l"
+else
+	export PAGER="less"
+fi
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
 export GREP_OPTIONS='--color=auto'
 
