@@ -57,8 +57,16 @@ if [ -x "`whence -p gem`" ] ; then
 	export PATH="${PATH}:`gem environment gemdir`/bin"
 	# you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead.
 fi
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+#if [ -f "${HOME}/.rvm/scripts/rvm" ] ; then
+	# rvm
+#	source "${HOME}/.rvm/scripts/rvm"
+#fi
+# rbenv
+export PATH="${HOME}/.rbenv/bin:${PATH}"
+eval "$(rbenv init -)"
+# pip
 if [ -x "`whence -p python`" ] ; then
-	# pip
 	export PATH="${PATH}:`python -m site --user-base`/bin"
 fi
 
