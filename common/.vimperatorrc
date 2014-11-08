@@ -9,5 +9,10 @@ set visualbell
 
 js liberator.beep=function()(void 0)
 
+cmap <C-n> <Tab>
+cmap <C-p> <S-Tab>
+
+qmark g https://www.google.co.jp/
+
 
 " vim: set ft=vimperator:
