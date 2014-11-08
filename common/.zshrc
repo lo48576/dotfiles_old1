@@ -24,7 +24,6 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 
 # list /zfs-filesystem/.zfs/ .
 # zfs snapshot is in /zfs-filesystem/.zfs/snapshot/snapshot-name/ .
@@ -42,36 +41,63 @@ export EDITOR=vim
 export PAGER="lv -c"
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
 export GREP_OPTIONS='--color=auto'
-# $ZSHENV_PATH is defined in .zshenv .
-export PATH="${ZSHENV_PATH}:${PATH}"
-unset ZSHENV_PATH
-# My executables
-export PATH="${HOME}/bin:${HOME}/app:${HOME}/app64:${HOME}/scripts:${PATH}"
-export PATH="${HOME}/scripts/hikikomorish:${PATH}"
-# You can run some executables in sbin when you set /etc/sudoers,
-# so these files should be included in $PATH.
-export PATH="${PATH}:/usr/local/sbin:/usr/sbin:/sbin"
-# Binaries managed by package managers in user privilege
-if [ -x "`whence -p gem`" ] ; then
-	# ruby gem
-	export PATH="${PATH}:`gem environment gemdir`/bin"
-	# you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead.
-fi
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-#if [ -f "${HOME}/.rvm/scripts/rvm" ] ; then
-	# rvm
-#	source "${HOME}/.rvm/scripts/rvm"
-#fi
-# rbenv
-export PATH="${HOME}/.rbenv/bin:${PATH}"
+
+#
+# PATH
+#
+typeset -U path
+
+# path(foo): 条件fooにマッチするパスのみ残す。
+# 条件:
+#   N: NULL_GLOBオプションを設定。
+#      globがマッチしない場合や存在しないパスであった場合無視する。
+#   -: シンボリックリンクそのものでなく、その指す先のファイルに評価する。
+#   /: ディレクトリのみを残す。
+
+## system
+path=(
+	$path
+	/usr/libexec(N-/)
+	)
+
+## installed to user-local directory by package manager
+path=(
+	# ruby gem (ruby)
+	#   you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead of whence .
+	$([ -x "`whence -p gem`" ] && echo "`gem environment gemdir`/bin")(N-/)
+	# rbenv (ruby)
+	${HOME}/.rbenv/bin(N-/)
+	# pip (python)
+	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
+	$path)
+# rbenv (ruby)
 eval "$(rbenv init -)"
-# pip
-if [ -x "`whence -p python`" ] ; then
-	export PATH="${PATH}:`python -m site --user-base`/bin"
+
+## my files (manually installed)
+path=(
+	${HOME}/bin(N-/)
+	${HOME}/app{,32,64}/*(N-/)
+	${HOME}/scripts(N-/)
+	$path)
+
+export PATH
+
+# for sudo
+if [[ $EUID != 0 ]] ; then
+	typeset -xT SUDO_PATH sudo_path
+	typeset -U sudo_path
+	sudo_path=(
+		/usr/local/sbin(N-/)
+		/usr/sbin(N-/)
+		/sbin(N-/)
+		)
 fi
+zstyle ':completion:*:sudo:*' environ PATH="$SUDO_PATH:$PATH"
+
 
 ## path to completion and prompts configuration
 fpath=(~/.zsh/functions/Completion ~/.zsh/functions/Prompts ${fpath})
+
 
 autoload -Uz compinit
 # -C: skip security check (see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#index-compinit )

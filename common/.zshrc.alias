@@ -1,7 +1,8 @@
 ## Alias configuration
 
 # enable alias expansion of commands after sudo command with a space after "sudo".
-alias sudo="sudo "
+#alias sudo="sudo "
+alias sudo="sudo env PATH=\"$SUDO_PATH:${PATH}\" "
 
 alias where="command -v"
 alias j="jobs -l"
