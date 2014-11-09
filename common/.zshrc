@@ -24,10 +24,24 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
+
+## man
 zstyle ':completion:*:manuals' separate-sections true
 # "manual page, section xx" という文字列が候補に埋もれて見辛いので、
 # スタイルを変える
 zstyle ':completion:*:*:man:*:manuals.*' format '%F{yellow}%B%U%d%u%b%f'
+
+## process
+# for kill
+# style: pid(yellow) %cpu(cyan) tty(blue) [user(green)] cmd(yellow and red)
+zstyle -e ':completion:*:*:*:*:processes' command \
+	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then reply="ps --forest -e -o pid,%cpu,tty,user,cmd" ; else reply="ps --forest -u $USER -o pid,%cpu,tty,cmd" ; fi'
+zstyle ':completion:*:*:*:*:processes' list-colors \
+	"=(#b) #([0-9]#) #([0-9]#.[0-9]#) #([^ ]#) #([A-Za-z][A-Za-z0-9\-_.]#)# #([\|\\_ ]# )([^ ]#)*=31=33=36=34=32=36=33"
+zstyle ':completion:*:*:kill:*' force-list always
+# for killall
+zstyle -e ':completion:*:processes-names' command \
+	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then reply="ps -e -o cmd" ; else reply="ps -u $USER -o cmd" ; fi'
 
 # list /zfs-filesystem/.zfs/ .
 # zfs snapshot is in /zfs-filesystem/.zfs/snapshot/snapshot-name/ .
