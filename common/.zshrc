@@ -93,7 +93,7 @@ path=(
 
 export PATH
 
-# for sudo
+# for sudo and sbin commands
 if [[ $EUID != 0 ]] ; then
 	typeset -xT SUDO_PATH sudo_path
 	typeset -U sudo_path
@@ -102,8 +102,10 @@ if [[ $EUID != 0 ]] ; then
 		/usr/sbin(N-/)
 		/sbin(N-/)
 		)
+	path=($path $sudo_path)
 fi
-zstyle ':completion:*:sudo:*' environ PATH="$SUDO_PATH:$PATH"
+#zstyle ':completion:*:sudo:*' environ PATH="$SUDO_PATH:$PATH"
+zstyle ':completion:*:sudo:*' command-path $path
 
 
 ## path to completion and prompts configuration
