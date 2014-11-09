@@ -24,6 +24,10 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*' group-name ''
+zstyle ':completion:*:manuals' separate-sections true
+# "manual page, section xx" という文字列が候補に埋もれて見辛いので、
+# スタイルを変える
+zstyle ':completion:*:*:man:*:manuals.*' format '%F{yellow}%B%U%d%u%b%f'
 
 # list /zfs-filesystem/.zfs/ .
 # zfs snapshot is in /zfs-filesystem/.zfs/snapshot/snapshot-name/ .
