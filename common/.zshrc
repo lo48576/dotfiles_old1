@@ -38,6 +38,7 @@ zstyle -e ':completion:*:*:*:*:processes' command \
 	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then reply="ps --forest -e -o pid,%cpu,tty,user,cmd" ; else reply="ps --forest -u $USER -o pid,%cpu,tty,cmd" ; fi'
 zstyle ':completion:*:*:*:*:processes' list-colors \
 	"=(#b) #([0-9]#) #([0-9]#.[0-9]#) #([^ ]#) #([A-Za-z][A-Za-z0-9\-_.]#)# #([\|\\_ ]# )([^ ]#)*=31=33=36=34=32=36=33"
+zstyle ':completion:*:*:*:*:processes' sort false
 zstyle ':completion:*:*:kill:*' force-list always
 # for killall
 zstyle -e ':completion:*:processes-names' command \
