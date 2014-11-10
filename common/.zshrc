@@ -101,7 +101,9 @@ path=(
 	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
 	$path)
 # rbenv (ruby)
-eval "$(rbenv init -)"
+if [ "`whence -p rbenv`" ] ; then
+	eval "$(rbenv init -)"
+fi
 
 ## my files (manually installed)
 path=(
