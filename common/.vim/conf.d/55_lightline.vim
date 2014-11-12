@@ -62,7 +62,7 @@ let g:lightline.component.position = '%04l/%04L:%03v'
 	"\ })
 
 "let g:lightline.separator = {'left': '》', 'right': '《'}
-let g:lightline.separator = {'left': '▶', 'right': '◀'}
+"let g:lightline.separator = {'left': '▶', 'right': '◀'}
 let g:lightline.subseparator = {'left': '>', 'right': '<'}
 
 
