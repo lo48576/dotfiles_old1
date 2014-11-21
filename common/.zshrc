@@ -281,9 +281,6 @@ setopt dvorak
 disable r
 
 
-# Set PROMPTs
-prompt larry1
-
 # Build $LS_COROLS with specific settings and print it.
 ls_colors_gnu()
 {
