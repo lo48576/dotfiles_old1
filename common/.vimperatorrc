@@ -13,6 +13,7 @@ cmap <C-n> <Tab>
 cmap <C-p> <S-Tab>
 
 qmark g https://www.google.co.jp/
+qmark t https://tweetdeck.twitter.com/
 
 
 " vim: set ft=vimperator:
