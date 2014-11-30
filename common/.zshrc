@@ -70,7 +70,8 @@ else
 	export PAGER="less"
 fi
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
-export GREP_OPTIONS='--color=auto'
+# GREP_OPTIONS is deprecated
+#export GREP_OPTIONS='--color=auto'
 
 #
 # PATH
