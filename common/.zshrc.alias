@@ -7,6 +7,9 @@ alias sudo="sudo "
 alias where="command -v"
 alias j="jobs -l"
 
+# use alias because GREP_OPTIONS is deprecated.
+alias grep="grep --color=auto"
+
 #LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
 # --time-style=long-iso : "+%Y-%m-%d %H:%M" format
 LS_COMMON_OPT="--time-style=long-iso"

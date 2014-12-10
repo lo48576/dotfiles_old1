@@ -70,7 +70,8 @@ else
 	export PAGER="less"
 fi
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
-export GREP_OPTIONS='--color=auto'
+# GREP_OPTIONS is deprecated
+#export GREP_OPTIONS='--color=auto'
 
 #
 # PATH
@@ -280,9 +281,6 @@ setopt dvorak
 # you can do it with history or incremental search
 disable r
 
-
-# Set PROMPTs
-prompt larry1
 
 # Build $LS_COROLS with specific settings and print it.
 ls_colors_gnu()
