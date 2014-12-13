@@ -62,7 +62,7 @@ bg_color = black
 #wall_picture=path/to/background-image
 
 # alpha (0-255)
-alpha = 212
+alpha = 191
 use_transbg = true
 wall_picture = 
 # brightness (0-100)
