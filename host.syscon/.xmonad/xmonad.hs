@@ -271,6 +271,7 @@ myManageHook = composeAll . concat $
     , [ resource  =? r --> doIgnore | r <- myIgnores ]
     , [ className =? "Firefox" <&&> resource =? "Dialog" --> doFloat ]
     , [ className =? "Gkrellm" <&&> resource =? "Gkrellm_conf" --> doFloat ]
+    , [ className =? "Thunar" <&&> title =? "ファイル操作進行中" --> doFloat ]
     ]
     where
       myFloats = ["MPlayer", "Conky", "Tilda", "Zenity", "StepMania", "Qjackctl"]
