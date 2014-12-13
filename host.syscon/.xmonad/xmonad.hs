@@ -268,7 +268,7 @@ myManageHook = composeAll . concat $
     [ [manageDocks]
     , [manageHook defaultConfig]
     , [ className =? c --> doFloat | c <- myFloats ]
-    , [ resource  =? c --> doIgnore | c <- myIgnores ]
+    , [ resource  =? r --> doIgnore | r <- myIgnores ]
     , [ className =? "Firefox" <&&> resource =? "Dialog" --> doFloat ]
     , [ className =? "Gkrellm" <&&> resource =? "Gkrellm_conf" --> doFloat ]
     ]
