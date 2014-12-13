@@ -20,7 +20,7 @@ NeoBundle 'Shougo/vimproc', {
 			\	},
 			\ }
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/vimfiler'
 "" editing
 NeoBundle 'osyo-manga/vim-jplus'

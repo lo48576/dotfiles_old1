@@ -8,7 +8,7 @@ inoremap <C-_>		<ESC>
 inoremap <C-d>		<Delete>
 " delete neocompletecache popup certainly by C-h
 "inoremap <C-h>		<Backspace>
-inoremap <expr><C-h>	neocomplcache#smart_close_popup()."\<Backspace>"
+"inoremap <expr><C-h>	neocomplcache#smart_close_popup()."\<Backspace>"
 
 " I'd like to use C-g to move cursor, so swap bindings
 inoremap <C-S-g>u	<C-g>u
@@ -46,8 +46,8 @@ autocmd Filetype text setlocal textwidth=0
 
 
 " hard to press 'C-x' on dvorak keyboard, C-u makes completion easier.
-inoremap <expr><C-u>	pumvisible() ? neocomplcache#cancel_popup() : "\<C-x>\<C-u>"
-inoremap <expr><C-e>	pumvisible() ? neocomplcache#cancel_popup() : "\<C-e>"
-inoremap <expr><C-y>	neocomplcache#close_popup()
+"inoremap <expr><C-u>	pumvisible() ? neocomplcache#cancel_popup() : "\<C-x>\<C-u>"
+"inoremap <expr><C-e>	pumvisible() ? neocomplcache#cancel_popup() : "\<C-e>"
+"inoremap <expr><C-y>	neocomplcache#close_popup()
 "inoremap <expr><C-m>	pumvisible() ? neocomplcache#close_popup() : "\<C-m>"
 
