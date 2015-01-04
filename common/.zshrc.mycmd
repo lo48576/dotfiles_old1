@@ -83,12 +83,8 @@ pd()
 		pushd "$1"
 	fi
 }
-#zstyle ':completion:*:*:pd' completer _dir_list
-_pd() {
-	_arguments -s : \
-		'1:local directory:_dir_list'
-}
-compdef _pd pd
+# Use the completion of cd
+compdef _cd pd
 
 
 # ps & grep => pgr
