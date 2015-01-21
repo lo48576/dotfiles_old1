@@ -9,4 +9,3 @@ au BufRead,BufNewFile *.frag,*.fp,*.fs,*.glslf,*. set filetype=glsl
 " unknown
 au BufRead,BufNewFile *.tsctrl,*.tseval set filetype=glsl
 
-
