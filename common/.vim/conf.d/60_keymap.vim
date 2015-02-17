@@ -26,6 +26,9 @@ augroup override_plugin_keymap
 	autocmd VimEnter *	imap <C-S-f>S	<Plug>Ssurround
 augroup END
 
+" disable F1 (built-in) help
+nmap	<F1>		<nop>
+imap	<F1>		<nop>
 " use F3 instead of C-j because input method with SKK uses C-j to switch mode.
 imap	<F3>		<C-j>
 nmap	<F3>		<C-j>
