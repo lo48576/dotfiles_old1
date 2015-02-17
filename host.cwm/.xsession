@@ -63,7 +63,7 @@ if [ -x "$XMONAD_PATH" ] ; then
 	# FIXME: Sometimes .xmodmaprc settings is not applied... why?
 	xmodmap ~/.xmodmaprc &
 	# backlight setting
-	xbacklight -steps 1 -set 40
+	#xbacklight -steps 1 -set 40
 
 	conky &
 #	sleep 1; conky -c ~/.conkyrc_ring &
