@@ -27,6 +27,7 @@ NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'Yggdroot/indentLine'
 "" style
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'gorodinskiy/vim-coloresque'
 "" tools
 """ ssh
 NeoBundle 'ujihisa/vimshell-ssh'
@@ -55,6 +56,7 @@ NeoBundle 'vim-scripts/VimCalc'
 NeoBundle 'vim-scripts/SingleCompile'
 NeoBundle 'vim-scripts/info.vim'
 NeoBundle 'vim-scripts/taglist.vim'
+NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
 "" edit
