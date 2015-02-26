@@ -96,4 +96,4 @@ let mapleader = ";"
 let g:tex_conceal=''
 
 " enable to delete characters with Bksp at any position
-let backspace=2
+set backspace=2
