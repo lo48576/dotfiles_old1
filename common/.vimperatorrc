@@ -11,6 +11,7 @@ js liberator.beep=function()(void 0)
 
 cmap <C-n> <Tab>
 cmap <C-p> <S-Tab>
+cmap <C-j> <nop>
 
 qmark g https://www.google.co.jp/
 qmark t https://tweetdeck.twitter.com/
