@@ -57,7 +57,7 @@ get_batt() {
 	#CHARGE_NOW="`cat "${BATT_ACPI_DIR}/charge_now"`"
 	CHARGE_PERC="`cat "${BATT_ACPI_DIR}/capacity"`"
 	prefix=""
-	if [ "x$BATT_STATUS" == "Discharging" ] ; then
+	if [ "x$BATT_STATUS" == "xDischarging" ] ; then
 		if [ $CHARGE_PERC -lt 10 ] ; then
 			prefix='^fg(red)'
 		elif [ $CHARGE_PERC -lt 40 ] ; then
