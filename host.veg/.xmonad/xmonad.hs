@@ -196,9 +196,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- settings for laptop
     --
     ++
-    [ ((0                 , xF86XK_MonBrightnessUp ), spawn "xbacklight -steps 1 -inc 9")
-    , ((0                 , xF86XK_MonBrightnessDown ), spawn "xbacklight -steps 1 -dec 9")
-    , ((0                 , xF86XK_AudioMute ), spawn "~/scripts/local/volumecontrol.sh toggle")
+    {-[ ((0                 , xF86XK_MonBrightnessUp ), spawn "xbacklight -steps 1 -inc 9")-}
+    {-, ((0                 , xF86XK_MonBrightnessDown ), spawn "xbacklight -steps 1 -dec 9")-}
+    {-, ((0                 , xF86XK_AudioMute ), spawn "~/scripts/local/volumecontrol.sh toggle")-}
+    [ ((0                 , xF86XK_AudioMute ), spawn "~/scripts/local/volumecontrol.sh toggle")
     , ((0                 , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/volumecontrol.sh 1%+")
     , ((0                 , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/volumecontrol.sh 1%-")
     ]
@@ -206,8 +207,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- settings to control MPD
     --
     ++
-    [ ((0                 , xF86XK_AudioPause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")
-    , ((modm              , xK_Pause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")
+    [ ((0                 , xF86XK_AudioPause ), spawn "~/scripts/local/mpd.sh toggle_pause")
+    {-, ((modm              , xK_Pause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")-}
+    , ((modm              , xK_Pause ), spawn "~/scripts/local/mpd.sh toggle_pause")
+    , ((modm              , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/mpd.sh set_volume '+3'")
+    , ((modm              , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/mpd.sh set_volume '-3'")
+    , ((0                 , xF86XK_AudioPlay ), spawn "~/scripts/local/mpd.sh set_play_status play")
+    , ((0                 , xF86XK_AudioStop ), spawn "~/scripts/local/mpd.sh set_play_status stop")
+    , ((0                 , xF86XK_AudioPrev ), spawn "~/scripts/local/mpd.sh play previous")
+    , ((0                 , xF86XK_AudioNext ), spawn "~/scripts/local/mpd.sh play next")
     ]
 
 
@@ -327,8 +335,9 @@ myStartupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 myScreenSizes :: IO [Rectangle]
 myScreenSizes = openDisplay "" >>= getScreenInfo
 myDzenCommandLine :: Rectangle -> String
-myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn '-*-ricty-bold-*-*-*-14-*-*-*-*-*-*-*' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
+--myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn '-*-ricty-bold-*-*-*-14-*-*-*-*-*-*-*' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
 --myDzenCommandLine (Rectangle _ _ _ screenHeight) = "dzen2 -fn '7x13bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height)
+myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY" ++ "\" | dzen2 -fn 'VLGothic-10:Bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
     where height = 16
 
 ------------------------------------------------------------------------
@@ -344,7 +353,7 @@ main = do
     --spawn "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh | dzen2 -fn '7x13bold' -h 16 -ta r -y $(( $(xrandr | sed -e '/Screen 0/! d;s/Sc[^c]*current [0-9]* x \\([0-9]*\\).*/\\1/') - 16))"
     screenSize <- myScreenSizes
     --spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh \"$DISPLAY\" | " ++ (myDzenCommandLine (head screenSize))
-    spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill; " ++ (myDzenCommandLine (head screenSize))
+    spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY" ++ "\"'$' | awk '{print $1}' | xargs kill; " ++ (myDzenCommandLine (head screenSize))
     xmonad =<< statusBar
         "xmobar"
         myXmobarPP

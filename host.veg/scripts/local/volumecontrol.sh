@@ -37,4 +37,4 @@ case	"$1" in
 		;;
 esac
 
-notify-send --app-name="volumecontrol.sh" "$SUMMARY" "$MESSAGE_BODY"
+#notify-send --app-name="volumecontrol.sh" "$SUMMARY" "$MESSAGE_BODY"
