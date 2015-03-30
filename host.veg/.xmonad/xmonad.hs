@@ -202,6 +202,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/volumecontrol.sh 1%+")
     , ((0                 , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/volumecontrol.sh 1%-")
     ]
+    --
+    -- settings to control MPD
+    --
+    ++
+    [ ((0                 , xF86XK_AudioPause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")
+    , ((modm              , xK_Pause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")
+    ]
 
 
 ------------------------------------------------------------------------
