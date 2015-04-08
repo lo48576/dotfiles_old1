@@ -47,7 +47,14 @@ var types = [
   "url",
   "tel",
   "color",
-].map(function(type) "@type=" + type.quote()).join(" or ");
+].map(type => "@type='" + type + "'").join(" or ");
+//].map(function(type) "@type=" + type.quote()).join(" or ");
+//***************************************
+// "TypeError: type.quote is not a function" on firefox 37.
+// String.prototype.quote has been removed and expression closure is deprecated.
+// For detail, see https://developer.mozilla.org/ja/Firefox/Releases/37/Site_Compatibility#String.prototype.quote_has_been_removed
+// and https://developer.mozilla.org/ja/Firefox/Releases/37/Site_Compatibility#Expression_closures_are_now_deprecated .
+//***************************************
 var xpath = '//input[(' + types + ' or not(@type)) and not(@disabled)] | //textarea';
 
 function isVisible (elem) {
