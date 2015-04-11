@@ -208,7 +208,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     ++
     [ ((0                 , xF86XK_AudioPause ), spawn "~/scripts/local/mpd.sh toggle_pause")
-    {-, ((modm              , xK_Pause ), spawn "echo -e 'pause\nclose' | curl telnet://localhost:6600")-}
     , ((modm              , xK_Pause ), spawn "~/scripts/local/mpd.sh toggle_pause")
     , ((modm              , xF86XK_AudioRaiseVolume ), spawn "~/scripts/local/mpd.sh set_volume '+3'")
     , ((modm              , xF86XK_AudioLowerVolume ), spawn "~/scripts/local/mpd.sh set_volume '-3'")
