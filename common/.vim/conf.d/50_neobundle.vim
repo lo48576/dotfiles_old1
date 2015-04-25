@@ -82,9 +82,9 @@ NeoBundle 'tpope/vim-rails'
 """ glsl
 NeoBundle 'glsl.vim'
 """ reST
-NeoBundle 'Rykka/riv.vim'
+"NeoBundle 'Rykka/riv.vim'
 """" (required by riv.vim)
-NeoBundle 'Rykka/clickable.vim'
+"NeoBundle 'Rykka/clickable.vim'
 """ others
 " c.vim needs modifying script files...
 "NeoBundle 'vim-scripts/c.vim'
