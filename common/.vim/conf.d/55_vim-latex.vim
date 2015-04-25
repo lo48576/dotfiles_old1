@@ -45,3 +45,5 @@ let g:Tex_ViewRule_pdf = 'evince'
 "let g:Tex_ViewRule_pdf = 'chromium --new-window'
 
 let g:Tex_AutoFolding = 0
+let g:Tex_SmartKeyQuote = 0
+let g:Imap_FreezeImap = 1
