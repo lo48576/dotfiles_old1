@@ -15,6 +15,7 @@ cmap <C-j> <nop>
 
 qmark g https://www.google.co.jp/
 qmark t https://tweetdeck.twitter.com/
+qmark c http://en.cppreference.com/w/
 
 
 " vim: set ft=vimperator:
