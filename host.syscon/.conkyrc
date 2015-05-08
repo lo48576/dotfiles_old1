@@ -141,6 +141,6 @@ ${diskiograph_write 30,200 66ffff 66ffff}${alignr}${diskiograph_read 30,200 fce9
 root(sdb4): $alignr ${fs_free /} / ${fs_size /}
 ${fs_bar 3 /}
 
-background: $alignr ${execi 300 basename $(~/scripts/change_wall.sh)}
+background: $alignr ${execi 300 basename $(~/scripts/change_wall.sh | cut -d' ' -f1)}
 
 #backlight: $alignr ${exec xbacklight -get}%

@@ -137,14 +137,3 @@ root(sda4): $alignr ${fs_free /} / ${fs_size /}
 ${fs_bar 3 /}
 
 background: $alignr ${execi 300 basename $(~/scripts/change_wall.sh | cut -d' ' -f1)}
-
-backlight: $alignr ${exec xbacklight -get}%
-AC power supply: $alignr ${exec cat /sys/class/power_supply/AC/online}
-Battery status: $alignr ${exec cat /sys/class/power_supply/CMB1/status}
-#Battery capacity: $alignr ${exec cat /sys/class/power_supply/CMB1/capacity}%
-Battery capacity: $alignr ${exec echo "scale=4; $(cat /sys/class/power_supply/CMB1/charge_now)*100/$(cat /sys/class/power_supply/CMB1/charge_full)" | bc}%
-
-Wireless ${hr 1}
-ESSID: $alignr ${wireless_essid wlp2s0} (${wireless_ap wlp2s0})
-Link quality: $alignr ${wireless_link_qual wlp2s0} / ${wireless_link_qual_max wlp2s0} (${wireless_bitrate wlp2s0})
-${wireless_link_bar 4 wlp2s0}

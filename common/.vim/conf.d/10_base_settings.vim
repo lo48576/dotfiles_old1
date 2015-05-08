@@ -92,3 +92,8 @@ endif
 let maplocalleader = ";"
 let mapleader = ";"
 
+" disable TeX conceal
+let g:tex_conceal=''
+
+" enable to delete characters with Bksp at any position
+set backspace=2

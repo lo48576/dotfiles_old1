@@ -14,6 +14,10 @@ autocmd FileType python setlocal noexpandtab softtabstop=4 shiftwidth=4 tabstop=
 autocmd FileType tex setlocal expandtab softtabstop=4 shiftwidth=4 tabstop=4
 " indent setting for Hamlet
 autocmd FileType hamlet setlocal expandtab softtabstop=4 shiftwidth=4 tabstop=4
+" textwidth setting for CMake
+autocmd FileType cmake setlocal textwidth=0
+" indent setting for Ruby
+autocmd FileType ruby setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 
 " setting for Haskell
 "au Bufenter *.hs compiler ghc

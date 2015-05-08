@@ -111,6 +111,7 @@ path=(
 	${HOME}/bin(N-/)
 	${HOME}/app{,32,64}/*(N-/)
 	${HOME}/scripts(N-/)
+	${HOME}/local/bin(N-/)
 	$path)
 
 export PATH
@@ -129,6 +130,12 @@ fi
 #zstyle ':completion:*:sudo:*' environ PATH="$SUDO_PATH:$PATH"
 zstyle ':completion:*:sudo:*' command-path $path
 
+# LD_LIBRARY_PATH
+typeset -xT LD_LIBRARY_PATH ld_library_path
+typeset -U ld_library_path
+ld_library_path=(
+	${HOME}/local/lib(N-/)
+	$ld_library_path)
 
 ## path to completion and prompts configuration
 fpath=(~/.zsh/functions/Completion ~/.zsh/functions/Prompts ${fpath})

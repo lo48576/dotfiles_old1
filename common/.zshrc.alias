@@ -52,7 +52,8 @@ alias zz="exec zsh"
 alias vv="vim -S"
 
 # When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
-alias udon="sudo emerge -uDNv --keep-going --exclude sys-kernel/gentoo-sources"
+#alias udon="sudo emerge -uDNv --keep-going --exclude sys-kernel/gentoo-sources"
+alias udon="sudo emerge -uDNv --keep-going"
 
 # Always show man page in English
 alias cman="LANG='C' man"

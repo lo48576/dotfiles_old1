@@ -18,8 +18,8 @@ case	"$1" in
 		;;
 	toggle)
 		$AMIXER 1+ toggle
-		STATUS="$(amixer sget Master | grep -o '\[\(on\|off\)\]' | head -1)"
-		if [ "$STATUS" == "[on]" ] ; then
+		STATUS="$(amixer sget Master | grep -o '\(on\|off\)')"
+		if [ "$STATUS" == "on" ] ; then
 			STATUS="off"
 		else
 			STATUS="on"
@@ -37,4 +37,4 @@ case	"$1" in
 		;;
 esac
 
-#notify-send --app-name="volumecontrol.sh" "$SUMMARY" "$MESSAGE_BODY"
+notify-send --app-name="volumecontrol.sh" "$SUMMARY" "$MESSAGE_BODY"

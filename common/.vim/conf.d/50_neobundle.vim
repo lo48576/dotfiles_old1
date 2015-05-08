@@ -20,13 +20,14 @@ NeoBundle 'Shougo/vimproc', {
 			\	},
 			\ }
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/vimfiler'
 "" editing
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'Yggdroot/indentLine'
 "" style
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'gorodinskiy/vim-coloresque'
 "" tools
 """ ssh
 NeoBundle 'ujihisa/vimshell-ssh'
@@ -55,6 +56,7 @@ NeoBundle 'vim-scripts/VimCalc'
 NeoBundle 'vim-scripts/SingleCompile'
 NeoBundle 'vim-scripts/info.vim'
 NeoBundle 'vim-scripts/taglist.vim'
+NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
 "" edit
@@ -80,9 +82,9 @@ NeoBundle 'tpope/vim-rails'
 """ glsl
 NeoBundle 'glsl.vim'
 """ reST
-NeoBundle 'Rykka/riv.vim'
+"NeoBundle 'Rykka/riv.vim'
 """" (required by riv.vim)
-NeoBundle 'Rykka/clickable.vim'
+"NeoBundle 'Rykka/clickable.vim'
 """ others
 " c.vim needs modifying script files...
 "NeoBundle 'vim-scripts/c.vim'
