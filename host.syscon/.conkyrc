@@ -6,7 +6,7 @@ font Sans:size=10
 # フォントを指定するか
 use_xft yes
 # フォントを指定
-xftfont monospace-9
+xftfont monospace-10
 #xftfont Sans:size=10
 # テキストの透過(アルファチャネル)(0-1)
 xftalpha 0.9
@@ -93,12 +93,16 @@ $stippled_hr
 ${color white}SYSTEM ${hr 1}${color}
 Kernel: $alignr$sysname $kernel
 Uptime: $alignr$uptime
-Temp: CPU ${hwmon temp 1}℃, Core0 ${hwmon temp 2}℃, Core1 ${hwmon temp 3}℃
+Temp: CPU ${hwmon temp 1}℃, Core0 ${hwmon temp 2}℃, Core1 ${hwmon temp 3}℃, Core2 ${hwmon temp 4}℃, Core2 ${hwmon temp 5}℃
 CPU${alignr}${cpu cpu0}% / ${freq}MHz
 CPU1 ${cpubar cpu1 5,440}${alignr}${cpu cpu1}%
 CPU2 ${cpubar cpu2 5,440}${alignr}${cpu cpu2}%
 CPU3 ${cpubar cpu3 5,440}${alignr}${cpu cpu3}%
 CPU4 ${cpubar cpu4 5,440}${alignr}${cpu cpu4}%
+CPU1 ${cpubar cpu5 5,440}${alignr}${cpu cpu5}%
+CPU2 ${cpubar cpu6 5,440}${alignr}${cpu cpu6}%
+CPU3 ${cpubar cpu7 5,440}${alignr}${cpu cpu7}%
+CPU4 ${cpubar cpu8 5,440}${alignr}${cpu cpu8}%
 ${cpugraph 30 33f5f5 f0ff33}
 Load: $alignr $loadavg
 Running / Processes: $alignr $running_processes / $processes
@@ -125,6 +129,7 @@ ${color white}TEMP ${hr 1}${color}
 #
 #${color #ddaa00} CPU: ${alignr}${acpitemp}℃$color
 /dev/sda: ${hddtemp /dev/sda}℃
+/dev/sdb: ${hddtemp /dev/sdb}℃
 # GPU: $alignr ${execi 30 nvidia-settings -q [gpu:0]/#GPUCoreTemp | grep '):' | awk '{print $4}' | sed 's/\.//'}℃
 #
 ${color white}Filesystem ${hr 1}${color}
@@ -133,18 +138,9 @@ ${color #66ffff} Write: $alignr $diskio_write$color
 ${color #fce94f} Read: $alignr $diskio_read$color
 ${diskiograph_write 30,200 66ffff 66ffff}${alignr}${diskiograph_read 30,200 fce94f fce94f}
 # root
-root(sda4): $alignr ${fs_free /} / ${fs_size /}
+root(sdb4): $alignr ${fs_free /} / ${fs_size /}
 ${fs_bar 3 /}
 
 background: $alignr ${execi 300 basename $(~/scripts/change_wall.sh | cut -d' ' -f1)}
 
-backlight: $alignr ${exec xbacklight -get}%
-AC power supply: $alignr ${exec cat /sys/class/power_supply/AC/online}
-Battery status: $alignr ${exec cat /sys/class/power_supply/CMB1/status}
-#Battery capacity: $alignr ${exec cat /sys/class/power_supply/CMB1/capacity}%
-Battery capacity: $alignr ${exec echo "scale=4; $(cat /sys/class/power_supply/CMB1/charge_now)*100/$(cat /sys/class/power_supply/CMB1/charge_full)" | bc}%
-
-Wireless ${hr 1}
-ESSID: $alignr ${wireless_essid wlp2s0} (${wireless_ap wlp2s0})
-Link quality: $alignr ${wireless_link_qual wlp2s0} / ${wireless_link_qual_max wlp2s0} (${wireless_bitrate wlp2s0})
-${wireless_link_bar 4 wlp2s0}
+#backlight: $alignr ${exec xbacklight -get}%
