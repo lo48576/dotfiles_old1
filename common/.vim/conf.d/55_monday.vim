@@ -2,7 +2,8 @@
 
 function! CustomizeMondayVim()
 	"let g:monday_sid = GetScriptID(expand('/home/larry/.vim/bundle/monday/plugin/monday.vim'))
-	let g:monday_sid = GetScriptID(system("perl -e 'use Cwd; print Cwd::abs_path($ARGV[0])' ~/.vim") . '/bundle/monday/plugin/monday.vim')
+	"let g:monday_sid = GetScriptID(system("perl -e 'use Cwd; print Cwd::abs_path($ARGV[0])' ~/.vim") . '/bundle/monday/plugin/monday.vim')
+	let g:monday_sid = GetScriptID(expand($HOME) . '/.vim/bundle/monday/plugin/monday.vim')
 	let Add_word_pair = function('<SNR>'.g:monday_sid.'_Add_word_pair')
 	let Add_number_suffix = '<SNR>'.g:monday_sid.'_Add_Number_Suffix'
 	call Add_word_pair('true;', 'false;')
