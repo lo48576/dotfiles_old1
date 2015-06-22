@@ -3,7 +3,8 @@
 HOST="localhost"
 PORT="6600"
 
-SEND="curl -s telnet://${HOST}:${PORT}"
+#SEND="curl -s telnet://${HOST}:${PORT}"
+SEND="curl --max-time 0.4 -s telnet://${HOST}:${PORT}"
 
 send_cmd() {
 	echo -e "$@\nclose"
