@@ -18,16 +18,49 @@
 //     <textarea name="comment"></textarea>
 // </html>
 
-//***************************************
-// E4X is now disabled in Firefox 20.
-// We cannot write raw XML code in javascript file.
-// For detail, see https://developer.mozilla.org/en/docs/E4X .
-//***************************************
 // PLUGIN_INFO {{{
-let INFO =
-{"plugin":{"author":"Takayama Fumihiko","author":"anekos","license":"BSD","project":null,"p":[null,null],"code":"\n<html>\n  <input name=\"search\" />\n  <a href=\"xxx\">xxx</a>\n  <a href=\"yyy\">yyy</a>\n  <a href=\"zzz\">zzz</a>\n  <input name=\"name\" />\n  <textarea name=\"comment\"></textarea>\n</html>\n\t","item":{"tags":"i_<M-i> i_<A-i> <M-i> <A-i>","spec":"<M-i>","spec":"<A-i>","description":{"p":"Move focus forward"}},"item":{"tags":"i_<M-S-i> i_<A-S-i> <M-S-i> <A-S-i>","spec":"<M-S-i>","spec":"<A-S-i>","description":{"p":"Move focus backward"}}}};
+let INFO = xml`
+<plugin name="Walk-Input" version="1.3.0"
+        href="http://github.com/vimpr/vimperator-plugins/blob/master/walk-input.js"
+        summary="The focus walks 'input' and 'textarea' element."
+        xmlns="http://vimperator.org/namespaces/liberator">
+    <author email="tekezo@pqrs.org">Takayama Fumihiko</author>
+    <author email="anekos@snca.net">anekos</author>
+    <license>BSD</license>
+    <project name="Vimperator" minVersion="2.2"/>
+    <p>
+		The focus walks &lt;input&gt; &amp; &lt;textarea&gt; element.
+		If you type <k name="M-i"/> first, the focus moves to "&lt;input name='search' /&gt;".
+		Then if you type <k name="M-i"/> once more, the focus moves to "&lt;input name='name' /&gt;".
+    </p>
+	<code><![CDATA[
+<html>
+  <input name="search" />
+  <a href="xxx">xxx</a>
+  <a href="yyy">yyy</a>
+  <a href="zzz">zzz</a>
+  <input name="name" />
+  <textarea name="comment"></textarea>
+</html>
+	]]></code>
+    <item>
+	<tags><![CDATA[i_<M-i> i_<A-i> <M-i> <A-i>]]></tags>
+	<spec>&lt;M-i&gt;</spec>
+	<spec>&lt;A-i&gt;</spec>
+	<description>
+            <p>Move focus forward</p>
+	</description>
+    </item>
+    <item>
+	<tags><![CDATA[i_<M-S-i> i_<A-S-i> <M-S-i> <A-S-i>]]></tags>
+	<spec>&lt;M-S-i&gt;</spec>
+	<spec>&lt;A-S-i&gt;</spec>
+	<description>
+            <p>Move focus backward</p>
+	</description>
+    </item>
+</plugin>`;
 // }}}
-// converted by xml2json-xslt ( http://code.google.com/p/xml2json-xslt/ )
 
 (function () {
 
@@ -47,15 +80,8 @@ var types = [
   "url",
   "tel",
   "color",
-].map(type => "@type='" + type + "'").join(" or ");
-//].map(function(type) "@type=" + type.quote()).join(" or ");
-//***************************************
-// "TypeError: type.quote is not a function" on firefox 37.
-// String.prototype.quote has been removed and expression closure is deprecated.
-// For detail, see https://developer.mozilla.org/ja/Firefox/Releases/37/Site_Compatibility#String.prototype.quote_has_been_removed
-// and https://developer.mozilla.org/ja/Firefox/Releases/37/Site_Compatibility#Expression_closures_are_now_deprecated .
-//***************************************
-var xpath = '//input[(' + types + ' or not(@type)) and not(@disabled)] | //textarea';
+].map(function(type) "@type=" + JSON.stringify(type)).join(" or ");
+var xpath = '//input[(' + types + ' or not(@type)) and not(@disabled)] | //textarea | //*[@contenteditable="true"]';
 
 function isVisible (elem) {
   while (elem && !(elem instanceof HTMLDocument)) {
