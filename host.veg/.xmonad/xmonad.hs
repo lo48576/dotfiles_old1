@@ -285,10 +285,13 @@ myManageHook = composeAll . concat $
     , [ className =? "Firefox" <&&> resource =? "Dialog" --> doFloat ]
     , [ className =? "Gkrellm" <&&> resource =? "Gkrellm_conf" --> doFloat ]
     , [ className =? "Thunar" <&&> title =? "ファイル操作進行中" --> doFloat ]
+    , [ role =? r  --> doFloat | r <- myFloatRole ]
     ]
     where
       myFloats = ["MPlayer", "Conky", "Tilda", "Zenity", "StepMania", "Qjackctl"]
       myIgnores = ["desktop_window", "kdesktop"]
+      myFloatRole = ["gimp-message-dialog"]
+      role = stringProperty "WM_WINDOW_ROLE"
 
 ------------------------------------------------------------------------
 -- Event handling
