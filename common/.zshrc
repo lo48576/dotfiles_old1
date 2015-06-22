@@ -100,6 +100,8 @@ path=(
 	${HOME}/.rbenv/bin(N-/)
 	# pip (python)
 	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
+	# npm (javascript)
+	$([ -x "`whence -p npm`" ] && echo "`npm bin`")(N-/)
 	$path)
 # rbenv (ruby)
 if [ "`whence -p rbenv`" ] ; then
