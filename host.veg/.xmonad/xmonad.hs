@@ -37,7 +37,6 @@ import Graphics.X11.ExtraTypes.XF86
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
---myTerminal      = "xterm"
 myTerminal      = "mlterm"
 
 -- Whether focus follows the mouse pointer.
@@ -64,7 +63,6 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
---myWorkspaces    = ["terminal", "web"] ++ map show [3..8] ++ ["bg"]
 myWorkspaces    = ["terminal", "web"] ++ map show [3..9] ++ ["bg"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -148,7 +146,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     -- `xmonad --restart` may automatically recompile this configure file.
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    --, ((modm              , xK_q     ), spawn "xmonad --restart")
     ]
     ++
 
