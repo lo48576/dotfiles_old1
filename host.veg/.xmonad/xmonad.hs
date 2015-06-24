@@ -149,7 +149,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     -- `xmonad --restart` may automatically recompile this configure file.
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "LANG=C xmonad --recompile && xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file - -default okay"))
@@ -320,8 +320,6 @@ myXmobarPP = xmobarPP
         , ppTitle   = xmobarColor "#00ff00" "" . shorten 256
         , ppSort    = getSortByXineramaRule
         }
-myLogHook_xmobar dest = dynamicLogWithPP myXmobarPP
-        { ppOutput = hPutStrLn dest }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -340,9 +338,7 @@ myStartupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 myScreenSizes :: IO [Rectangle]
 myScreenSizes = openDisplay "" >>= getScreenInfo
 myDzenCommandLine :: Rectangle -> String
---myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn '-*-ricty-bold-*-*-*-14-*-*-*-*-*-*-*' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
---myDzenCommandLine (Rectangle _ _ _ screenHeight) = "dzen2 -fn '7x13bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height)
-myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY" ++ "\" | dzen2 -fn 'VLGothic-10:Bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
+myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn 'VLGothic-10:Bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
     where height = 16
 
 ------------------------------------------------------------------------
@@ -355,16 +351,23 @@ myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"
 --main = xmonad =<< dzen defaults
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-    --spawn "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh | dzen2 -fn '7x13bold' -h 16 -ta r -y $(( $(xrandr | sed -e '/Screen 0/! d;s/Sc[^c]*current [0-9]* x \\([0-9]*\\).*/\\1/') - 16))"
-    screenSize <- myScreenSizes
-    --spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh \"$DISPLAY\" | " ++ (myDzenCommandLine (head screenSize))
-    spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY" ++ "\"'$' | awk '{print $1}' | xargs kill; " ++ (myDzenCommandLine (head screenSize))
+    screenSizes <- myScreenSizes
+    spawn $ 
+        "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill" ++
+        myDzenCommandLine (head screenSizes)
+    {-
+    let dzen_height = 16
+        dzen_y = (rect_height (head screenSizes)) - dzen_height
+    dzenproc <- spawnPipe $ "dzen2 -fn 'VLGothic-10:Bold' -h " ++ (show dzen_height) ++ "-tar -y " ++ (show dzen_y) ++ " -e 'button3=exec:'"
+    -}
     xmonad =<< statusBar
         "xmobar"
         myXmobarPP
         myToggleStrutsKey
         defaults
-        { logHook = myLogHook_xmobar xmproc
+        { logHook = dynamicLogWithPP myXmobarPP {
+              ppOutput = hPutStrLn xmproc
+          }
         }
 
 ------------------------------------------------------------------------
