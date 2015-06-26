@@ -353,7 +353,7 @@ main = do
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
     screenSizes <- myScreenSizes
     spawn $ 
-        "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill" ++
+        "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill ; " ++
         myDzenCommandLine (head screenSizes)
     {-
     let dzen_height = 16
