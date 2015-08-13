@@ -24,7 +24,9 @@ NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/vimfiler'
 "" editing
 NeoBundle 'osyo-manga/vim-jplus'
-NeoBundle 'Yggdroot/indentLine'
+" indendLine does 'conceallevel=0'
+"NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'editorconfig/editorconfig-vim'
 "" style
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'gorodinskiy/vim-coloresque'
@@ -45,7 +47,7 @@ NeoBundle 'vim-scripts/gnupg.vim'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'vim-scripts/monday'
 NeoBundle 'vim-scripts/Source-Explorer-srcexpl.vim'
-NeoBundle 'aharisu/vim_goshrepl.git'
+"NeoBundle 'aharisu/vim_goshrepl.git'
 NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'anyakichi/vim-surround'
 NeoBundle 'vim-scripts/The-NERD-Commenter'
@@ -59,10 +61,12 @@ NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
+NeoBundle 'vim-scripts/renamer.vim'
 "" edit
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'vim-scripts/VOoM'
+NeoBundle 'vim-scripts/endwise.vim'
 "" filetype
 """ binary
 NeoBundle 'Shougo/vinarise'
@@ -88,16 +92,15 @@ NeoBundle 'glsl.vim'
 """ others
 " c.vim needs modifying script files...
 "NeoBundle 'vim-scripts/c.vim'
-NeoBundle 'vim-scripts/vimwiki'
-NeoBundle 'vim-scripts/brainfuck-syntax'
+"NeoBundle 'vim-scripts/vimwiki'
+"NeoBundle 'vim-scripts/brainfuck-syntax'
 NeoBundle 'tpope/vim-markdown'
 "" colors
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'vim-scripts/Wombat'
 NeoBundle 'kana/vim-smartchr'
 "" unknown
-NeoBundle 'vim-scripts/neco-look'
-NeoBundle 'vim-scripts/endwise.vim'
+"NeoBundle 'vim-scripts/neco-look'
 " asobi
 "" status bar
 "NeoBundle 'koron/u-nya-vim'
