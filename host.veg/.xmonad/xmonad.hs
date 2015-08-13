@@ -194,6 +194,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask .|. controlMask, xK_q     ), io (exitWith ExitSuccess))
     -- paste X-selection-paste buffer
     -- , ((0                 , xK_Insert), pasteSelection)
+    -- eject DVD
+    , ((0                 , xF86XK_Eject), spawn "eject -T /dev/sr0")
     ]
     --
     -- settings for laptop
