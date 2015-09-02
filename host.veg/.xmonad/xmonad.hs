@@ -220,6 +220,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xF86XK_AudioStop ), spawn "~/scripts/local/mpd.sh set_play_status stop")
     , ((0                 , xF86XK_AudioPrev ), spawn "~/scripts/local/mpd.sh play previous")
     , ((0                 , xF86XK_AudioNext ), spawn "~/scripts/local/mpd.sh play next")
+    , ((modm .|. shiftMask , xK_Pause ), spawn "~/scripts/local/mpd.sh play next")
     ]
 
 
