@@ -1,0 +1,12 @@
+# -l: Allow physical lines of each logical line printed on the screen to be concatenated for cut and paste after screen refresh
+# -c: Allow ANSI escape sequences for text decoration (Color)
+-lc
+# -Ss<seq>: Set ANSI Standout sequence to seq  (default "7")
+# promptに使われている模様。
+#-Ss7;37;1;3
+# -Sr<seq>: Set ANSI Reverse sequence to seq   (default "7")
+# -Sb<seq>: Set ANSI Blink sequence to seq     (default "5")
+# -Su<seq>: Set ANSI Underline sequence to seq (default "4")
+-Su4;36
+# -Sh<seq>: Set ANSI Highlight sequence to seq (default "1")
+-Sh1;34

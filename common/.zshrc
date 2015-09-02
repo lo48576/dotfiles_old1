@@ -65,7 +65,7 @@ fi
 # If mojibake (like '^[[0m') appears on linux tty,
 #   use "-c" option with lv.
 if [ -x "`whence -p lv`" ] ; then
-	export PAGER="lv -c -l"
+	export PAGER="lv"
 else
 	export PAGER="less"
 fi
