@@ -65,7 +65,7 @@ fi
 # If mojibake (like '^[[0m') appears on linux tty,
 #   use "-c" option with lv.
 if [ -x "`whence -p lv`" ] ; then
-	export PAGER="lv -c -l"
+	export PAGER="lv"
 else
 	export PAGER="less"
 fi
@@ -100,6 +100,8 @@ path=(
 	${HOME}/.rbenv/bin(N-/)
 	# pip (python)
 	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
+	# npm (javascript)
+	$([ -x "`whence -p npm`" ] && echo "`npm bin`")(N-/)
 	$path)
 # rbenv (ruby)
 if [ "`whence -p rbenv`" ] ; then

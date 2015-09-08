@@ -61,9 +61,12 @@ if [ -x "$XMONAD_PATH" ] ; then
 		fi
 	done
 	# FIXME: Sometimes .xmodmaprc settings is not applied... why?
-	xmodmap ~/.xmodmaprc &
+	# TODO: xmodmap is deprecated.
+	#xmodmap ~/.xmodmaprc &
+	xkbcomp ~/.lifebook_keyboard.xkm :0 &
+	#xkbcomp ~/.lifebook_keyboard.xkb && xkbcomp ~/.lifebook_keyboard.xkm :0 &
 	# backlight setting
-	xbacklight -steps 1 -set 40
+	#xbacklight -steps 1 -set 40
 
 	conky &
 #	sleep 1; conky -c ~/.conkyrc_ring &

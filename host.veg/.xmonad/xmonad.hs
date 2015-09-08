@@ -37,12 +37,15 @@ import Graphics.X11.ExtraTypes.XF86
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
---myTerminal      = "xterm"
 myTerminal      = "mlterm"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
+
+-- Whether clicking on a window to focus also passes the click to the window
+myClickJustFocuses :: Bool
+myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
@@ -64,7 +67,6 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
---myWorkspaces    = ["terminal", "web"] ++ map show [3..8] ++ ["bg"]
 myWorkspaces    = ["terminal", "web"] ++ map show [3..9] ++ ["bg"]
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -147,8 +149,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     -- `xmonad --restart` may automatically recompile this configure file.
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    --, ((modm              , xK_q     ), spawn "xmonad --restart")
+    , ((modm              , xK_q     ), spawn "LANG=C xmonad --recompile && xmonad --restart")
+
+    -- Run xmessage with a summary of the default keybindings (useful for beginners)
+    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file - -default okay"))
     ]
     ++
 
@@ -190,6 +194,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask .|. controlMask, xK_q     ), io (exitWith ExitSuccess))
     -- paste X-selection-paste buffer
     -- , ((0                 , xK_Insert), pasteSelection)
+    -- eject DVD
+    , ((0                 , xF86XK_Eject), spawn "eject -T /dev/sr0")
     ]
     --
     -- settings for laptop
@@ -214,6 +220,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xF86XK_AudioStop ), spawn "~/scripts/local/mpd.sh set_play_status stop")
     , ((0                 , xF86XK_AudioPrev ), spawn "~/scripts/local/mpd.sh play previous")
     , ((0                 , xF86XK_AudioNext ), spawn "~/scripts/local/mpd.sh play next")
+    , ((modm .|. shiftMask , xK_Pause ), spawn "~/scripts/local/mpd.sh play next")
     ]
 
 
@@ -285,10 +292,13 @@ myManageHook = composeAll . concat $
     , [ className =? "Firefox" <&&> resource =? "Dialog" --> doFloat ]
     , [ className =? "Gkrellm" <&&> resource =? "Gkrellm_conf" --> doFloat ]
     , [ className =? "Thunar" <&&> title =? "ファイル操作進行中" --> doFloat ]
+    , [ role =? r  --> doFloat | r <- myFloatRole ]
     ]
     where
       myFloats = ["MPlayer", "Conky", "Tilda", "Zenity", "StepMania", "Qjackctl"]
       myIgnores = ["desktop_window", "kdesktop"]
+      myFloatRole = ["gimp-message-dialog"]
+      role = stringProperty "WM_WINDOW_ROLE"
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -313,8 +323,6 @@ myXmobarPP = xmobarPP
         , ppTitle   = xmobarColor "#00ff00" "" . shorten 256
         , ppSort    = getSortByXineramaRule
         }
-myLogHook_xmobar dest = dynamicLogWithPP myXmobarPP
-        { ppOutput = hPutStrLn dest }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -333,9 +341,7 @@ myStartupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 myScreenSizes :: IO [Rectangle]
 myScreenSizes = openDisplay "" >>= getScreenInfo
 myDzenCommandLine :: Rectangle -> String
---myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn '-*-ricty-bold-*-*-*-14-*-*-*-*-*-*-*' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
---myDzenCommandLine (Rectangle _ _ _ screenHeight) = "dzen2 -fn '7x13bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height)
-myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY" ++ "\" | dzen2 -fn 'VLGothic-10:Bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
+myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"$DISPLAY\" | dzen2 -fn 'VLGothic-10:Bold' -h " ++ show height ++" -ta r -y " ++ show (screenHeight - height) ++ " -e 'button3=exec:'"
     where height = 16
 
 ------------------------------------------------------------------------
@@ -348,16 +354,23 @@ myDzenCommandLine (Rectangle _ _ _ screenHeight) = "~/scripts/local/status.sh \"
 --main = xmonad =<< dzen defaults
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-    --spawn "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh | dzen2 -fn '7x13bold' -h 16 -ta r -y $(( $(xrandr | sed -e '/Screen 0/! d;s/Sc[^c]*current [0-9]* x \\([0-9]*\\).*/\\1/') - 16))"
-    screenSize <- myScreenSizes
-    --spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill; ~/scripts/local/status.sh \"$DISPLAY\" | " ++ (myDzenCommandLine (head screenSize))
-    spawn $ "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY" ++ "\"'$' | awk '{print $1}' | xargs kill; " ++ (myDzenCommandLine (head screenSize))
+    screenSizes <- myScreenSizes
+    spawn $ 
+        "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$' | awk '{print $1}' | xargs kill ; " ++
+        myDzenCommandLine (head screenSizes)
+    {-
+    let dzen_height = 16
+        dzen_y = (rect_height (head screenSizes)) - dzen_height
+    dzenproc <- spawnPipe $ "dzen2 -fn 'VLGothic-10:Bold' -h " ++ (show dzen_height) ++ "-tar -y " ++ (show dzen_y) ++ " -e 'button3=exec:'"
+    -}
     xmonad =<< statusBar
         "xmobar"
         myXmobarPP
         myToggleStrutsKey
         defaults
-        { logHook = myLogHook_xmobar xmproc
+        { logHook = dynamicLogWithPP myXmobarPP {
+              ppOutput = hPutStrLn xmproc
+          }
         }
 
 ------------------------------------------------------------------------
@@ -396,6 +409,7 @@ defaults = defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
+        clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
         workspaces         = myWorkspaces,
@@ -413,3 +427,54 @@ defaults = defaultConfig {
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
+
+-- | Finally, a copy of the default bindings in simple textual tabular format.
+help :: String
+help = unlines ["The default modifier key is 'alt'. Default keybindings:",
+    "",
+    "-- launching and killing programs",
+    "mod-Shift-Enter  Launch xterminal",
+    "mod-p            Launch dmenu",
+    "mod-Shift-p      Launch gmrun",
+    "mod-Shift-c      Close/kill the focused window",
+    "mod-Space        Rotate through the available layout algorithms",
+    "mod-Shift-Space  Reset the layouts on the current workSpace to default",
+    "mod-n            Resize/refresh viewed windows to the correct size",
+    "",
+    "-- move focus up or down the window stack",
+    "mod-Tab        Move focus to the next window",
+    "mod-Shift-Tab  Move focus to the previous window",
+    "mod-j          Move focus to the next window",
+    "mod-k          Move focus to the previous window",
+    "mod-m          Move focus to the master window",
+    "",
+    "-- modifying the window order",
+    "mod-Return   Swap the focused window and the master window",
+    "mod-Shift-j  Swap the focused window with the next window",
+    "mod-Shift-k  Swap the focused window with the previous window",
+    "",
+    "-- resizing the master/slave ratio",
+    "mod-h  Shrink the master area",
+    "mod-l  Expand the master area",
+    "",
+    "-- floating layer support",
+    "mod-t  Push window back into tiling; unfloat and re-tile it",
+    "",
+    "-- increase or decrease number of windows in the master area",
+    "mod-comma  (mod-,)   Increment the number of windows in the master area",
+    "mod-period (mod-.)   Deincrement the number of windows in the master area",
+    "",
+    "-- quit, or restart",
+    "mod-Shift-q  Quit xmonad",
+    "mod-q        Restart xmonad",
+    "mod-[1..9]   Switch to workSpace N",
+    "",
+    "-- Workspaces & screens",
+    "mod-Shift-[1..9]   Move client to workspace N",
+    "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3",
+    "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3",
+    "",
+    "-- Mouse bindings: default actions bound to mouse events",
+    "mod-button1  Set the window to floating mode and move by dragging",
+    "mod-button2  Raise the window to the top of the stack",
+    "mod-button3  Set the window to floating mode and resize by dragging"]

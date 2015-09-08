@@ -95,7 +95,7 @@ get_volume() {
 	echo "${vol_label}${volume_perc}%[$sound_output]"
 }
 
-MPD_SEND="curl -s telnet://localhost:6600"
+MPD_SEND="curl --max-time 1 -s telnet://localhost:6600"
 get_mpd_info() {
 	mpd_status="`echo -e "status\nclose" | $MPD_SEND`"
 	mpd_play_state="`sed -ne '/^state:/s/^[^:]*: \(.*\)$/\1/ p' <<<"$mpd_status"`"
@@ -130,5 +130,5 @@ while :; do
 	echo -n " ${SEP_RIGHT} "
 	echo -n "$battery"
 	echo
-	sleep 0.5
+	sleep 1
 done
