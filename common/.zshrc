@@ -255,6 +255,11 @@ case "${TERMINAL_MULTIPLEXER}" in
 esac
 unset USER_DEFAULT_LANG_ZSHRC
 
+if [ "x$TMUX" != x ] ; then
+	# set window title (to attached session name).
+	tmux set set-titles-string '#S - tmux'
+fi
+
 export LC_TIME="C"
 
 case ${UID} in
