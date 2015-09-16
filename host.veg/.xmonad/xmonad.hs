@@ -137,6 +137,9 @@ import Control.Monad(liftM)
     -- https://hackage.haskell.org/package/base-4.8.1.0/docs/Data-Char.html
     -- toLower: Convert a letter to the corresponding lower-case letter, if any.
 import Data.Char(toLower)
+    -- http://hackage.haskell.org/package/base-4.8.1.0/docs/Data-List.html
+    -- isPrefixOf: The `isSuffixOf` function takes two lists and returns `True` iff the first list is a suffix of the second.
+import Data.List(isPrefixOf)
 
 --
 -- Hooks
@@ -840,13 +843,24 @@ mltermTmuxSession :: String -> X ()
 mltermTmuxSession s = spawn $ "mlterm -e sh -c " ++ (escapeShellArg $ "tmux -2 attach-session -t " ++ name ++ " || tmux -2 new-session -s " ++ name)
     where name = escapeShellArg s
 
--- Get pairs of session name with hostname and simple session name.
+-- Get tmux sessions.
 tmuxSessionsList :: MonadIO m => m [String]
 tmuxSessionsList = lines `liftM` runProcessWithInput "tmux" ["list-sessions", "-F", "#S"] ""
 
+-- Get tmux sessions and its status.
+tmuxSessionsList' :: MonadIO m => m [(String, String)]
+tmuxSessionsList' = (map proc . lines) `liftM` runProcessWithInput "tmux" ["list-sessions", "-F", "#{session_attached} #S"] ""
+    where proc str = (sname str, sstat str)
+          sname = tail . dropWhile (/= ' ')
+          sstat str = if (isPrefixOf "0 " str)
+                         then "detached"
+                         else "attached"
+
 mltermAttachTmuxSession :: X ()
-mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction defaultGSConfig
-    where genAction sname = (sname, mltermTmuxSession sname)
+--mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList >>= runSelectedAction defaultGSConfig
+--    where genAction sname = (sname, mltermTmuxSession sname)
+mltermAttachTmuxSession = map genAction `liftM` tmuxSessionsList' >>= runSelectedAction defaultGSConfig
+    where genAction (sname, sstat) = (sname ++ " [" ++ sstat ++ "]", mltermTmuxSession sname)
 
 tmuxSessionPrompt :: X ()
 tmuxSessionPrompt =
