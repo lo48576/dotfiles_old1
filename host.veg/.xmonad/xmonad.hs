@@ -606,6 +606,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("thunar"         , spawn "thunar")
         , ("pavucontrol"    , spawn "pavucontrol")
         , ("arandr"         , spawn "arandr")
+        , ("qmpdclient"     , spawn "qmpdclient")
+        , ("WLAN reconnect" , spawn $ "(gksu -- sh -c 'netctl restart veg_default1 && systemctl restart squid'"
+                                      ++ " && notify-send --app-name='netctl' 'reconnected.' 'WLAN reconnected.' -t 2500 -u low)"
+                                      ++ " || notify-send --app-name='netctl' 'reconnect failed.' 'Failed to reconnect WLAN.' -t 2500 -u low")
         ]
       )
     -- Select an existing session with grid.
