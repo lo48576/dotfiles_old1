@@ -31,7 +31,10 @@ if [ -x "$XMONAD_PATH" ] ; then
 	xrandr -s 0
 	# Set keymap to dvorak layout.
 	#setxkbmap -layout dvorak &
-	setxkbmap -option ctrl:nocaps -layout dvorak &
+	#setxkbmap -option ctrl:nocaps -layout dvorak &
+	#xkbcomp ~/.lifebook_keyboard.xkm :0 &
+	xkbcomp ~/.lifebook_keyboard_lite.xkm :0 &
+	#xkbcomp ~/.lifebook_keyboard.xkb && xkbcomp ~/.lifebook_keyboard.xkm :0 &
 	# Screensaver
 	xscreensaver -no-splash &
 	# System tray
@@ -60,11 +63,6 @@ if [ -x "$XMONAD_PATH" ] ; then
 			"$APP" &
 		fi
 	done
-	# FIXME: Sometimes .xmodmaprc settings is not applied... why?
-	# TODO: xmodmap is deprecated.
-	#xmodmap ~/.xmodmaprc &
-	xkbcomp ~/.lifebook_keyboard.xkm :0 &
-	#xkbcomp ~/.lifebook_keyboard.xkb && xkbcomp ~/.lifebook_keyboard.xkm :0 &
 	# backlight setting
 	#xbacklight -steps 1 -set 40
 
