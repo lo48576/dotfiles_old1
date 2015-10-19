@@ -97,16 +97,16 @@ path=(
 	#   you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead of whence .
 	$([ -x "`whence -p gem`" ] && echo "`gem environment gemdir`/bin")(N-/)
 	# rbenv (ruby)
-	${HOME}/.rbenv/bin(N-/)
+	#${HOME}/.rbenv/bin(N-/)
 	# pip (python)
 	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
 	# npm (javascript)
 	$([ -x "`whence -p npm`" ] && echo "`npm bin`")(N-/)
 	$path)
 # rbenv (ruby)
-if [ "`whence -p rbenv`" ] ; then
-	eval "$(rbenv init -)"
-fi
+#if [ "`whence -p rbenv`" ] ; then
+	#eval "$(rbenv init -)"
+#fi
 
 ## my files (manually installed)
 path=(
