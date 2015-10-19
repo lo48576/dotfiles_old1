@@ -42,9 +42,16 @@ NeoBundle 'vim-scripts/tar.vim'
 NeoBundle 'tpope/vim-fugitive'
 """ gpg
 NeoBundle 'vim-scripts/gnupg.vim'
+""" html/css
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'pangloss/vim-javascript'
+"NeoBundle 'othree/html5.vim'
+NeoBundle 'hokaccha/vim-html5validator'
+""" sass
+NeoBundle 'AtsushiM/sass-compile.vim'
 """ other
 "NeoBundle 'mattn/zencoding-vim'
-NeoBundle 'mattn/emmet-vim'
 NeoBundle 'vim-scripts/monday'
 NeoBundle 'vim-scripts/Source-Explorer-srcexpl.vim'
 "NeoBundle 'aharisu/vim_goshrepl.git'
@@ -85,6 +92,8 @@ NeoBundle 'pbrisbin/vim-syntax-shakespeare'
 NeoBundle 'tpope/vim-rails'
 """ glsl
 NeoBundle 'glsl.vim'
+""" toml
+NeoBundle 'cespare/vim-toml'
 """ reST
 "NeoBundle 'Rykka/riv.vim'
 """" (required by riv.vim)
