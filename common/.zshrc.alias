@@ -34,6 +34,9 @@ alias lla="ls -la"
 alias llah="ls -lha"
 alias llha="ls -lha"
 
+alias l="ls"
+alias s="ls"
+
 # -h (--human-readable): print sizes in human readable format
 alias du="du -h"
 alias df="df -h"
