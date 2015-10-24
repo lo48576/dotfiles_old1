@@ -3,8 +3,10 @@ xkb_keymap {
 	xkb_types     { include "complete"	};
 	xkb_compat    { include "complete"	};
 	xkb_symbols   { include "pc+us(dvorak)+inet(evdev)+ctrl(nocaps)+terminate(ctrl_alt_bksp)"
-		// map Hiragana_Katakana to colon/semicolon.
-		key <HKTG> {         [ colon, semicolon] };
+		// map Hiragana_Katakana to Ctrl.
+		//key <HKTG> {         [ colon, semicolon] };
+		modifier_map Control { <HKTG> };
+		// map Henkan to Super_L ("Windows key").
 		key <HENK> {         [         Super_L ] };
 	};
 	xkb_geometry  { include "pc(pc105)"	};
