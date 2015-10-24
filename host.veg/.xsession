@@ -35,12 +35,16 @@ if [ -x "$XMONAD_PATH" ] ; then
 	#xkbcomp ~/.lifebook_keyboard.xkm :0 &
 	xkbcomp ~/.lifebook_keyboard_lite.xkm :0 &
 	#xkbcomp ~/.lifebook_keyboard.xkb && xkbcomp ~/.lifebook_keyboard.xkm :0 &
-	if [ ! -x "xcape" ] ; then
+	#if [ ! -x "xcape" ] ; then
 		# Make Shift_R both space and Shift_R.
 		# (and .lifebook_keyboard_lite.xkm makes space key Shift_R)
 		# `xcape` forks and run as daemon, so `&` is not necessary.
-		xcape -t 200 -e 'Shift_R=space'
-	fi
+		#xcape -t 200 -e 'Shift_R=space'
+		# FIXME: `xcape -t 200 -e 'Shift_R=space'` (without '-d' and '&')
+		#        doesn't work correctly. Why?
+		#xcape -d -t 200 -e 'Shift_R=space' &
+		# moved to xmonad.hs .
+	#fi
 	# Screensaver
 	xscreensaver -no-splash &
 	# System tray
