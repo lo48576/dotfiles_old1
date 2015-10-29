@@ -67,10 +67,10 @@ NeoBundle 'vim-scripts/VimCalc'
 "NeoBundle 'vim-scripts/vimoutliner-colorscheme-fix'
 NeoBundle 'vim-scripts/SingleCompile'
 NeoBundle 'vim-scripts/info.vim'
-NeoBundle 'vim-scripts/taglist.vim'
 if executable("ctags") == 1
-	NeoBundle 'vim-scripts/gtags.vim'
+	NeoBundle 'vim-scripts/taglist.vim'
 endif
+NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'vim-scripts/renamer.vim'
