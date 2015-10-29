@@ -49,7 +49,10 @@ NeoBundle 'pangloss/vim-javascript'
 "NeoBundle 'othree/html5.vim'
 NeoBundle 'hokaccha/vim-html5validator'
 """ sass
-NeoBundle 'AtsushiM/sass-compile.vim'
+if executable("sass") == 1
+	NeoBundle 'AtsushiM/search-parent.vim' " required by sass-compile.vim
+	NeoBundle 'AtsushiM/sass-compile.vim'
+endif
 """ other
 "NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'vim-scripts/monday'
@@ -65,7 +68,9 @@ NeoBundle 'vim-scripts/VimCalc'
 NeoBundle 'vim-scripts/SingleCompile'
 NeoBundle 'vim-scripts/info.vim'
 NeoBundle 'vim-scripts/taglist.vim'
-NeoBundle 'vim-scripts/gtags.vim'
+if executable("ctags") == 1
+	NeoBundle 'vim-scripts/gtags.vim'
+endif
 NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'vim-scripts/renamer.vim'
