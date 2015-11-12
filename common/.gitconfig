@@ -4,6 +4,8 @@
 [github]
 	user = L1048576
 	token = a042337777e7e1dbbc4b011e3a7e7544
+[url "http://yoshioka@lab.nakadai.org"]
+	insteadOf = http://lab.nakadai.org
 [color]
 	ui = auto
 [core]
