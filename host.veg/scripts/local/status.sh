@@ -13,7 +13,7 @@ icon_eighth_note="`echo -e '\u266a'`"
 icon_beamed_eighth_notes="`echo -e '\u266b'`"
 icon_beamed_sixteenth_notes="`echo -e '\u266c'`"
 icon_music="$icon_eighth_note"
-# VGGothic has bug, U+23f4 and U+23F5 is swapped...
+# VLGothic has bug, U+23f4 and U+23f5 is swapped...
 #icon_play_forward="`echo -e '\u23f5'`"
 # U+25b6: BLACK RIGHT-POINTING TRIANGLE
 # U+25b8: BLACK RIGHT-POINTING SMALL TRIANGLE
@@ -24,6 +24,8 @@ icon_stop="`echo -e '\u23f9'`"
 icon_rec="`echo -e '\u23fa'`"
 icon_voltage="`echo -e '\u26a1'`"
 
+SEP_LEFT="`echo -e '\u25b8'`"
+SEP_RIGHT="`echo -e '\u25c2'`"
 
 get_loadavg() {
 	# $loadavg is in format such as '0.00 0.01 0.18'
@@ -106,11 +108,21 @@ get_mpd_info() {
 	fi
 	mpd_vol="`sed -ne '/^volume:/s/^[^:]*: \(.*\)$/\1/ p' <<<"$mpd_status"`"
 	mpd_song="`echo -e 'currentsong\nclose' | $MPD_SEND | sed -ne '/^Title:/s/^[^:]*: \(.*\)$/\1/ p'`"
-	echo "${icon_music}[${mpd_play_state_str}:${mpd_vol}%]$speaker_icon:${mpd_song}"
+	echo "${icon_music}[${mpd_play_state_str}:${mpd_vol}%]$speaker_icon:^fg(green)${mpd_song}^fg()"
 }
 
-SEP_RIGHT="`echo -e '\u25b8'`"
-SEP_RIGHT="`echo -e '\u25c2'`"
+get_rogybgm_info() {
+	ap_mac="`iwlist wlp2s0 scan | sed -ne 's/.*Address: *\(.*\)$/\1/gp'`"
+	if [ "x$ap_mac" == "x00:A0:DE:9B:87:F0" ] ; then
+		# connected to SSR-NETWORK.
+		echo -ne 'status\ncurrentsong\nclose' \
+			| curl --max-time 1 -s 'telnet://172.16.11.82:6600' \
+			| sed -ne 's/^state: *\(.*\)/\1/gp;s/^Title: *\(.*\)$/\1/p' \
+			| tr '\n' '\0' | sed -e 's/\(.*\)\x0\(.*\)\x0/rogyBGM[\1]: \2/'
+		echo " ${SEP_LEFT}"
+	fi
+}
+
 while :; do
 	# like '2012-04-23(Mon) 22:51:48+0900 (1335189108)'
 	date="`LC_ALL=C date +'%F(%a) %T%z (%s)'`"
@@ -119,7 +131,9 @@ while :; do
 	battery="`get_batt`"
 	volume="`get_volume`"
 	mpd_info="`get_mpd_info`"
+	rogybgm_info="`get_rogybgm_info`"
 
+	echo -n "$rogybgm_info"
 	echo -n "$mpd_info"
 	echo -n " ${SEP_RIGHT} "
 	echo -n "$volume"
