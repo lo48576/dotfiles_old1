@@ -89,7 +89,6 @@ max_user_text 32768
 TEXT
 ${color white}NETWORK ${hr 1}${color}
 IP Address(enp0s25): $alignr ${addr enp0s25}
-IP Address(br0): $alignr ${addr br0}
 IP Address(wlp2s0): $alignr ${addr wlp2s0}
 IP Address(sol24usb0): $alignr ${addr sol24usb0}
 Port(s): ${alignr}Connections
