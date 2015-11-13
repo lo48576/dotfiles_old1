@@ -50,7 +50,8 @@ import XMonad.Layout((|||), ChangeLayout(NextLayout), IncMasterN(IncMasterN), Re
     -- (=?): `q =? x`. If the result of `q` equals `x`, return `True`.
     -- (-->): `p --> x`. If `p` returns `True`, execute the `ManageHook`.
     -- (<&&>): `&&` lifted to a `Monad`.
-import XMonad.ManageHook(composeAll, doFloat, doIgnore, className, appName, title, stringProperty, (<+>), (=?), (-->), (<&&>))
+    -- (<&&>): `||` lifted to a `Monad`.
+import XMonad.ManageHook(composeAll, doFloat, doIgnore, className, appName, title, stringProperty, (<+>), (=?), (-->), (<&&>), (<||>))
     -- http://xmonad.org/xmonad-docs/xmonad/XMonad-Operations.html
     -- sendMessage: Throw a message to the current LayoutClass possibly modifying how we layout the windows, then refresh.
     -- focus: Set focus explicitly to window w if it is managed by us, or root.
@@ -180,6 +181,15 @@ import XMonad.Hooks.EwmhDesktops(ewmhDesktopsStartup, ewmhDesktopsEventHook, ewm
     -- Position:
     --   Master, End, Above, Below
 import XMonad.Hooks.InsertPosition(insertPosition, Position(Below), Focus(Older))
+    -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Hooks-ManageHelpers.html
+    -- isDialog: A predicate to check whether a window is a dialog.
+    --   (isDialog :: Query Bool)
+import XMonad.Hooks.ManageHelpers(isDialog)
+
+--
+-- Layouts
+--
+
     -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-NoBorders.html
     -- smartBorders: Removes the borders from a window under one of the following conditions:
     --                 - There is only one screen and only one window.
@@ -187,11 +197,6 @@ import XMonad.Hooks.InsertPosition(insertPosition, Position(Below), Focus(Older)
     --                 - A floating window covers the entire screen (e.g. mplayer).
     --   Note that on a Xinerama setup, the former condition will never be true.
     -- noBorders: Removes all window borders from the specified layout.
-
---
--- Layouts
---
-
 import XMonad.Layout.NoBorders(smartBorders, noBorders)
     -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Layout-Magnifier.html
     -- XMonad.Layout.Magnifier: This is a layout modifier that will make a layout increase
@@ -610,6 +615,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , ("WLAN reconnect" , spawn $ "(gksu -- sh -c 'netctl restart veg_default1 && systemctl restart squid'"
                                       ++ " && notify-send --app-name='netctl' 'reconnected.' 'WLAN reconnected.' -t 2500 -u low)"
                                       ++ " || notify-send --app-name='netctl' 'reconnect failed.' 'Failed to reconnect WLAN.' -t 2500 -u low")
+        {-, ("hybrid-sleep"   , spawn $ "gksu systemctl hybrid-sleep")-}
+        , ("hybrid-sleep"   , spawn $ "systemctl -i hybrid-sleep")
         ]
       )
     -- Select an existing session with grid.
@@ -708,8 +715,9 @@ myLayout =
 -- 'className' and 'appName' are used below.
 --
 myManageHook = composeAll . concat $
-    -- Open new window after active window and don't change active window.
-    [ [insertPosition Below Older]
+    -- Open new window after active window and don't change active window
+    -- except when the new window is not a dialog.
+    [ [ not `liftM` isDialog --> insertPosition Below Older]
     , [manageDocks]
     , [manageHook defaultConfig]
     , [ className =? c --> doFloat | c <- myFloats ]
