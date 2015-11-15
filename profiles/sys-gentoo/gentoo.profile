@@ -1,0 +1,2 @@
+[DEPEND]
+sys-gentoo/eix

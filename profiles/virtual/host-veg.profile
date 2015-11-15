@@ -1,0 +1,9 @@
+[DEPEND]
+virtual/default-laptop
+host-veg/conky
+host-veg/desktop-statusbar
+host-veg/fontconfig
+host-veg/xkb
+host-veg/xmobar
+host-veg/xmonad
+host-veg/xsession

@@ -1,0 +1,2 @@
+[DEPEND]
+virtual/base-graphical

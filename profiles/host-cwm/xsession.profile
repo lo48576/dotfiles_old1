@@ -1,0 +1,2 @@
+[DEPEND]
+host-cwm/xmonad

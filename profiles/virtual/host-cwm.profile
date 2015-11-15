@@ -1,0 +1,10 @@
+[DEPEND]
+virtual/base-terminal
+virtual/base-graphical
+virtual/base-desktop
+host-cwm/conky
+host-cwm/desktop-statusbar
+host-cwm/fontconfig
+host-cwm/xmobar
+host-cwm/xmonad
+host-cwm/xsession

@@ -1,0 +1,2 @@
+[DEPEND]
+host-veg/xmonad
