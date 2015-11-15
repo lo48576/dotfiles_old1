@@ -13,3 +13,6 @@ List packages to install to 'DEPEND' section of 'var/profiles'.
 sys-gentoo/gentoo
 virtual/host-veg
 ----
+
+### Options
+See `./install.sh -h` .
