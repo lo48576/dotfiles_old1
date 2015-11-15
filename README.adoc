@@ -1,0 +1,15 @@
+# dotfiles
+
+## How to use
+
+Make 'var' directory at the top of the repository.
+List packages to install to 'DEPEND' section of 'var/profiles'.
+
+### Example
+
+.var/profiles
+----
+[DEPEND]
+sys-gentoo/gentoo
+virtual/host-veg
+----
