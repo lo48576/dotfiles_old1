@@ -1,2 +1,2 @@
 [DEPEND]
-
+virtual/base-terminal
