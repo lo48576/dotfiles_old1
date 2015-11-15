@@ -7,8 +7,11 @@ set -eu
 usage() {
 	cat <<-__EOF__ >&2
 		Usage: install.sh [-n] [-h]
-		    -h     print this help
+		    -h     print this help and exit
 		    -n     print files to be installed, but not remove or copy any files
+		    -u     only uninstall previously installed links, not install current files
+
+		If -h and other option is specified simultaneously, options other than -h is ignored.
 	__EOF__
 }
 
@@ -206,6 +209,9 @@ unset -v TEMPFILE_PACKAGES
 if [ "$DRYRUN" -eq 0 ] ; then
 	[ -f "$LINK_TARGETS_FILE" ] && xargs -0 -a "$LINK_TARGETS_FILE" rm -f --
 	:>"$LINK_TARGETS_FILE"
+elif [ -f "$LINK_TARGETS_FILE" ] ; then
+	# dry-run
+	xargs -0a "$LINK_TARGETS_FILE" -I'{}' bash -c 'echo "$(printf "%q" "{}")"' | xargs echo rm -f --
 fi
 
 #
