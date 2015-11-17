@@ -1,4 +1,6 @@
+" show tabline always
 set showtabline=2
+" show statusline always at 2nd line from the bottom of window.
 set laststatus=2
 " use textbase tabline on vim & gVim
 set guioptions-=e
@@ -6,12 +8,7 @@ set guioptions-=e
 "set noshowmode
 
 " basic settings
-let g:lightline = {
-	\ 'colorscheme': 'wombat',
-	\ }
-let g:lightline.enable = {
-	\ 'tabline': 0
-	\ }
+let g:lightline = {}
 
 let g:lightline.mode_map = {
 	\ 'n':      'NRM',
@@ -28,20 +25,8 @@ let g:lightline.mode_map = {
 	\ }
 
 
-" colorscheme settings
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-"let g:lightline#colorscheme#larry1#palette = s:p
-let g:lightline#colorscheme#larry1#palette = s:p
-let s:col = {}
-
-let s:col.base = ['#808080', '#9E9E9E', 244, 247]
-let s:col.base_light = ['#A8A8A8', '#D0D0D0', 248, 252]
-
-
-let s:p.tabline.middle = ['#444444', '#969696', 238, 247]
-
-unlet s:p
-"let g:lightline.colorscheme = 'larry1'
+" colorscheme
+let g:lightline.colorscheme = 'wombat'
 
 " component settings
 let g:lightline.component = {}
@@ -61,8 +46,6 @@ let g:lightline.component.position = '%04l/%04L:%03v'
 	"\ 'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
 	"\ })
 
-"let g:lightline.separator = {'left': '》', 'right': '《'}
-"let g:lightline.separator = {'left': '▶', 'right': '◀'}
 let g:lightline.subseparator = {'left': '>', 'right': '<'}
 
 
@@ -110,7 +93,6 @@ let g:lightline.inactive = {}
 let g:lightline.inactive.left = [['relativepath', 'readonly_modified']]
 let g:lightline.inactive.right = [['position'], ['charvaluehex4'] , ['filetype'], ['fileformat'], ['fugitive']]
 "let g:lightline.inactive.right = [['position'], ['charvaluehex4'] , ['filetype'], ['fileformat', 'fugitive']]
-"let g:lightline.inactive.right = [['position'], ['fugitive'], ['charvaluehex4'] , ['filetype'], ['fileformat']]
 let g:lightline.active = {}
 let g:lightline.active.left = [['mode', 'paste']] + g:lightline.inactive.left
 let g:lightline.active.right = g:lightline.inactive.right
@@ -119,6 +101,7 @@ let g:lightline.active.right = g:lightline.inactive.right
 let g:lightline.tab_component_function = {}
 
 let g:lightline.component.cd = '%.35(%{fnamemodify(getcwd(), ":~")}%)'
+let g:lightline.component.cd50 = '%.50(%{fnamemodify(getcwd(), ":~")}%)'
 
 " tabbuf_nr contains tab number, number of buffers, and modified flag (which
 " indicates whether any buffer of the tab is modified, or nothing is modified).
@@ -149,7 +132,7 @@ let g:lightline.tabline_subseparator = {'left': '>', 'right': '<'}
 let g:lightline.tab = {}
 let g:lightline.tabline = {}
 let g:lightline.tabline.left = [['tabs']]
-let g:lightline.tabline.right = [['cd']]
+let g:lightline.tabline.right = [['cd50']]
 let g:lightline.tab.inactive = ['tabbuf_nr', 'path_shorten']
 "let g:lightline.tab.inactive = ['prefix', 'filename']
 let g:lightline.tab.active = g:lightline.tab.inactive

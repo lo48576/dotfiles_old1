@@ -1,8 +1,3 @@
-""" base settings
-
-" always show line number
-set number
-
 " don't save options ("globals")
 set sessionoptions=blank,buffers,curdir,folds,help,winsize,tabpages
 " set sessionoptions=blank,buffers,curdir,folds,help,winsize,tabpages,globals
@@ -11,30 +6,17 @@ set sessionoptions=blank,buffers,curdir,folds,help,winsize,tabpages
 " *Don't* put 'highlight foo' before 'syntax on'
 syntax on
 
-if $COLORTERM != ""
-	"source ~/.vimrc.256color
-	" for xterm-256color
-	" force enable 256 colors
-	set t_Co=256
-	set t_AB=[48;5;%dm
-	set t_AF=[38;5;%dm
-	colorscheme mycolor2
-	highlight! User1		term=bold	guifg=#005FFF guibg=fg		ctermfg=27 ctermbg=fg cterm=bold
-else
-	"source ~/.vimrc.16color
-	" for terminals which don't support 256colors
-	colorscheme mycolor_16
-	highlight! User1		term=bold	guifg=#005FFF guibg=fg		cterm=reverse	ctermbg=1
-endif
-
-"" ///* settings *///
+" I sometimes use linux virtual console (like agetty),
+" so don't set 256color default.
+" Set $TERM appropriately (normally '*-256col or') so that
+" vim detect 256color support automatically.
+"set t_Co=256
+"set t_AB=[48;5;%dm
+"set t_AF=[38;5;%dm
 
 "set encoding=utf-8
 
-" use highlight 'CursorLineNr'
-set cursorline
-
-" set width of tab character
+" set default width of tab character
 set tabstop=4
 
 " don't break long line automatically
@@ -42,32 +24,17 @@ set textwidth=0
 
 " enable autoindent
 set autoindent
+
 " prevent inserting two tab characters by autoindent
 set softtabstop=4
 set shiftwidth=4
 
-" font and size (gVim)
-"set guifont=Monospace:h12:cSHIFTJIS
-set guifont=Ricty\ 11
-"set guifont=Dejavu\ Sans\ Mono\ 10
-"set guifont=Ubuntu\ Mono\ 11
-
-" linespace (gVim)
-set linespace=1
-
-" make whitespace characters visible
-set list
-
-" tab:tab(capital,subsequent), trail:whitespace(0x20) at the end of line, eol:end of line, nbsp:0xa0
-" these must be halfwidth characters.
-set listchars=tab:>\ ,trail:-,eol:$,extends:>,precedes:<,nbsp:.
-
-" don't use bell or visual bell
-set vb t_vb=
-
 " priority sequence of help
-"set helplang=ja,en
-set helplang=en
+if $LANG == "ja_JP.UTF-8"
+	set helplang=ja,en
+else
+	set helplang=en
+endif
 
 " use clipboad of Operating System
 "set clipboard+=unnamed
@@ -88,12 +55,8 @@ if exists('&ambiwidth')
 endif
 
 " leader
-"let maplocalleader = "\<C-b>"
 let maplocalleader = ";"
 let mapleader = ";"
 
-" disable TeX conceal
-let g:tex_conceal=''
-
-" enable to delete characters with Bksp at any position
+" Enable to delete characters with Bksp at any position
 set backspace=2

@@ -4,6 +4,8 @@
 "  and indent setting
 filetype plugin indent on
 
+autocmd Filetype text setlocal textwidth=0
+
 " indent setting for Haskell
 autocmd FileType haskell setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 " indent setting for Scheme
