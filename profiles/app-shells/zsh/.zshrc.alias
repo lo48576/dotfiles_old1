@@ -77,10 +77,11 @@ alias histgrep="history -E 1 | grep"
 #     A code-searching tool similar to ack, but faster
 # -S (--smart-case): Match case sensitively if there are any uppercase letters in PATTERN,
 #                    or case nsensitively otherwise.
+# -f (--follow): Follow Symlinks.
 # --stats: Print stats (files scanned, time taken, etc)
-alias ag="ag -S --stats"
+alias ag="ag -Sf --stats"
 # --hidden: Search hidden files. This option obeys ignore files.
-alias agh="ag -S --stats --hidden"
+alias agh="ag -Sf --stats --hidden"
 
 # Quit zsh like vim
 alias :q="exit"
@@ -96,4 +97,4 @@ whence bundle >/dev/null && alias be="bundle exec"
 
 #alias -s exe="wine64"
 
-# vim: set foldmethod=marker foldlevel=1 :
+# vim: set foldmethod=marker :
