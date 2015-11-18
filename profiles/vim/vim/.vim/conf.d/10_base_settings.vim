@@ -6,14 +6,6 @@ set sessionoptions=blank,buffers,curdir,folds,help,winsize,tabpages
 " *Don't* put 'highlight foo' before 'syntax on'
 syntax on
 
-" I sometimes use linux virtual console (like agetty),
-" so don't set 256color default.
-" Set $TERM appropriately (normally '*-256col or') so that
-" vim detect 256color support automatically.
-"set t_Co=256
-"set t_AB=[48;5;%dm
-"set t_AF=[38;5;%dm
-
 "set encoding=utf-8
 
 " set default width of tab character
