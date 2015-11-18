@@ -1,7 +1,5 @@
 [DEPEND]
-virtual/base-terminal
-virtual/base-graphical
-virtual/base-desktop
+virtual/default-desktop
 host-cwm/conky
 host-cwm/desktop-statusbar
 host-cwm/fontconfig
