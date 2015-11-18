@@ -1,4 +1,4 @@
-# Zsh Global {{{
+# Zsh Global {{{1
 #
 # Zsh Global
 #
@@ -8,10 +8,10 @@ fpath=(
 	${HOME}/.zsh/functions/*(N-/)
 	${fpath})
 
-# }}} Zsh Global
+# }}}1 Zsh Global
 
 
-# Zsh History {{{
+# Zsh History {{{1
 #
 # History
 #
@@ -32,15 +32,15 @@ setopt hist_ignore_space
 # Share command history data
 setopt share_history
 
-# }}} Zsh History
+# }}}1 Zsh History
 
 
-# Environment variables {{{
+# Environment variables {{{1
 #
 # Environment Variables
 #
 
-# PATH {{{
+# PATH {{{2
 #
 # PATH
 #
@@ -99,7 +99,7 @@ if [[ $EUID -ne 0 ]] ; then
 fi
 
 export PATH
-# }}} PATH
+# }}}2 PATH
 
 #
 # MANPATH
@@ -133,7 +133,7 @@ ld_library_path=(
 	${HOME}/local/lib(N-/)
 	$ld_library_path)
 
-# LANG and TERM {{{
+# LANG and TERM {{{2
 #
 # LANG and TERM
 #
@@ -215,14 +215,14 @@ fi
 export LANG
 export TERM
 
-# }}} LANG and TERM
+# }}}2 LANG and TERM
 
 #
 # Other locales
 #
 export LC_TIME="C"
 
-# Applicatinos Global {{{
+# Applicatinos Global {{{2
 #
 # Applications Global
 #
@@ -240,9 +240,9 @@ export PAGER="less"
 # Options for less
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
 
-# }}} Applicatinos Global
+# }}}2 Applicatinos Global
 
-# Applicatinos Local {{{
+# Applicatinos Local {{{2
 #
 # Applications local
 #
@@ -261,12 +261,12 @@ Kernel: %S
 Elapsed: %E
 CPU: %P"
 
-# }}} Applicatinos Local
+# }}}2 Applicatinos Local
 
-# }}} Environment variables
+# }}}1 Environment variables
 
 
-# Prompt Style {{{
+# Prompt Style {{{1
 #
 # Prompt Style
 #
@@ -277,10 +277,10 @@ autoload -Uz promptinit && promptinit
 # Set prompt
 prompt larry1
 
-# }}} Prompt Style
+# }}}1 Prompt Style
 
 
-# Completion {{{
+# Completion {{{1
 #
 # Completion
 #
@@ -362,10 +362,10 @@ zstyle -e ':completion:*:processes-names' command \
 zstyle ':completion:*:sudo:*' command-path $path
 
 
-# }}} Completion
+# }}}1 Completion
 
 
-# Command Line and Input {{{
+# Command Line and Input {{{1
 #
 # Command Line and Input
 #
@@ -389,7 +389,7 @@ setopt no_autoremoveslash
 # Kill the delay after hitting <ESC>.
 export KEYTIMEOUT=1
 
-# Keys {{{
+# Keys {{{2
 #
 # Keys
 #
@@ -465,12 +465,12 @@ zle -N cdup
 # If you want to type "^^"(Ctrl-^), `Ctrl-V Ctrl-6`.
 bindkey '^^' cdup
 
-# }}} Keys
+# }}}2 Keys
 
-# }}} Command Line and Input
+# }}}1 Command Line and Input
 
 
-# External Plugins and Settings {{{
+# External Plugins and Settings {{{1
 #
 # External Plugins and Settings
 #
@@ -498,10 +498,10 @@ autoload +XUz mytmux
 [[ -f ${HOME}/.zsh/zsh-syntax-highlighting.zsh.local ]] && source "${HOME}/.zsh/zsh-syntax-highlighting.zsh.local"
 
 
-# }}} External Plugins and Settings
+# }}}1 External Plugins and Settings
 
 
-# Application {{{
+# Application {{{1
 #
 # Application
 #
@@ -512,10 +512,10 @@ if [[ -n $TMUX ]] ; then
 	tmux set set-titles-string '#S - tmux'
 fi
 
-# }}} Application
+# }}}1 Application
 
 
-# Initialize {{{
+# Initialize {{{1
 #
 # Initialize
 #
@@ -530,6 +530,6 @@ echo "language: ${LANG}"
 #	zprof | less
 #fi
 
-# }}}
+# }}}1
 
-# vim: set foldmethod=marker foldlevel=1 :
+# vim: set foldmethod=marker :
