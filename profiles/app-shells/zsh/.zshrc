@@ -238,7 +238,15 @@ fi
 # `less` may exist on all environment...
 export PAGER="less"
 # Options for less
-export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
+# -xn (--tabs=n): Set tabstops.
+# -X (--no-init): Disable sending the termcap initialization and
+#                 deinitialization string to the terminal.
+# -M (--LONG-PROMPT): Causes less to prompt even more verbosely than `more`.
+# -i (--ignore-case): Causes searches to ignore case except when a search
+#                     pattern contains uppercase letters.
+# -I (--IGNORE-CASE): Like -i, but always ignore case.
+# -R (--RAW-CONTROL-CHARS): Causes ANSI color escape sequences are output in "raw" form.
+export LESS='-x4 -XMiR'
 
 # }}}2 Applicatinos Global
 
