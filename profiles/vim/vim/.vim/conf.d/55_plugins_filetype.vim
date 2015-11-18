@@ -1,8 +1,8 @@
 " tar archive
-NeoBundle 'vim-scripts/tar.vim'
+NeoBundle 'tar.vim'
 
 " gpg encrypted file
-NeoBundle 'vim-scripts/gnupg.vim'
+NeoBundle 'gnupg.vim'
 
 " html/css
 NeoBundle 'mattn/emmet-vim'
