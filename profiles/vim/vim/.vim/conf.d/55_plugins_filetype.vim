@@ -40,3 +40,6 @@ NeoBundle 'cespare/vim-toml'
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
+
+" python
+NeoBundle 'python_fold'
