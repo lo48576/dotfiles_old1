@@ -419,12 +419,6 @@ bindkey "^N" history-beginning-search-forward-end
 # You can do it with history or incremental search
 disable r
 
-# Enable to delete characters before start position of istert mode
-# NOTE: `.foobar` always refer built-in version of `foobar` widget.
-zle -A .backward-kill-word vi-backward-kill-word
-zle -A .backward-delete-char vi-backward-delete-char
-
-
 function {
 	# for detail, see
 	# https://wiki.archlinuxjp.org/index.php/Zsh#.E3.82.AD.E3.83.BC.E3.83.90.E3.82.A4.E3.83.B3.E3.83.89
@@ -439,8 +433,7 @@ function {
 	[[ -n ${key[End]}       ]] && bindkey "${key[End]}"       end-of-line
 	[[ -n ${key[Insert]}    ]] && bindkey "${key[Insert]}"    overwrite-mode
 	[[ -n ${key[Delete]}    ]] && bindkey "${key[Delete]}"    delete-char
-	# FIXME: .backward-delete-char と同じ挙動をしてほしいはずだが、何故かインサートモードになるより前の文字を消してくれない。
-	#[[ -n ${key[BackSpace]} ]] && bindkey "${key[BackSpace]}" vi-backward-delete-char
+	# NOTE: Some terminal may has wrong sequence as key[BackSpace]...
 	[[ -n ${key[BackSpace]} ]] && bindkey "${key[BackSpace]}" backward-delete-char
 
 	[[ -n ${key[Home]}      ]] && bindkey -M vicmd "${key[Home]}"      beginning-of-line
@@ -451,6 +444,8 @@ function {
 
 # Ctrl-H
 bindkey "^H"    backward-delete-char
+# Backspace (in some terminal like tmux)
+bindkey "^?"    backward-delete-char
 
 # Push command to stack (Esc-q at emacs binding)
 # Ctrl+7 (in dvorak, Shift+7 is '&'.)
