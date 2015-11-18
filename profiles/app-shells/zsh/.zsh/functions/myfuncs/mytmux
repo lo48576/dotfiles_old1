@@ -12,10 +12,12 @@ local COLOR_OPTION
 local session_name
 if [[ $TERM == *-256color ]] ; then
 	COLOR_OPTION="-2"
+elif whence tput >/dev/null && [[ $(tput colors) == "256" ]] ; then
+	COLOR_OPTION="-2"
 fi
 while [[ $# -ge 1 ]] ; do
 	case $1 in
-		-2|-8)
+		-2)
 			COLOR_OPTION=$1
 			shift
 			;;
