@@ -1,0 +1,4 @@
+#compdef pd
+# Use the completion of cd
+#compdef _cd pd
+_cd

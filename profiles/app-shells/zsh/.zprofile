@@ -1,12 +1,12 @@
 # .zprofile is loaded only from login shell.
 
 # Run ssh-agent if SSH_AGENT_PID is not set (i.e. ssh-agent is not running).
-if [ -z "$SSH_AGENT_PID" ] ; then
+if [[ -z $SSH_AGENT_PID ]] ; then
 	echo -n "SSH "
 	eval `ssh-agent`
 fi
 
-if [ -z "$TMUX" ] ; then
+if [[ -z $TMUX && $TERM == "linux" ]] ; then
 	# maybe running in virtual console such as getty or agetty.
 	# 16 colors only available, but blue is so dark and hard to read blue characters.
 	# change color code of blue to #003eff.

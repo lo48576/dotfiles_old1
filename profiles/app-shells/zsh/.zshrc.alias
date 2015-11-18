@@ -1,4 +1,4 @@
-## Alias configuration
+# Alias configuration
 
 # enable alias expansion of commands after sudo command with a space after "sudo".
 alias sudo="sudo "
@@ -7,20 +7,21 @@ alias sudo="sudo "
 alias where="command -v"
 alias j="jobs -l"
 
-# use alias because GREP_OPTIONS is deprecated.
 alias grep="grep --color=auto"
 
-#LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
-# --time-style=long-iso : "+%Y-%m-%d %H:%M" format
-LS_COMMON_OPT="--time-style=long-iso"
-case "${OSTYPE}" in
-linux*)
-	alias ls="ls --color=auto ${LS_COMMON_OPT}"
-	;;
-freebsd*|darwin*)
-	alias ls="ls -G -w ${LS_COMMON_OPT}"
-	;;
-esac
+function {
+	#LS_COMMON_OPT='--time-style="+%Y-%m-%d %H:%M:%S"'
+	# --time-style=long-iso : "+%Y-%m-%d %H:%M" format
+	local LS_COMMON_OPT="--time-style=long-iso"
+	case "$OSTYPE" in
+	linux*)
+		alias ls="ls --color=auto ${LS_COMMON_OPT}"
+		;;
+	freebsd*|darwin*)
+		alias ls="ls -G -w ${LS_COMMON_OPT}"
+		;;
+	esac
+}
 
 # -a (--all): list entries starting with .
 alias la="ls -a"
@@ -34,8 +35,8 @@ alias lla="ls -la"
 alias llah="ls -lha"
 alias llha="ls -lha"
 
-alias l="ls"
-alias s="ls"
+whence -p l >/dev/null || alias l="ls"
+whence -p s >/dev/null || alias s="ls"
 
 # -h (--human-readable): print sizes in human readable format
 alias du="du -h"
@@ -51,12 +52,12 @@ alias pa="ps aux"
 
 # restart zsh
 alias zz="exec zsh"
+
 # vim with saved session
 alias vv="vim -S"
 
 # When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
-#alias udon="sudo emerge -uDNv --keep-going --exclude sys-kernel/gentoo-sources"
-alias udon="sudo emerge -uDNv --keep-going"
+whence emerge >/dev/null && alias udon="sudo emerge -uDNv --keep-going"
 
 # Always show man page in English
 alias cman="LANG='C' man"
@@ -72,7 +73,7 @@ alias zlnw="noglob zmv -L -W"
 alias hist-all="history -E 1"
 alias histgrep="history -E 1 | grep"
 
-# ag: sys-apps/the_silver_searcher
+# ag: the_silver_searcher
 #     A code-searching tool similar to ack, but faster
 # -S (--smart-case): Match case sensitively if there are any uppercase letters in PATTERN,
 #                    or case nsensitively otherwise.
@@ -86,7 +87,13 @@ alias :q="exit"
 # I sometimes press 'q' with Shift because ':' is Shift-; ...
 alias :Q="exit"
 # Edit file with vim like vim
-alias :e="vim"
+alias :e="$EDITOR"
+
+alias ::="mytmux"
 
 # bundle exec
-alias be="bundle exec"
+whence bundle >/dev/null && alias be="bundle exec"
+
+#alias -s exe="wine64"
+
+# vim: set foldmethod=marker foldlevel=1 :

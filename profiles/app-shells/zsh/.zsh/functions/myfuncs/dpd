@@ -1,0 +1,9 @@
+# make a directory, then pushd there.
+# mkdir + pushd => dpd
+if [[ $# -eq 0 ]] ; then
+	echo "usage: dpd <new directory>"
+else
+	mkdir -p "$1" && pushd "$1"
+fi
+
+# vim: set ft=zsh :

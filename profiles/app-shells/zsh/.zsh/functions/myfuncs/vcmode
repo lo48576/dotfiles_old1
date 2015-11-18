@@ -1,0 +1,7 @@
+# Force "C" locale.
+vcmode() {
+	echo "entering Virtual Console Mode"
+	LANG="C" TERM="linux" MLTERM= COLORTERM= exec zsh
+}
+
+# vim: set ft=zsh :

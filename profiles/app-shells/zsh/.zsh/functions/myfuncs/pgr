@@ -1,0 +1,5 @@
+# `pgr foo` to `ps aux | grep [f]oo`
+# so that `grep foo` itself is not listed.
+ps aux | grep --color=auto "[${1:0:1}]${1:1}"
+
+# vim: set ft=zsh :

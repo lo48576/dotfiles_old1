@@ -1,0 +1,15 @@
+#compdef mytmux
+
+_mytmux() {
+	# see /usr/share/zsh/5.1.1/functions/Completion/Unix/_tmux
+	function __tmux-sessions() {
+		local expl
+		local -a sessions
+		sessions=( ${${(f)"$(command tmux 2> /dev/null list-sessions)"}/:[ $'\t']##/:} )
+		_describe -t sessions 'sessions' sessions "$@"
+	}
+	_arguments -s : \
+		'(-8)-2[force using 256 colours]' \
+		'(-2)-8[force using 88 colours]' \
+		'*:target session:__tmux-sessions'
+}

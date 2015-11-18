@@ -1,0 +1,9 @@
+# pushd & popd => pd
+# hard to type "pushd" in dvorak...
+if [[ $# -eq 0 ]] ; then
+	popd
+else
+	pushd "$1"
+fi
+
+# vim: set ft=zsh :

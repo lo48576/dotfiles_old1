@@ -1,0 +1,6 @@
+#compdef dpd
+
+_dpd() {
+	_arguments -s : \
+		'1:directory:_dir_list _mkdir'
+}

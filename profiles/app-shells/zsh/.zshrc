@@ -1,83 +1,51 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_histfile
+# Zsh Global {{{
+#
+# Zsh Global
+#
+
+# Path to completion and prompts configuration
+fpath=(
+	${HOME}/.zsh/functions/*(N-/)
+	${fpath})
+
+# }}} Zsh Global
+
+
+# Zsh History {{{
+#
+# History
+#
+
+# History file
+HISTFILE=${HOME}/.zsh_histfile
+# Number of histories to save on memory
 HISTSIZE=1000000
+# Number of histories to save on file
 SAVEHIST=1000000000
-# Ignore duplication command history list
+
+# Ignore duplicate command-line in history
 setopt hist_ignore_all_dups
+# Ignore duplicate command-line of the previous command-line
 setopt hist_ignore_dups
-# Don't remember commands which begins with whitespace
+# Never remember command-line which begins with whitespace
 setopt hist_ignore_space
 # Share command history data
 setopt share_history
-# Change current directory without "cd"
-setopt autocd
-setopt nolistbeep
-#unsetopt beep
-setopt beep
-# Vim-like key binding
-bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename "${ZDOTDIR:-${HOME}}/.zshrc"
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:descriptions' format '%B%d%b'
-zstyle ':completion:*:messages' format '%d'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*' group-name ''
 
-## man
-zstyle ':completion:*:manuals' separate-sections true
-# "manual page, section xx" という文字列が候補に埋もれて見辛いので、
-# スタイルを変える
-zstyle ':completion:*:*:man:*:manuals.*' format '%F{yellow}%B%U%d%u%b%f'
+# }}} Zsh History
 
-## process
-# for kill
-# style: pid(yellow) %cpu(cyan) tty(blue) [user(green)] cmd(yellow and red)
-zstyle -e ':completion:*:*:*:*:processes' command \
-	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then reply="ps --forest -e -o pid,%cpu,tty,user,cmd" ; else reply="ps --forest -u $USER -o pid,%cpu,tty,cmd" ; fi'
-zstyle ':completion:*:*:*:*:processes' list-colors \
-	"=(#b) #([0-9]#) #([0-9]#.[0-9]#) #([^ ]#) #([A-Za-z][A-Za-z0-9\-_.]#)# #([\|\\_ ]# )([^ ]#)*=31=33=36=34=32=36=33"
-zstyle ':completion:*:*:*:*:processes' sort false
-zstyle ':completion:*:*:kill:*' force-list always
-# for killall
-zstyle -e ':completion:*:processes-names' command \
-	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then reply="ps -e -o cmd" ; else reply="ps -u $USER -o cmd" ; fi'
 
-# list /zfs-filesystem/.zfs/ .
-# zfs snapshot is in /zfs-filesystem/.zfs/snapshot/snapshot-name/ .
-# you may need following settings in /etc/sudoers:
-# user ALL=(ALL) NOPASSWD: /sbin/zfs
-#zstyle ':completion:*' fake-files "`sudo zfs list -rH -o mountpoint -t filesystem | tr '\n' '|'`:.zfs"
-##zstyle ':completion:*:*directories' fake "`sudo zfs list -rH -o mountpoint -t filesystem | tr '\n' '|'`:.zfs"
-##zstyle ':completion::complete:*:directories' fake '.zfs'
-##zstyle ':completion::complete:*:dirs' fake '.zfs'
-##zstyle ':completion::complete:*:dir_list' fake '.zfs'
-
+# Environment variables {{{
 #
-# default options for commands
+# Environment Variables
 #
-if [ -x "`whence -p vim`" ] ; then
-	export EDITOR="vim"
-elif [ -x "`whence -p vi`" ] ; then
-	export EDITOR="vi"
-fi
-# If mojibake (like '^[[0m') appears on linux tty,
-#   use "-c" option with lv.
-if [ -x "`whence -p lv`" ] ; then
-	export PAGER="lv"
-else
-	export PAGER="less"
-fi
-export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
-# GREP_OPTIONS is deprecated
-#export GREP_OPTIONS='--color=auto'
 
+# PATH {{{
 #
 # PATH
 #
-typeset -U path
 
+typeset -U path
 # path(foo): 条件fooにマッチするパスのみ残す。
 # 条件:
 #   N: NULL_GLOBオプションを設定。
@@ -85,30 +53,30 @@ typeset -U path
 #   -: シンボリックリンクそのものでなく、その指す先のファイルに評価する。
 #   /: ディレクトリのみを残す。
 
-## system
+# system
 path=(
 	$path
 	/usr/libexec(N-/)
 	)
 
-## installed to user-local directory by package manager
+# User-local binary directory to which some package managers
+# of languages install packages.
 path=(
-	# ruby gem (ruby)
-	#   you can use `ruby -e 'require "rubygems"; puts Gem::bindir'` instead of whence .
-	$([ -x "`whence -p gem`" ] && echo "`gem environment gemdir`/bin")(N-/)
-	# rbenv (ruby)
-	#${HOME}/.rbenv/bin(N-/)
+	# ruby gems (ruby)
+	#   You can use
+	#       `ruby -e 'require "rubygems"; puts Gem::bindir'`
+	#   or
+	#       `ruby -rubygems -e 'puts Gem.bindir'`
+	#   instead of using `gem`.
+	#   `gem` is slower than 6x or more than using `ruby` directly.
+	$(whence ruby gem >/dev/null && ruby -rubygems -e 'puts Gem.bindir')(N-/)
 	# pip (python)
-	$([ -x "`whence -p python`" ] && echo "`python -m site --user-base`/bin")(N-/)
+	$(whence python >/dev/null && python -m site --user-base)/bin(N-/)
 	# npm (javascript)
-	$([ -x "`whence -p npm`" ] && echo "`npm bin`")(N-/)
+	$(whence npm >/dev/null && npm bin)(N-/)
 	$path)
-# rbenv (ruby)
-#if [ "`whence -p rbenv`" ] ; then
-	#eval "$(rbenv init -)"
-#fi
 
-## my files (manually installed)
+# User-local directories.
 path=(
 	${HOME}/bin(N-/)
 	${HOME}/app{,32,64}/*(N-/)
@@ -116,7 +84,22 @@ path=(
 	${HOME}/local/bin(N-/)
 	$path)
 
+# For `sudo`.
+# Root already has these paths in $PATH,
+# so the settings below is for non-root users.
+if [[ $EUID -ne 0 ]] ; then
+	typeset -xT SUDO_PATH sudo_path
+	typeset -U sudo_path
+	sudo_path=(
+		/usr/local/sbin(N-/)
+		/usr/sbin(N-/)
+		/sbin(N-/)
+		$sudo_path)
+	path=($path $sudo_path)
+fi
+
 export PATH
+# }}} PATH
 
 #
 # MANPATH
@@ -129,6 +112,7 @@ manpath=(
 	"")
 # MANPATHの末尾にコロン(:)があると、システム全体の検索パスが末尾に追加される。
 # MANPATHの先頭にコロン(:)があると、システム全体の検索パスが先頭に追加される。
+# 空文字列をmanpathの最後に追加することで、MANPATHの最後にコロンを付ける。
 export MANPATH
 
 #
@@ -140,294 +124,136 @@ include=(
 	$include)
 export INCLUDE
 
-# for sudo and sbin commands
-if [[ $EUID != 0 ]] ; then
-	typeset -xT SUDO_PATH sudo_path
-	typeset -U sudo_path
-	sudo_path=(
-		/usr/local/sbin(N-/)
-		/usr/sbin(N-/)
-		/sbin(N-/)
-		)
-	path=($path $sudo_path)
-fi
-#zstyle ':completion:*:sudo:*' environ PATH="$SUDO_PATH:$PATH"
-zstyle ':completion:*:sudo:*' command-path $path
-
+#
 # LD_LIBRARY_PATH
+#
 typeset -xT LD_LIBRARY_PATH ld_library_path
 typeset -U ld_library_path
 ld_library_path=(
 	${HOME}/local/lib(N-/)
 	$ld_library_path)
 
-## path to completion and prompts configuration
-fpath=(~/.zsh/functions/Completion ~/.zsh/functions/Prompts ${fpath})
+# LANG and TERM {{{
+#
+# LANG and TERM
+#
 
-
-autoload -Uz compinit
-# -C: skip security check (see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#index-compinit )
-compinit -C
-# End of lines added by compinstall
-
-# enable cache for the completions.
-zstyle ':completion::complete:*' use-cache 1
-
-#autoload -Uz colors && colors
-autoload -Uz promptinit && promptinit
-
-# Set prompt
-prompt larry1
-
-:<<'#COLOR_SETTING_1'
-#define 16 colors -> COL(FG|BG)16[]
-for X in {0..7}; do
-	COLFG16[$(( ${X} + 1 ))]=$(echo "\e[3${X}m")
-	COLBG16[$(( ${X} + 1 ))]=$(echo "\e[4${X}m")
-done
-unset X
-
-# define 256 colors -> COL(FG|BG)256[]
-#COLORS=("00" "5F" "87" "AF" "D7" "FF")
-for X in {16..255}; do
-	COLFG256[${X}]=$(echo "\e[38;5;${X}m")
-	COLBG256[${X}]=$(echo "\e[48;5;${X}m")
-done
-unset X
-#COLOR_SETTING_1
-
-# Distinguish terminal software
-check_term_emulator() {
-	case "${TERM}" in
-		linux)
-			# virtual console
-			TERMINAL_EMULATOR="linux"
-			;;
-		screen*)
-			# screen, tmux, etc...
-			if [ -n "$TMUX" ] ; then
-				TERMINAL_MULTIPLEXER="tmux"
-				if [ -z "$COLORTERM" ] ; then
-					export COLORTERM=1
-				fi
-			else
-				TERMINAL_MULTIPLEXER="screen"
-			fi
-			;;
-		mlterm*)
-			TERMINAL_EMULATOR="mlterm"
-			;;
-		#yaft-256color)
-		#	 yaft
-		#	;;
-	esac
-	if [ -n "${MLTERM}" ] ; then
-		# mlterm
-		TERMINAL_EMULATOR="mlterm"
-		export TERM_VERSION="${MLTERM}"
-		export COLORTERM=1
-	elif [ -n "${XTERM_VERSION}" ] ; then
-		# xterm, uxterm
-		TERMINAL_EMULATOR="xterm"
-		export COLORTERM=1
-	elif [ -n "${COLORTERM}" ] ; then
-		case "${COLORTERM}" in
-			gnome-terminal)
-				# gnome-terminal
-				TERMINAL_EMULATOR="gnome-terminal"
-				;;
-		esac
-	fi
-	export TERMINAL_EMULATOR="${TERMINAL_EMULATOR:-linux}"
-	export TERMINAL_MULTIPLEXER
-}
-check_term_emulator
-
-# Set $LANG and $TERM
-# I can see only 16 colors when I use tty1-6,
-# so 'LANG="ja_JP.UTF-8"' is not always adequate.
-USER_DEFAULT_LANG_ZSHRC="ja_JP.UTF-8"
-case "${TERMINAL_EMULATOR}" in
-	mlterm)
-		export LANG="$USER_DEFAULT_LANG_ZSHRC"
-		export TERM="mlterm-256color"
-		;;
-	xterm)
-		export LANG="$USER_DEFAULT_LANG_ZSHRC"
-		export TERM="xterm-256color"
-		;;
-	gnome-terminal)
-		export LANG="$USER_DEFAULT_LANG_ZSHRC"
-		export TERM="xterm-256color"
-		;;
+# Distinguish terminal emulator and terminal multiplexer
+case $TERM in
 	linux)
-		export LANG="C"
+		# virtual console (such as getty, agetty...)
+		ZSHRC_TERMINAL_EMULATOR="linux"
 		;;
-	*)
-		#export LANG="$USER_DEFAULT_LANG_ZSHRC"
-		export LANG="C"
-		;;
-esac
-case "${TERMINAL_MULTIPLEXER}" in
-	screen*|tmux)
-		# for tmux or screen
-		# derive setting of parent process
-		# default: C
-		if [[ "$LANG" != "" && "$LANG" != "C" ]] ; then
-			export LANG="$USER_DEFAULT_LANG_ZSHRC"
+	screen*|tmux*)
+		if [[ -n $TMUX ]] ; then
+			ZSHRC_TERMINAL_MULTIPLEXER="tmux"
+		else
+			ZSHRC_TERMINAL_MULTIPLEXER="screen"
 		fi
 		;;
+	mlterm*)
+		ZSHRC_TERMINAL_EMULATOR="mlterm"
+		;;
 esac
-unset USER_DEFAULT_LANG_ZSHRC
-
-if [ "x$TMUX" != x ] ; then
-	# set window title (to attached session name).
-	tmux set set-titles-string '#S - tmux'
+if [[ -n $MLTERM ]] ; then
+	# mlterm
+	ZSHRC_TERMINAL_EMULATOR="mlterm"
+elif [[ -n $XTERM_VERSION ]] ; then
+	ZSHRC_TERMINAL_EMULATOR="xterm"
+elif [[ $COLORTERM == "gnome-terminal" ]] ; then
+	ZSHRC_TERMINAL_EMULATOR="gnome-terminal"
 fi
 
+export ZSHRC_TERMINAL_EMULATOR=${ZSHRC_TERMINAL_EMULATOR:-linux}
+export ZSHRC_TERMINAL_MULTIPLEXER
+
+# Set $LANG and $TERM.
+# I can see only 16 colors on tty1-6 (agetty),
+# so 'LANG="ja_JP.UTF-8"' is not always adequate.
+function {
+	local USER_DEFAULT_LANG="ja_JP.UTF-8"
+	case $ZSHRC_TERMINAL_EMULATOR in
+		mlterm)
+			LANG=$USER_DEFAULT_LANG
+			TERM="mlterm-256color"
+			;;
+		xterm|gnome-terminal)
+			LANG=$USER_DEFAULT_LANG
+			TERM="xterm-256color"
+			;;
+		linux)
+			LANG="C"
+			;;
+		*)
+			LANG="C"
+			;;
+	esac
+	case $ZSHRC_TERMINAL_MULTIPLEXER in
+		screen|tmux)
+			# ON GNU screen or tmux,
+			# use setting of the parent process.
+			# default: C
+			if [[ -n $LANG && $LANG != "C" ]] ; then
+				LANG=$USER_DEFAULT_LANG
+			fi
+			;;
+	esac
+	case $ZSHRC_TERMINAL_MULTIPLEXER in
+		screen)
+			TERM="screen-256color"
+			;;
+		tmux)
+			TERM="tmux-256color"
+			;;
+	esac
+}
+
+if [[ $EUID -eq 0 ]] ; then
+	LANG="C"
+fi
+
+export LANG
+export TERM
+
+# }}} LANG and TERM
+
+#
+# Other locales
+#
 export LC_TIME="C"
 
-case ${UID} in
-0)
-	export LANG="C"
-	;;
-esac
+# Applicatinos Global {{{
+#
+# Applications Global
+#
 
-# Show information about terminal
-show_term_basic_info()
-{
-	echo "terminal emulator: ${TERMINAL_EMULATOR} ${TERM_VERSION}"
-	echo "terminal multiplexer: ${TERMINAL_MULTIPLEXER}"
-	echo "terminal: ${TERM}"
-	echo "language: ${LANG}"
-}
-show_term_basic_info
+# EDITOR
+if whence -p vim >/dev/null ; then
+	export EDITOR="vim"
+elif whence -p vi >/dev/null ; then
+	export EDITOR="vi"
+fi
 
-# auto directory pushd that you can get dirs list by cd -[tab]
-#setopt auto_pushd
+# PAGER
+# `less` may exist on all environment...
+export PAGER="less"
+# Options for less
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case'
 
-# compacked complete list display
-setopt list_packed
+# }}} Applicatinos Global
 
-# no remove postfix slash of command line
-setopt noautoremoveslash
+# Applicatinos Local {{{
+#
+# Applications local
+#
 
-# suppose to use dvorak layout at typo correction
-setopt correct
-setopt dvorak
+# `ls` (LS_COLORS)
+if [[ -f "${HOME}/.dir_colors" ]] ; then
+	eval $(dircolors -b "${HOME}/.dir_colors")
+fi
 
-# disabling execution of the last command with 'r'.
-# you can do it with history or incremental search
-disable r
-
-
-# Build $LS_COROLS with specific settings and print it.
-ls_colors_gnu()
-{
-	STR_BASE='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:'
-	PATTERN_ARCHIVE='*.tar:*.tgz:*.arj:*.taz:*.lzh:*.lzma:*.tlz:*.txz:*.zip:*.z:*.Z:*.dz:*.gz:*.lz:*.xz:*.bz2:*.bz:*.tbz:*.tbz2:*.tz:*.deb:*.rpm:*.jar:*.war:*.ear:*.sar:*.rar:*.ace:*.zoo:*.cpio:*.7z:*.rz:'
-	PATTERN_IMAGE='*.jpg:*.jpeg:*.gif:*.bmp:*.pbm:*.pgm:*.ppm:*.tga:*.xbm:*.xpm:*.tif:*.tiff:*.png:*.svg:*.svgz:*.mng:*.pcx:'
-	PATTERN_VIDEO='*.mov:*.mpg:*.mpeg:*.m2v:*.mkv:*.webm:*.ogm:*.mp4:*.m4v:*.mp4v:*.vob:*.qt:*.nuv:*.wmv:*.asf:*.rm:*.rmvb:*.flc:*.avi:*.fli:*.flv:*.gl:*.dl:*.xcf:*.xwd:*.yuv:*.cgm:*.emf:*.axv:*.anx:*.ogv:*.ogx:'
-	PATTERN_DOCUMENT='*.pdf:*.ps:*.txt:*.patch:*.diff:*.log:*.tex:*.csv:*.doc:*.odt:*.ods:*.odp:*.odb:*.odg:*.odf:*.sgml:*.dsl:*.htm:*.html:*.xml:*.xsl:*.rnc:*.rng:*.css:*.chm:*.dvi:'
-	PATTERN_SOUND='*.aac:*.au:*.flac:*.m4a:*.mid:*.midi:*.mka:*.mp3:*.mpc:*.ogg:*.ra:*.tak:*.wav:*.axa:*.oga:*.spx:*.xspf:*.wma:'
-	STYLE_ARCHIVE='01;31'
-	STYLE_IMAGE='01;35'
-	STYLE_VIDEO='01;35'
-	#STYLE_DOCUMENT='00;32'
-	STYLE_DOCUMENT='00;37'
-	STYLE_SOUND='00;36'
-	COLOR_STR="${STR_BASE}"
-	COLOR_STR="${COLOR_STR}`echo "$PATTERN_ARCHIVE" | sed "s/:/=$STYLE_ARCHIVE:/g"`"
-	COLOR_STR="${COLOR_STR}`echo "$PATTERN_IMAGE" | sed "s/:/=$STYLE_IMAGE:/g"`"
-	COLOR_STR="${COLOR_STR}`echo "$PATTERN_VIDEO" | sed "s/:/=$STYLE_VIDEO:/g"`"
-	COLOR_STR="${COLOR_STR}`echo "$PATTERN_DOCUMENT" | sed "s/:/=$STYLE_DOCUMENT:/g"`"
-	COLOR_STR="${COLOR_STR}`echo "$PATTERN_SOUND" | sed "s/:/=$STYLE_SOUND:/g"`"
-	echo "$COLOR_STR"
-}
-
-# for gnu ls
-export LS_COLORS="`ls_colors_gnu`"
-
-#if [ -f ~/.dir_colors ] ; then
-#	eval $(dircolors -b ~/.dir_colors)
-#fi
-
-#zstyle ':completion:*' list-colors ''
-# replace ':' (colon) with ' ' (whitespace).
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# incremental search with ^P and ^N
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-
-# Home/End/Delete/Bksp
-case "${TERMINAL_EMULATOR}" in
-	gnome-terminal)
-		bindkey "^?"    backward-delete-char
-		bindkey "^H"    backward-delete-char
-		bindkey "^[[3~" delete-char
-		bindkey "^[[1~" beginning-of-line
-		bindkey "^[[4~" end-of-line
-		;;
-	mlterm)
-		bindkey "^?"    backward-delete-char
-		bindkey "^H"    backward-delete-char
-		bindkey "^[[3~" delete-char
-		bindkey "^[OH"  beginning-of-line
-		bindkey "^[OF"  end-of-line
-		bindkey "^[[H"  beginning-of-line
-		bindkey "^[[F"  end-of-line
-		;;
-esac
-# test (apply all binding if possible)
-bindkey "^?"    backward-delete-char
-bindkey "^H"    backward-delete-char
-bindkey "^[[3~" delete-char
-bindkey "^[[1~" beginning-of-line
-bindkey "^[OH"  beginning-of-line
-bindkey "^[[4~" end-of-line
-bindkey "^[OF"  end-of-line
-
-
-# enable to delete characters before position where you start insert mode
-zle -A .backward-kill-word vi-backward-kill-word
-zle -A .backward-delete-char vi-backward-delete-char
-
-# push command to stack (Esc-q at emacs binding)
-# Ctrl+7 (in dvorak, Shift+7 is '&'.)
-# you can use Ctrl+- (Shift+- is '_'.)
-bindkey '^_' push-line
-# Esc, then 'q'
-bindkey -a 'q' push-line
-bindkey -a 'H' run-help
-
-# load other zsh configs if exist
-#  aliases
-[ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
-#  functions
-[ -f ~/.zshrc.mycmd ] && source ~/.zshrc.mycmd
-#  host-dependent settings
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-cdup()
-{
-	# skip lines to leave old prompt
-	echo ; echo
-	cd ..
-	zle reset-prompt
-}
-zle -N cdup
-# cd ../ by Ctrl-6 (in US Keyboard)
-# if you want to type "^^"(Ctrl-^), Ctrl-V Ctrl-6
-bindkey '^^' cdup
-# cd ../ by ^
-# if you want to type "^", Ctrl-V ^
-#bindkey '\^' cdup
-
-# show 'time' result when a process uses more than 30 cpu time
+# `time` (zsh built-in)
+# Show `time` result when a process runs more than 30 cpu time
 REPORTTIME=30
 TIMEFMT="job: %J
 User: %U
@@ -435,33 +261,275 @@ Kernel: %S
 Elapsed: %E
 CPU: %P"
 
+# }}} Applicatinos Local
 
-# zsh-syntax-highlighting
-#[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f ~/.zsh/zsh-syntax-highlighting.zsh.local ] && source ~/.zsh/zsh-syntax-highlighting.zsh.local
+# }}} Environment variables
 
-#tmux_set_current_dir()
-#{
-	#[ -n "$TMUX" ] && tmux set-environment "TMUXPWD_$(tmux display -p '#D' | tr -d '%')" "$PWD"
-#}
 
-init()
-{
-	# fortune
-	#fortune ~/Documents/fortune
-	u_nyah_disabled=1
-	if [[ "$LANG" != "C" ]] && [[ -z "$u_nyah_disabled" ]] ; then
-		# Let's nyah!
-		# u_nyah_prompt is defined in .zshrc.mycmd
-		precmd_functions=($precmd_functions u_nyah_prompt)
-	fi
-	# tmux
-	#precmd_functions=($precmd_functions tmux_set_current_dir)
+# Prompt Style {{{
+#
+# Prompt Style
+#
+
+#autoload -Uz colors && colors
+autoload -Uz promptinit && promptinit
+
+# Set prompt
+prompt larry1
+
+# }}} Prompt Style
+
+
+# Completion {{{
+#
+# Completion
+#
+
+# Load completion feature
+autoload -Uz compinit
+# `-C` is for faster boot.
+# -C: skip security check (see http://zsh.sourceforge.net/Doc/Release/Completion-System.html#index-compinit )
+compinit -C
+
+#
+# General
+#
+zstyle :compinstall filename "${ZDOTDIR:-${HOME}}/.zshrc"
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
+
+# Use cache for the completion
+zstyle ':completion::complete:*' use-cache 1
+
+# Use compact list when there is lots of items
+setopt list_packed
+
+# No beep on completion
+setopt no_listbeep
+
+# Allow implicit conversion from lower alphabets to capitals on completion search.
+# (Note that capitals are not converted to lowers.)
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+#
+# Files and Directories
+#
+
+# replace ':' (colon) with ' ' (whitespace).
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+#
+# `man`
+#
+
+# Separate by sections.
+zstyle ':completion:*:manuals' separate-sections true
+# "manual page, section xx" という文字列が候補に埋もれて見辛いので、
+# スタイルを変える
+zstyle ':completion:*:*:man:*:manuals.*' format '%F{yellow}%B%U%d%u%b%f'
+
+#
+# `kill`
+#
+# プロセスの候補をプロセスツリーで表示する。
+
+# style: pid(yellow) %cpu(cyan) tty(blue) [user(green)] cmd(yellow and red)
+zstyle -e ':completion:*:*:*:*:processes' command \
+	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then \
+		reply="ps --forest -e -o pid,%cpu,tty,user,cmd" \
+	else \
+		reply="ps --forest -u $USER -o pid,%cpu,tty,cmd" \
+	fi'
+zstyle ':completion:*:*:*:*:processes' list-colors \
+	"=(#b) #([0-9]#) #([0-9]#.[0-9]#) #([^ ]#) #([A-Za-z][A-Za-z0-9\-_.]#)# #([\|\\_ ]# )([^ ]#)*=31=33=36=34=32=36=33"
+# プロセスツリーで表示するので、勝手にソートされるとツリーが崩れるため、ソートを無効化。
+zstyle ':completion:*:*:*:*:processes' sort false
+# Show completion list (process tree) always
+zstyle ':completion:*:*:kill:*' force-list always
+
+# `killall`
+zstyle -e ':completion:*:processes-names' command \
+	'if (( $funcstack[(eI)$_comps[sudo]] )) ; then \
+		reply="ps -e -o cmd" \
+	else \
+		reply="ps -u $USER -o cmd" \
+	fi'
+
+# `sudo`
+zstyle ':completion:*:sudo:*' command-path $path
+
+
+# }}} Completion
+
+
+# Command Line and Input {{{
+#
+# Command Line and Input
+#
+
+#
+# Prompt and Command Line
+#
+
+# Enable typo correction
+setopt correct
+
+# Use beep
+setopt beep
+
+# Change current directory without "cd"
+setopt autocd
+
+# Don't remove trailing slash of command line automatically
+setopt no_autoremoveslash
+
+# Kill the delay after hitting <ESC>.
+export KEYTIMEOUT=1
+
+# Keys {{{
+#
+# Keys
+#
+
+# Suppose to use dvorak layout at typo correction
+setopt dvorak
+
+# Vim-like key binding
+bindkey -v
+
+# Incremental search with ^P and ^N (like vim)
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+
+# Disable execution of the last command with 'r'.
+# You can do it with history or incremental search
+disable r
+
+# Enable to delete characters before start position of istert mode
+# NOTE: `.foobar` always refer built-in version of `foobar` widget.
+zle -A .backward-kill-word vi-backward-kill-word
+zle -A .backward-delete-char vi-backward-delete-char
+
+
+function {
+	# for detail, see
+	# https://wiki.archlinuxjp.org/index.php/Zsh#.E3.82.AD.E3.83.BC.E3.83.90.E3.82.A4.E3.83.B3.E3.83.89
+	typeset -A key
+	key[Home]=${terminfo[khome]}
+	key[End]=${terminfo[kend]}
+	key[Insert]=${terminfo[kich1]}
+	key[Delete]=${terminfo[kdch1]}
+	key[BackSpace]=${terminfo[kbs]}
+
+	[[ -n ${key[Home]}      ]] && bindkey "${key[Home]}"      beginning-of-line
+	[[ -n ${key[End]}       ]] && bindkey "${key[End]}"       end-of-line
+	[[ -n ${key[Insert]}    ]] && bindkey "${key[Insert]}"    overwrite-mode
+	[[ -n ${key[Delete]}    ]] && bindkey "${key[Delete]}"    delete-char
+	# FIXME: .backward-delete-char と同じ挙動をしてほしいはずだが、何故かインサートモードになるより前の文字を消してくれない。
+	#[[ -n ${key[BackSpace]} ]] && bindkey "${key[BackSpace]}" vi-backward-delete-char
+	[[ -n ${key[BackSpace]} ]] && bindkey "${key[BackSpace]}" backward-delete-char
+
+	[[ -n ${key[Home]}      ]] && bindkey -M vicmd "${key[Home]}"      beginning-of-line
+	[[ -n ${key[End]}       ]] && bindkey -M vicmd "${key[End]}"       end-of-line
+	[[ -n ${key[Delete]}    ]] && bindkey -M vicmd "${key[Delete]}"    delete-char
+	[[ -n ${key[BackSpace]} ]] && bindkey -M vicmd "${key[BackSpace]}" backward-char
 }
 
-# initialize
-init
+# Ctrl-H
+bindkey "^H"    backward-delete-char
+
+# Push command to stack (Esc-q at emacs binding)
+# Ctrl+7 (in dvorak, Shift+7 is '&'.)
+# You can use Ctrl+- (Shift+- is '_'.)
+bindkey '^_' push-line
+# Esc, then 'q'
+bindkey -a 'q' push-line
+
+# Show help with `Esc H`
+#bindkey -a 'H' run-help
+
+cdup() {
+	# skip lines to leave old prompt
+	echo ; echo
+	cd ..
+	zle reset-prompt
+}
+zle -N cdup
+# `cd ../` by Ctrl-6 (in US Keyboard).
+# If you want to type "^^"(Ctrl-^), `Ctrl-V Ctrl-6`.
+bindkey '^^' cdup
+
+# }}} Keys
+
+# }}} Command Line and Input
+
+
+# External Plugins and Settings {{{
+#
+# External Plugins and Settings
+#
+
+#
+# Load other zsh configs if exist
+#
+
+# autoload functions in ${HOME}/.zsh/functions/myfuncs/
+autoload -Uz ${HOME}/.zsh/functions/myfuncs/*(:t)
+
+# `+X`: load function immediately.
+autoload +XUz mytmux
+
+# Aliases
+[[ -f ${HOME}/.zshrc.alias ]] && source "${HOME}/.zshrc.alias"
+# Host-dependent settings
+[[ -f ${HOME}/.zshrc.local ]] && source "${HOME}/.zshrc.local"
+
+#
+# Plugins
+#
+
+# zsh-syntax-highlighting
+[[ -f ${HOME}/.zsh/zsh-syntax-highlighting.zsh.local ]] && source "${HOME}/.zsh/zsh-syntax-highlighting.zsh.local"
+
+
+# }}} External Plugins and Settings
+
+
+# Application {{{
+#
+# Application
+#
+
+# tmux
+if [[ -n $TMUX ]] ; then
+	# Set window title (to attached session name).
+	tmux set set-titles-string '#S - tmux'
+fi
+
+# }}} Application
+
+
+# Initialize {{{
+#
+# Initialize
+#
+
+# Print information about terminal
+echo "terminal emulator: ${ZSHRC_TERMINAL_EMULATOR}"
+echo "terminal multiplexer: ${ZSHRC_TERMINAL_MULTIPLEXER}"
+echo "terminal: ${TERM}"
+echo "language: ${LANG}"
 
 #if (which zprof >/dev/null) ; then
 #	zprof | less
 #fi
+
+# }}}
+
+# vim: set foldmethod=marker foldlevel=1 :
