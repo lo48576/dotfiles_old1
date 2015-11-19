@@ -73,7 +73,9 @@ path=(
 	# pip (python)
 	$(whence python >/dev/null && python -m site --user-base)/bin(N-/)
 	# npm (javascript)
-	$(whence npm >/dev/null && npm bin)(N-/)
+	# FIXME: `npm bin` is too slow... (it takes more than 0.4s)
+	#$(whence npm >/dev/null && npm bin)(N-/)
+	${HOME}/node_modules/.bin(N-/)
 	$path)
 
 # User-local directories.
@@ -368,6 +370,16 @@ zstyle -e ':completion:*:processes-names' command \
 
 # `sudo`
 zstyle ':completion:*:sudo:*' command-path $path
+
+# `npm`
+if whence npm >/dev/null ; then
+	function {
+		local npm_completion_file=${HOME}/.zsh/functions/Completion/_npm
+		# NOTE: `npm` is very slow, so cache the result.
+		[[ -e $npm_completion_file ]] || npm completion >$npm_completion_file
+		source "$npm_completion_file"
+	}
+fi
 
 
 # }}}1 Completion
