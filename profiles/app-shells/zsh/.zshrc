@@ -74,8 +74,10 @@ path=(
 	$(whence python >/dev/null && python -m site --user-base)/bin(N-/)
 	# npm (javascript)
 	# FIXME: `npm bin` is too slow... (it takes more than 0.4s)
-	#$(whence npm >/dev/null && npm bin)(N-/)
+	#$(whence npm >/dev/null && npm bin 2>/dev/null)(N-/)
 	${HOME}/node_modules/.bin(N-/)
+	# This path is set by ~/.npmrc
+	${HOME}/.node_modules_global/bin(N-/)
 	$path)
 
 # User-local directories.
