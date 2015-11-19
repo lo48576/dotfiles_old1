@@ -1,5 +1,6 @@
 [DEPEND]
 virtual/default-laptop
+virtual/default-develop
 host-veg/conky
 host-veg/desktop-statusbar
 host-veg/fontconfig

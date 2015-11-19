@@ -1,5 +1,6 @@
 [DEPEND]
 virtual/default-desktop
+virtual/default-develop
 host-cwm/conky
 host-cwm/desktop-statusbar
 host-cwm/fontconfig

@@ -1,0 +1,2 @@
+[DEPEND]
+dev-lang/npm
