@@ -97,4 +97,7 @@ whence bundle >/dev/null && alias be="bundle exec"
 
 #alias -s exe="wine64"
 
+# Prevent executing `startx` from X environment by mistake
+whence startx >/dev/null && alias startx="[[ -z $DISPLAY ]] && startx"
+
 # vim: set foldmethod=marker :
