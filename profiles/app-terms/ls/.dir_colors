@@ -258,6 +258,8 @@ EXEC 01;32
 .swo 00;34
 # compiled python
 .pyc 00;34
+# haskell
+.hi  00;34
 
 # Texts
 .txt 01;37
