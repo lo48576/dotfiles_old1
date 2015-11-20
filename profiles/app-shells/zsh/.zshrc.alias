@@ -54,10 +54,10 @@ alias pa="ps aux"
 alias zz="exec zsh"
 
 # vim with saved session
-alias vv="vim -S"
+whence -p vim >/dev/null && alias vv="vim -S"
 
 # When you run "udon world" or "udon @world", your world will be overspread with udon noodle!
-whence emerge >/dev/null && alias udon="sudo emerge -uDNv --keep-going"
+whence -p emerge >/dev/null && alias udon="sudo emerge -uDNv --keep-going"
 
 # Always show man page in English
 alias cman="LANG='C' man"
@@ -79,9 +79,11 @@ alias histgrep="history -E 1 | grep"
 #                    or case nsensitively otherwise.
 # -f (--follow): Follow Symlinks.
 # --stats: Print stats (files scanned, time taken, etc)
-alias ag="ag -Sf --stats"
 # --hidden: Search hidden files. This option obeys ignore files.
-alias agh="ag -Sf --stats --hidden"
+if whence -p ag >/dev/null ; then
+	alias ag="ag -Sf --stats"
+	alias agh="ag -Sf --stats --hidden"
+fi
 
 # Quit zsh like vim
 alias :q="exit"
