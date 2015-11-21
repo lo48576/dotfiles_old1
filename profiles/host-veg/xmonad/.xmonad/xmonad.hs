@@ -503,9 +503,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_Print ), spawn "scrot -m 'screenshot-%Y-%m-%d-%H%M%S%z.png' -e 'mv $f ~/Pictures/screenshots/'")
     -- Run 'F'iler
     --, ((modm              , xK_f     ), spawn "nautilus --new-window")
-    , ((modm              , xK_f     ), spawn "thunar")
+    , ((modm              , xK_f     ), spawn "pcmanfm")
     -- Run 'F'iler as root
-    , ((modm .|. shiftMask, xK_f     ), spawn "gksu thunar")
+    , ((modm .|. shiftMask, xK_f     ), spawn "gksu pcmanfm")
     -- 'Q'uit xmonad without warning
     , ((modm .|. shiftMask .|. controlMask, xK_q ), io (exitWith ExitSuccess))
     -- Eject DVD
@@ -608,7 +608,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_Tab ), runSelectedAction defaultGSConfig
         [ ("firefox"        , spawn "firefox")
         , ("thunderbird"    , spawn "thunderbird")
-        , ("thunar"         , spawn "thunar")
+        , ("pcmanfm"        , spawn "pcmanfm")
         , ("pavucontrol"    , spawn "pavucontrol")
         , ("arandr"         , spawn "arandr")
         , ("qmpdclient"     , spawn "qmpdclient")
