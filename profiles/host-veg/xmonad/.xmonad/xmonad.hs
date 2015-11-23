@@ -742,7 +742,7 @@ myManageHook = composeAll . concat $
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
---myEventHook = mempty
+{-myEventHook = mempty-}
 myEventHook = ewmhDesktopsEventHook
 
 ------------------------------------------------------------------------
@@ -751,7 +751,7 @@ myEventHook = ewmhDesktopsEventHook
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
---myLogHook = return ()
+{-myLogHook = return ()-}
 myLogHook = ewmhDesktopsLogHook
 myXmobarPP = xmobarPP
         { ppCurrent = xmobarColor "#ffff00" "" . wrap "[" "]"
@@ -892,7 +892,8 @@ tmuxSessionPrompt =
 --
 -- No need to modify this.
 --
-defaults = ewmh $ defaultConfig {
+--defaults = ewmh $ defaultConfig {
+defaults = defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
