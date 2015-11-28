@@ -24,8 +24,8 @@ let g:Tex_CompileRule_dvi = 'uplatex -interaction=nonstopmode -file-line-error-s
 let g:Tex_BibtexFlavor = 'upbibtex'
 let g:Tex_MakeIndexFlavor = 'makeindex $*.idx'
 let g:Tex_UseEditorSettingInDVIViewer = 1
-"let g:Tex_ViewRule_pdf = 'xdg-open'
-let g:Tex_ViewRule_pdf = 'evince'
+let g:Tex_ViewRule_pdf = 'xdg-open'
+"let g:Tex_ViewRule_pdf = 'evince'
 
 let g:Tex_AutoFolding = 0
 let g:Tex_SmartKeyQuote = 0
