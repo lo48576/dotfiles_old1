@@ -1,5 +1,5 @@
 " calc
-NeoBundle 'vim-scripts/VimCalc'
+NeoBundle 'VimCalc'
 
 " file renamer
-NeoBundle 'vim-scripts/renamer.vim'
+NeoBundle 'renamer.vim'

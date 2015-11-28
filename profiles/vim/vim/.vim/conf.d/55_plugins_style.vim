@@ -2,8 +2,8 @@
 NeoBundle 'itchyny/lightline.vim'
 
 " colorscheme
-NeoBundle 'vim-scripts/wombat256.vim'
-NeoBundle 'vim-scripts/Wombat'
+NeoBundle 'wombat256.vim'
+NeoBundle 'Wombat'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'w0ng/vim-hybrid'
 

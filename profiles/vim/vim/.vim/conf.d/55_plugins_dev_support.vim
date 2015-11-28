@@ -1,6 +1,6 @@
-NeoBundle 'vim-scripts/SingleCompile'
-NeoBundle 'vim-scripts/project.tar.gz'
-NeoBundle 'vim-scripts/The-NERD-tree'
+NeoBundle 'SingleCompile'
+NeoBundle 'project.tar.gz'
+NeoBundle 'The-NERD-tree'
 
 " ctags
-NeoBundle 'vim-scripts/Source-Explorer-srcexpl.vim'
+NeoBundle 'Source-Explorer-srcexpl.vim'
