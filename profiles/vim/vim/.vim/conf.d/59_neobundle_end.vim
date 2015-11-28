@@ -1,4 +1,4 @@
+call neobundle#end()
 
-if has('vim_starting')
-	call neobundle#end()
-endif
+filetype plugin indent on
+NeoBundleCheck
