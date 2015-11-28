@@ -67,12 +67,14 @@ if [ -x "$XMONAD_PATH" ] ; then
 	#xcompmgr -cC -r 0 &
 	# Applications to run in background
 	#BACKGROUND_APPLICATIONS="/usr/bin/gnome-sound-applet /usr/bin/system-config-printer-applet /usr/libexec/polkit-gnome-authentication-agent-1"
+	# gnome-extra/polkit-gnome: "A dbus session bus service that is used to bring up authentication dialogs"
 	BACKGROUND_APPLICATIONS="`which volumeicon` `which polkit-gnome-authentication-agent-1`"
 	for APP in $BACKGROUND_APPLICATIONS ; do
 		if [ -x "$APP" ] ; then
 			"$APP" &
 		fi
 	done
+	eval $(gnome-keyring-daemon --start --components=secrets)
 	# backlight setting
 	#xbacklight -steps 1 -set 40
 
