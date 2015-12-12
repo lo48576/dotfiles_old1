@@ -287,7 +287,8 @@ CPU: %P"
 autoload -Uz promptinit && promptinit
 
 # Set prompt
-prompt larry1
+#prompt larry1
+prompt larry2
 
 # }}}1 Prompt Style
 

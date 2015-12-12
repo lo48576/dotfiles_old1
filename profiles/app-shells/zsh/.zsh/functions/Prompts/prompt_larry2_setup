@@ -1,0 +1,83 @@
+# larry2 prompt theme
+
+prompt_larry2_help() {
+	cat <<-'#HELP_END'
+	    prompt larry2
+	#HELP_END
+}
+
+prompt_larry2_setup() {
+	autoload -Uz vcs_info
+	zstyle ':vcs_info:*' enable git svn hg bzr
+	zstyle ':vcs_info:*' formats '(%s:%b)'
+	zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
+	zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
+	zstyle ':vcs_info:bzr:*' use-simple true
+
+
+	local color_base='yellow'
+	local color_epochprefix_separator='magenta'
+	local color_infoline_prefix='blue'
+	local color_user_root='green'
+	local color_user_normal='yellow'
+	local color_localhost_rootuser='green'
+	local color_localhost_normaluser='red'
+	local color_remotehost_rootuser=$color_localhost_rootuser
+	local color_remotehost_normaluser=$color_localhost_normaluser
+	local color_hostpath_separator='cyan'
+	local color_returncode_ok='green'
+	local color_returncode_fail='red'
+	local color_datetime='yellow'
+	local color_tty='magenta'
+	local color_vcs='cyan'
+	local color_prompt='cyan'
+	local color_sprompt_command='red'
+	local color_ps2=$color_base
+	local color_ps3=$color_base
+	local color_ps4=$color_base
+
+	local prompt_infoline_prefix="%F{$color_infoline_prefix}#%f "
+	# ! : True if shell is running with privileges.
+	local prompt_user="%(!.%B%F{$color_user_root}.%F{$color_user_normal})%n%(!.%b.)%f"
+	if [[ -n $SSH_CLIENT ]] ; then
+		# remote host (over ssh)
+		local prompt_host_ssh="%(!.%B%F{$color_remotehost_rootuser}.%F{$color_remotehost_normaluser})@%M%f%(!.%b.)"
+	else
+		# localhost
+		local prompt_host="%(!.%B%F{$color_localhost_rootuser}.%F{$color_localhost_normaluser})@%M%f%(!.%b.)"
+	fi
+	#local prompt_path="%F{$color_base}%~%f"
+	local prompt_path="%~"
+	local prompt_prompt="%F{$color_prompt}%(!.#.$)%f "
+	local prompt_ret="%(?.%F{$color_returncode_ok}(*'-'%)<(ok%).%F{$color_returncode_fail}(*;_;%)<(%B%?%b%F{$color_returncode_fail}%))%f"
+	local prompt_tty="%F{$color_tty}%y%f"
+	local prompt_datetime="%F{$color_datetime}%D{%Y/%m/%d-%H:%M:%S}%F{$color_epochprefix_separator}@%F{$color_datetime}%D{%s}%f"
+	local prompt_vcs="%1(v|%F{$color_vcs}%1v%f|)"
+	local ps1_line1="${prompt_infoline_prefix}${prompt_ret} ${prompt_datetime} ${prompt_tty} ${prompt_vcs}"
+	local ps1_line2="${prompt_infoline_prefix}${prompt_user}${prompt_host}%F{$color_hostpath_separator}:%f${prompt_path}%f"
+	local ps1_line3="${prompt_prompt}"
+	# $prompt_newline is prepared by zsh
+	PS1="${ps1_line1}${prompt_newline}${ps1_line2}${prompt_newline}${ps1_line3}"
+
+	PS2="%F{$color_ps2}# %_%%%f "
+	PS3="%F{$color_ps3}# (*'-')<(choose!) >> "
+	PS4="%F{$color_ps4}# (*0-0)<(running["'${LINENO}'"]) "
+
+	# typo correction
+	SPROMPT="(*'~\`)< Did you mean %B%F{$color_sprompt_command}%r%f%b? [nyae]: "
+
+	# show vcs info if there's any info to show
+	unset RPROMPT
+
+	add-zsh-hook precmd prompt_larry2_precmd
+}
+
+prompt_larry2_precmd() {
+	psvar=()
+	LANG=en_US.UTF-8 vcs_info
+	[[ -n $vcs_info_msg_0_ ]] && psvar[1]=$vcs_info_msg_0_
+}
+
+prompt_larry2_setup "$@"
+
+# vim: set ft=sh :
