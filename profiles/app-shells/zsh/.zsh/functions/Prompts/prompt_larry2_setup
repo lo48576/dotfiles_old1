@@ -41,7 +41,7 @@ prompt_larry2_setup() {
 	local prompt_user="%(!.%B%F{$color_user_root}.%F{$color_user_normal})%n%(!.%b.)%f"
 	if [[ -n $SSH_CLIENT ]] ; then
 		# remote host (over ssh)
-		local prompt_host_ssh="%(!.%B%F{$color_remotehost_rootuser}.%F{$color_remotehost_normaluser})@%M%f%(!.%b.)"
+		local prompt_host="%B%(!.%F{$color_remotehost_rootuser}.%F{$color_remotehost_normaluser})@%M%f%b"
 	else
 		# localhost
 		local prompt_host="%(!.%B%F{$color_localhost_rootuser}.%F{$color_localhost_normaluser})@%M%f%(!.%b.)"
