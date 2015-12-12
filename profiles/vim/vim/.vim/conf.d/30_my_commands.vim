@@ -24,5 +24,6 @@ function! CSVH(colnr)
 endfunction
 command! -nargs=1 Csv :call CSVH(<args>)
 
-:nnoremap <F5> "=strftime("%c")<CR>P
-:inoremap <F5> <C-R>=strftime("%c")<CR>noremap <silent> <expr> <F5> Date()
+" ISO 8601 (yyyy-mm-ddThh:mm:ss+hhmm)
+nnoremap <F5> "=strftime("%FT%T%z")<CR>P
+inoremap <F5> <C-R>=strftime("%FT%T%z")<CR>
