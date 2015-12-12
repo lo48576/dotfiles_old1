@@ -13,6 +13,8 @@
 	abbrev = 12
 [merge]
 	ff = false
+[pull]
+	ff = true
 [alias]
 # see http://d.hatena.ne.jp/sugyan/20111103/1320247493 .
 	tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
