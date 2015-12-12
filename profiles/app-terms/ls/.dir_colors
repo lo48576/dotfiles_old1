@@ -280,6 +280,8 @@ EXEC 01;32
 .markdown 01;37
 .ini 01;37
 .conf 01;37
+.yaml 01;37
+.toml 01;37
 
 # Source code
 .c 00;33
