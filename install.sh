@@ -18,6 +18,7 @@ usage() {
 finish() {
 	# Check leakage with
 	# grep -o 'TEMPFILE_[A-Z_]*' install.sh | sort -u
+	local RET="$?"
 	[ -n "${TEMPFILE_CHECKED_PKGS:-}" ] && rm -f "${TEMPFILE_CHECKED_PKGS}"
 	[ -n "${TEMPFILE_CONFLICT_LIST:-}" ] && rm -f "${TEMPFILE_CONFLICT_LIST}"
 	[ -n "${TEMPFILE_INSTALL_FILELIST:-}" ] && rm -f "${TEMPFILE_INSTALL_FILELIST}"
@@ -26,6 +27,7 @@ finish() {
 	[ -n "${TEMPFILE_PACKAGES_YET:-}" ] && rm -f "${TEMPFILE_PACKAGES_YET}"
 	[ -n "${TEMPFILE_PACKAGE_DEPENDENCIES:-}" ] && rm -f "${TEMPFILE_PACKAGE_DEPENDENCIES}"
 	[ -n "${TEMPFILE_USER_SELECTED_PKGS:-}" ] && rm -f "${TEMPFILE_USER_SELECTED_PKGS}"
+	return "$RET"
 }
 trap finish EXIT
 
