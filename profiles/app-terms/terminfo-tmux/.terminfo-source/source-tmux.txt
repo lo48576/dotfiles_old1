@@ -1,0 +1,2 @@
+tmux: ncurses-6.0
+tmux-256color: ncurses-6.0
