@@ -64,12 +64,12 @@ declare -r PROFILE_FILE="${VAR_DIR}/profiles"
 declare -r LINK_TARGETS_FILE="${VAR_DIR}/.link_targets"
 
 # Packages to be installed
-declare TEMPFILE_PACKAGES="$(tempfile)"
+declare TEMPFILE_PACKAGES="$(mktemp)"
 # Dependencies of packages
-declare TEMPFILE_PACKAGE_DEPENDENCIES="$(tempfile)"
+declare TEMPFILE_PACKAGE_DEPENDENCIES="$(mktemp)"
 
 # User selected packages
-declare TEMPFILE_USER_SELECTED_PKGS="$(tempfile)"
+declare TEMPFILE_USER_SELECTED_PKGS="$(mktemp)"
 helpers/get_entries.sh "DEPEND" "$PROFILE_FILE" \
 	| grep -v '^$' \
 	>"$TEMPFILE_USER_SELECTED_PKGS"
@@ -80,7 +80,7 @@ helpers/get_entries.sh "DEPEND" "$PROFILE_FILE" \
 # Packages to resolve dependencies.
 declare PACKAGES_YET="$(cat "$TEMPFILE_USER_SELECTED_PKGS")"
 # Tempfile to hold PACKAGES_YET temporarily.
-declare TEMPFILE_PACKAGES_YET="$(tempfile)"
+declare TEMPFILE_PACKAGES_YET="$(mktemp)"
 while [ -n "$PACKAGES_YET" ] ; do
 	while read PKG ; do
 		PKG_FILE_PATH="${PROFILES_DIR}/${PKG}.profile"
@@ -114,7 +114,7 @@ sort -u "$TEMPFILE_PACKAGE_DEPENDENCIES" -o "$TEMPFILE_PACKAGE_DEPENDENCIES"
 # List up files to be installed
 #
 # Files to be installed
-declare TEMPFILE_INSTALL_FILELIST="$(tempfile)"
+declare TEMPFILE_INSTALL_FILELIST="$(mktemp)"
 # Format of the every line of $TEMPFILE_INSTALL_FILELIST is
 # 'filename//package\0'.
 # Line separator is '\0' (NUL character), column separator is '//'.
@@ -134,18 +134,18 @@ done <"$TEMPFILE_PACKAGES" >>"$TEMPFILE_INSTALL_FILELIST"
 # Check file conflicts
 #
 # Checked (printed) packages.
-declare TEMPFILE_CHECKED_PKGS="$(tempfile)"
+declare TEMPFILE_CHECKED_PKGS="$(mktemp)"
 # Next packages to check (maybe not checked).
-declare TEMPFILE_NEXT_PKGS_TO_CHECK="$(tempfile)"
+declare TEMPFILE_NEXT_PKGS_TO_CHECK="$(mktemp)"
 # Conflict files.
-declare TEMPFILE_CONFLICT_LIST="$(tempfile)"
+declare TEMPFILE_CONFLICT_LIST="$(mktemp)"
 sed -ze 's!//.*$!!' "$TEMPFILE_INSTALL_FILELIST" \
 	| sort -z \
 	| uniq -zd \
 	| tee "$TEMPFILE_CONFLICT_LIST" \
 	| while read -rd $'\0' CONFLICT_FILE ; do
 		# Inside this loop is executed for each conflict file.
-		# Clear tempfiles which maybe used in previous iteration of this loop.
+		# Clear tempfile which maybe used in previous iteration of this loop.
 		:>"$TEMPFILE_CHECKED_PKGS"
 		:>"$TEMPFILE_NEXT_PKGS_TO_CHECK"
 		echo -en '\e[1;31mfile conflict\e[0m:' >&2
