@@ -680,7 +680,8 @@ myLayout =
        threeCol = ThreeCol nmaster delta ratio
 
        -- Magnifier
-       mag = Mag.magnifiercz' 1.1
+       --mag = Mag.magnifiercz' 1.1
+       mag = Mag.magnifiercz' 1
 
        -- Theme for tabbed layout
        tabbedLayout = (theme robertTheme) { fontName = sizedXftFont 8 }
