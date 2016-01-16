@@ -528,8 +528,11 @@ autoload +XUz mytmux
 
 # tmux
 if [[ -n $TMUX ]] ; then
-	# Set window title (to attached session name).
-	tmux set set-titles-string '#S - tmux'
+	# Set window title.
+	# #T: pane_title
+	# #W: window_name
+	# #S: session_name
+	tmux set set-titles-string '#T [[#W]] #S - tmux'
 fi
 
 # }}}1 Application
