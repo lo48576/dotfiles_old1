@@ -1,5 +1,6 @@
 [DEPEND]
 vim/vim
+vim/neovim
 app-shells/tmux
 app-shells/zsh
 app-terms/ls
