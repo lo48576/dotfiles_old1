@@ -41,7 +41,7 @@ inoremap <expr><C-y>  deoplete#mappings#close_popup()
 
 " hard to press 'C-x' on dvorak keyboard, C-u makes completion easier.
 "inoremap <expr><C-u>	pumvisible() ? neocomplete#cancel_popup() : "\<C-x>\<C-u>"
-inoremap <expr><C-u>	pumvisible() ? deoplete#mappings#cancel_popup() : deoplete#mappings#start_manual_complete()
+inoremap <expr><C-u>	pumvisible() ? deoplete#mappings#cancel_popup() : deoplete#mappings#manual_complete()
 inoremap <expr><C-e>	pumvisible() ? neocomplete#mappings#cancel_popup() : "\<C-e>"
 
 " Enable omni completion.
