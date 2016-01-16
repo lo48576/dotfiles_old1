@@ -53,6 +53,8 @@ alias pa="ps aux"
 # restart zsh
 alias zz="exec zsh"
 
+# Use neovim instead of vim if available.
+whence -p nvim >/dev/null && alias vim="nvim"
 # vim with saved session
 whence -p vim >/dev/null && alias vv="vim -S"
 

@@ -232,7 +232,9 @@ export LC_TIME="C"
 #
 
 # EDITOR
-if whence -p vim >/dev/null ; then
+if whence -p nvim >/dev/null ; then
+	export EDITOR="nvim"
+elif whence -p vim >/dev/null ; then
 	export EDITOR="vim"
 elif whence -p vi >/dev/null ; then
 	export EDITOR="vi"
