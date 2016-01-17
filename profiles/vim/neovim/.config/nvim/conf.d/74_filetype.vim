@@ -17,4 +17,4 @@ autocmd FileType asciidoc setlocal expandtab softtabstop=4 shiftwidth=4 tabstop=
 " textwidth setting for CMake
 "autocmd FileType cmake setlocal textwidth=0
 " indent setting for Ruby
-"autocmd FileType ruby setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
+autocmd FileType ruby setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
