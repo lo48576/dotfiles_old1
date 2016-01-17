@@ -1,3 +1,2 @@
-let g:polyglot_disabled = ['latex', 'html5']
+let g:polyglot_disabled = ['latex']
 " latex: use vim-latex
-" html5: cannot use othree/html5.vim
