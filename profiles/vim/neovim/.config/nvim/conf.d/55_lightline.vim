@@ -1,3 +1,12 @@
+NeoBundle 'itchyny/lightline.vim' " A light and configurable statusline/tabline for Vim
+
+if neobundle#tap('lightline.vim')
+	call neobundle#config({
+				\	'depends' : ['tpope/vim-fugitive'],
+				\ })
+	call neobundle#untap()
+endif
+
 " show tabline always
 set showtabline=2
 " show statusline always at 2nd line from the bottom of window.

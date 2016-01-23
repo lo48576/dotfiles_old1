@@ -1,3 +1,5 @@
+NeoBundle 'Shougo/deoplete.nvim' " :stars: Dark powered asynchronous completion framework for neovim
+
 let g:deoplete#enable_at_startup = 1
 
 " Use smartcase.

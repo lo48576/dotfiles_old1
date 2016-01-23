@@ -15,14 +15,6 @@ iunmap <C-g>k
 inoremap <C-S-g>j	<C-g>j
 iunmap <C-g>j
 
-augroup override_plugin_keymap
-	" Surround.vim
-	autocmd VimEnter *	iunmap <C-g>s
-	autocmd VimEnter *	iunmap <C-g>S
-	autocmd VimEnter *	imap <C-S-f>s	<Plug>Isurround
-	autocmd VimEnter *	imap <C-S-f>S	<Plug>Ssurround
-augroup END
-
 " disable F1 (built-in) help
 nmap	<F1>		<nop>
 imap	<F1>		<nop>
@@ -41,3 +33,6 @@ inoremap <C-c>		<Down>
 inoremap <C-k>		<Up>
 " P @ qwerty
 inoremap <C-l>		<Right>
+
+" Close quickfix buffer by 'q' on the buffer.
+au FileType qf nnoremap <silent><buffer>q :quit<CR>
