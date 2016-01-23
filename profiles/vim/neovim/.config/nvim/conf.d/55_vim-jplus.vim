@@ -9,9 +9,6 @@ if neobundle#tap('vim-jplus')
 					\	'cpp' : {
 					\		'right_matchstr_pattern' : '^\s*//\s*\zs.*',
 					\	},
-					\	'_' : {
-					\		'delimiter_format' : ' %d ',
-					\	},
 					\ }
 	endfunction
 	call neobundle#untap()
