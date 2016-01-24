@@ -8,7 +8,7 @@ if neobundle#tap('vimfiler.vim')
 				\	'depends' : 'Shougo/unite.vim',
 				\	'on_cmd' : [
 				\		'VimFiler', 'VimFilerTab', 'VimFilerExplorer', 'VimFilerBufferDir',
-				\		'Edit', 'Write', 'Read', 'Source',
+				\		'VimFilerEdit', 'VimFilerWrite', 'VimFilerRead', 'VimFilerSource',
 				\		{
 				\			'name' : 'VimFiler',
 				\			'complete' : 'customlist,vimfiler#complete',
