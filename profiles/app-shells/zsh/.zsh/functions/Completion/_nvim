@@ -1,0 +1,96 @@
+#compdef nvim
+
+#typeset -A opt_args
+#local context state line
+
+#local files
+#files=`find ${PWD}/* -maxdepth 0 -exec basename '{}' ';'`
+
+#_describe -t sudo "Open with sudo.vim" files -P 'sudo:'
+
+#return	1
+
+typeset -A opt_args
+local context state line expl ret=1
+
+function _remote_users() {
+  local expl
+  _wanted remote-user expl "remote user"
+}
+_ssh_users () {
+  _combination -s '[:@]' my-accounts users-hosts users "$@"
+}
+
+_ssh_hosts () {
+  local -a config_hosts
+  local config
+  integer ind
+
+  # If users-hosts matches, we shouldn't complete anything else.
+  if [[ "$IPREFIX" == *@ ]]; then
+    _combination -s '[:@]' my-accounts users-hosts "users=${IPREFIX/@}" hosts "$@" && return
+  else
+    _combination -s '[:@]' my-accounts users-hosts \
+      ${opt_args[-l]:+"users=${opt_args[-l]:q}"} hosts "$@" && return
+  fi
+  if (( ind = ${words[(I)-F]} )); then
+    config=${~words[ind+1]}
+  else
+    config="$HOME/.ssh/config"
+  fi
+  if [[ -r $config ]]; then
+    local IFS=$'\t ' key hosts host
+    while read key hosts; do
+      if [[ "$key" == (#i)host ]]; then
+         for host in ${(z)hosts}; do
+            case $host in
+            (*[*?]*) ;;
+            (*) config_hosts+=("$host") ;;
+            esac
+         done
+      fi
+    done < "$config"
+    if (( ${#config_hosts} )); then
+      _wanted hosts expl 'remote host name' \
+        compadd -M 'm:{a-zA-Z}={A-Za-z} r:|.=* r:|=*' "$@" $config_hosts
+    fi
+  fi
+}
+
+_nvim_files() {
+  local host user port
+  if compset -P 'sudo:' ; then
+    _wanted vim-file expl 'files' _files
+  elif compset -P 'binary:' ; then
+    _wanted vim-file expl 'files' _files
+  elif compset -P 'scp://' ; then
+    if compset -P 1 '*/'; then
+      user="${IPREFIX#scp://}"
+      #user="${user%%@*}"
+      user="${user%%@*}@"
+      host="${IPREFIX#scp://*@}"
+      host="${host%%/*}"
+      port="${host#*:}"
+      port="${port:#${host}}"
+      port="${port:-22}"
+      host="${host%:*}"
+      #echo _remote_files -h  -- ssh -p ${port} ${user}${host}
+      #_remote_files -- ssh ${(kv)~opt_args[(I)-[FP1246]]/-P/-p} && ret=0
+      #_remote_files -h  -- ssh -p ${port} ${user}${host}
+    elif compset -P '*@'; then
+      suf=( -S '' )
+      compset -S ':*' || suf=( -S/ )
+      _wanted hosts expl 'remote host name' _ssh_hosts $suf && ret=0
+    else
+      _alternative \
+          'hosts:remote host name:_ssh_hosts -r/ -S/' \
+          'users:user:_ssh_users -qS@' && ret=0
+    fi
+  else
+    _wanted vim-file expl 'files' _files
+  fi
+  return ret
+}
+
+_arguments : \
+  '*:file:_nvim_files'
