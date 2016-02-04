@@ -5,6 +5,13 @@ if neobundle#tap('VOoM')
 	call neobundle#config({
 				\	'on_cmd' : ['Voom', 'Voomhelp', 'Voomexec', 'Voomlog'],
 				\ })
+	function! neobundle#tapped.hooks.on_source(bundle)
+		let g:voom_ft_modes = {
+					\	'markdown' : 'markdown',
+					\	'tex' : 'latex',
+					\	'asciidoc' : 'asciidoc',
+					\ }
+	endfunction
 	call neobundle#untap()
 endif
 
