@@ -294,6 +294,7 @@ EXEC 01;32
 .js 00;33
 .java 00;33
 .rs 00;33
+.vim 00;33
 
 # Source code (may be executable)
 #.py
