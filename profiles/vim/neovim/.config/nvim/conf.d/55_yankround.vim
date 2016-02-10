@@ -1,9 +1,9 @@
-NeoBundleLazy 'LeafCage/yankround.vim' " logging registers and reusing them.
+"NeoBundleLazy 'LeafCage/yankround.vim' " logging registers and reusing them.
+NeoBundle 'LeafCage/yankround.vim' " logging registers and reusing them.
 
 if neobundle#tap('yankround.vim')
 	call neobundle#config({
 				\	'on_map' : '<Plug>',
-				\	'on_unite' : 'yankround',
 				\ })
 	function! neobundle#tapped.hooks.on_source(bundle)
 		"let g:yankround_max_history = 30
