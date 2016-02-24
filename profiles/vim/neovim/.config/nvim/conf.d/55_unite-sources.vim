@@ -3,6 +3,7 @@ NeoBundleLazy 'ujihisa/unite-colorscheme' " A unite.vim plugin
 if neobundle#tap('unite-colorscheme')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
@@ -22,7 +23,7 @@ NeoBundleLazy 'Shougo/unite-sudo' " sudo source for unite.vim
 if neobundle#tap('unite-sudo')
 	call neobundle#config({
 				\	'depends' : ['Shougo/unite.vim', 'Shougo/vimfiler.vim'],
-				\	'on_source' : 'vimfiler.vim',
+				\	'on_source' : ['vimfiler.vim', 'unite.vim'],
 				\ })
 	call neobundle#untap()
 endif
@@ -32,6 +33,7 @@ NeoBundle 'hewes/unite-gtags' " Unite source for GNU GLOBAL
 if neobundle#tap('unite-gtags')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
@@ -41,6 +43,7 @@ NeoBundle 'sgur/unite-qf' " quickfix source for unite.vim
 if neobundle#tap('unite-qf')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
@@ -50,6 +53,7 @@ NeoBundle 'tacroe/unite-mark'
 if neobundle#tap('unite-mark')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
@@ -59,6 +63,7 @@ NeoBundle 'mattn/unite-remotefile' " unite source for remote file
 if neobundle#tap('unite-remotefile')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
@@ -69,6 +74,7 @@ if neobundle#tap('unite-session')
 	call neobundle#config({
 				\	'depends' : 'Shougo/unite.vim',
 				\	'on_cmd' : ['UniteSessionSave', 'UniteSessionLoad'],
+				\	'on_source' : 'unite.vim',
 				\ })
 	call neobundle#untap()
 endif
