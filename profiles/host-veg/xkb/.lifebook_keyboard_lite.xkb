@@ -9,9 +9,9 @@ xkb_keymap {
 		// map Henkan to Super_L ("Windows key").
 		key <HENK> {         [         Super_L ] };
 
-		replace key <SPCE> {        [ Shift_R ] };
-		modifier_map Shift { <SPCE> };
-		replace key <I253> {        [ space ] };
+		//replace key <SPCE> {        [ Shift_R ] };
+		//modifier_map Shift { <SPCE> };
+		//replace key <I253> {        [ space ] };
 	};
 	xkb_geometry  { include "pc(pc105)"	};
 };

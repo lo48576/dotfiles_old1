@@ -781,10 +781,6 @@ myStartupHook = do
         ++ " | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$'"
         ++ " | awk '{print $1}' | xargs kill"
         ++ " ; " ++ myDzenCommandLine (head screenSizes)
-    -- Setting for SandS.
-    -- This command doesn't work correctly on ~/.xsession .
-    spawn $ "pkill xcape"
-        ++ " ; xcape -t 200 -e 'Shift_R=space'"
 
 ------------------------------------------------------------------------
 -- Status bars
