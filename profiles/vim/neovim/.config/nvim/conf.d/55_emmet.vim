@@ -18,6 +18,9 @@ if neobundle#tap('emmet-vim')
 			  \	},
 			  \ }
 
+		" See [Update image size in XHTML · Issue #161 · mattn/emmet-vim](https://github.com/mattn/emmet-vim/issues/161)
+		let g:emmet_html5 = 0
+
 		" Enable just for html/css/scss and some other types.
 		let g:user_emmet_install_global = 0
 		autocmd FileType html,css,scss,html5,eruby,jsp,xml,coffee,jinja EmmetInstall
