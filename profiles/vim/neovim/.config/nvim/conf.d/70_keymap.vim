@@ -34,5 +34,9 @@ inoremap <C-k>		<Up>
 " P @ qwerty
 inoremap <C-l>		<Right>
 
+" Use incremental search by C-n / C-p in command mode.
+cnoremap <C-n>		<Down>
+cnoremap <C-p>		<Up>
+
 " Close quickfix buffer by 'q' on the buffer.
 au FileType qf nnoremap <silent><buffer>q :quit<CR>
