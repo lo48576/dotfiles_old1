@@ -40,6 +40,10 @@ setopt share_history
 # Environment Variables
 #
 
+# `go`
+# golang packages directory
+export GOPATH=${HOME}/.go
+
 # PATH {{{2
 #
 # PATH
@@ -78,6 +82,8 @@ path=(
 	${HOME}/node_modules/.bin(N-/)
 	# This path is set by ~/.npmrc
 	${HOME}/.node_modules_global/bin(N-/)
+	# go (golang)
+	${GOPATH}/bin(N-/)
 	$path)
 
 # User-local directories.
