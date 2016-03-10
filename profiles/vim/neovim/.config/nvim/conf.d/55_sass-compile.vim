@@ -3,7 +3,7 @@ if executable("sass") == 1
 	NeoBundleLazy 'AtsushiM/sass-compile.vim' " Add Sass compile & utility commands.
 endif
 
-if neobundle#tap('sass-complete.vim')
+if neobundle#tap('sass-compile.vim')
 	call neobundle#config({
 				\	'depends' : 'AtsushiM/search-parent.vim',
 				\	'on_ft' : ['scss', 'sass'],
