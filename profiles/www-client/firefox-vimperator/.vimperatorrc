@@ -13,10 +13,10 @@ cmap <C-n> <Tab>
 cmap <C-p> <S-Tab>
 cmap <C-j> <nop>
 
-qmark g https://www.google.co.jp/
-qmark t https://tweetdeck.twitter.com/
-qmark c http://en.cppreference.com/w/
-qmark r https://doc.rust-lang.org/std/
+silent qmark g https://www.google.co.jp/
+silent qmark t https://tweetdeck.twitter.com/
+silent qmark c http://en.cppreference.com/w/
+silent qmark r https://doc.rust-lang.org/std/
 
 
 " vim: set ft=vimperator:
