@@ -642,6 +642,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
                                        >> windows W.shiftMaster))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    , ((modm, 12 :: Graphics.X11.Types.Button), (\w -> focus w >> kill))
     ]
 
 ------------------------------------------------------------------------
