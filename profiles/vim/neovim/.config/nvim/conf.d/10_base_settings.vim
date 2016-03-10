@@ -52,3 +52,5 @@ let mapleader = ";"
 
 " Enable to delete characters with Bksp at any position
 set backspace=2
+
+set synmaxcol=1000
