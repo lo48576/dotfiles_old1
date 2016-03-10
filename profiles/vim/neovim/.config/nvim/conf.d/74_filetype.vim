@@ -5,7 +5,7 @@ autocmd Filetype text setlocal textwidth=0
 " indent setting for Asciidoc
 autocmd FileType asciidoc setlocal expandtab softtabstop=4 shiftwidth=4 tabstop=4
 " indent setting for Haskell
-"autocmd FileType haskell setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
+autocmd FileType haskell setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 " indent setting for Scheme
 "autocmd FileType scheme setlocal expandtab softtabstop=2 shiftwidth=2 tabstop=2
 " indent setting for Python
