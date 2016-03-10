@@ -339,6 +339,11 @@ import XMonad.Actions.DynamicWorkspaces(removeWorkspace, selectWorkspace, withWo
     -- http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Actions-CopyWindow.html
     -- copy: Copy the focused window to a workspace.
 import XMonad.Actions.CopyWindow(copy)
+    -- https://hackage.haskell.org/package/unix-2.7.1.0/docs/System-Posix-Env.html
+    -- putEnv: putEnv function takes an argument of the form name=value and is equivalent to setEnv(key,value,True{-overwrite-}).
+    -- setEnv: The setEnv function inserts or resets the environment variable name in the current environment list.
+    -- unsetEnv: The unsetEnv function deletes all instances of the variable name from the environment.
+import System.Posix.Env as Env
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -777,11 +782,28 @@ myStartupHook = do
     ewmhDesktopsStartup
     setWMName "LG3D"
     screenSizes <- myScreenSizes
+    liftIO $ Env.putEnv "LANG=ja_JP.UTF8"
+    liftIO $ Env.putEnv "XMODIFIERS=@im=uim"
+    liftIO $ Env.putEnv "GTK_IM_MODULE=uim"
+    liftIO $ Env.putEnv "QT_IM_MODULE=uim"
+    -- Let java VM know about xmonad.
+    -- Necessary to use java gui application on XMonad.
+    liftIO $ Env.putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
+    -- To run tmux in X session started on tmux, erase $TMUX environment variable.
+    liftIO $ Env.unsetEnv "TMUX"
+
+    spawn "xsetroot -cursor_name left_ptr"
+    spawn "xkbcomp ~/.lifebook_keyboard_lite.xkm :0"
     spawn $
         "ps -A -w -w --no-header -o pid,command=WIDE-COMMAND-COLUMN"
         ++ " | grep '[/]scripts/local/status.sh '\"$DISPLAY\"'$'"
         ++ " | awk '{print $1}' | xargs kill"
         ++ " ; " ++ myDzenCommandLine (head screenSizes)
+    spawn "pgrep -x xscreensaver || xscreensaver -no-splash"
+    spawn "pgrep -x trayer-srg || trayer-srg --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype percent --width 20 --transparent true --alpha 64 --tint 0x666666 --height 20 --monitor 0"
+    spawn "pgrep -x volumeicon || volumeicon"
+    spawn "pgrep -x uim-xim || uim-xim"
+    spawn "pgrep -f '^(.*/)?uim-toolbar-gtk-systray$' || uim-toolbar-gtk-systray"
 
 ------------------------------------------------------------------------
 -- Status bars
