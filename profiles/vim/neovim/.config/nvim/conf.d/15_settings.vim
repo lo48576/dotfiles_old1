@@ -1,8 +1,8 @@
 " For vim-latex.
 "	IMPORTANT: grep will sometimes skip displaying the file name if you
-"	search in a singe file. This will confuse Latex-Suite. Set your grep
+"	search in a single file. This will confuse Latex-Suite. Set your grep
 "	program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+"set grepprg=grep\ -nH\ $*
 
 " For vim-latex.
 "	OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
