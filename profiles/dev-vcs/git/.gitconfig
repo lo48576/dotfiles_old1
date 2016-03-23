@@ -18,3 +18,7 @@
 [alias]
 # see http://d.hatena.ne.jp/sugyan/20111103/1320247493 .
 	tr = log --graph --pretty='format:%C(yellow)%h%Creset %s %Cgreen(%an)%Creset %Cred%d%Creset'
+# see http://qiita.com/kyanny/items/10a57a4f1d2806e3a3b8 .
+	delete-merged-branches = !git branch --merged | grep -vE '^\\*|master$|develop$' | xargs -I % git branch -d %
+# see http://qiita.com/Yinaura/items/9d75307c3678f04cd475 .
+	revision = !git show -s --format=%H
