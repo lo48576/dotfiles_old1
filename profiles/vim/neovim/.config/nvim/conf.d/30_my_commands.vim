@@ -27,3 +27,10 @@ command! -nargs=1 Csv :call CSVH(<args>)
 " ISO 8601 (yyyy-mm-ddThh:mm:ss+hhmm)
 nnoremap <F5> "=strftime("%FT%T%z")<CR>P
 inoremap <F5> <C-R>=strftime("%FT%T%z")<CR>
+
+" Save file and create directory if necessary.
+function! SaveAndWrite()
+	!mkdir -p %:p:h
+	w
+endfunction
+command! -bar -nargs=0 WW call SaveAndWrite()
