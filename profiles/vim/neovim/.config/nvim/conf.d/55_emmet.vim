@@ -3,7 +3,7 @@ NeoBundleLazy 'mattn/emmet-vim' " emmet for vim
 
 if neobundle#tap('emmet-vim')
 	call neobundle#config({
-				\	'on_ft' : ['html', 'css', 'scss', 'html5', 'eruby', 'jsp', 'xml', 'coffee', 'jinja'],
+				\	'on_ft' : ['html', 'css', 'scss', 'html5', 'eruby', 'jsp', 'xml', 'coffee', 'jinja', 'mason', 'liquid'],
 				\ })
 	function! neobundle#tapped.hooks.on_source(bundle)
 		" Only enable insert mode and visual mode functions.
@@ -23,7 +23,7 @@ if neobundle#tap('emmet-vim')
 
 		" Enable just for html/css/scss and some other types.
 		let g:user_emmet_install_global = 0
-		autocmd FileType html,css,scss,html5,eruby,jsp,xml,coffee,jinja EmmetInstall
+		autocmd FileType html,css,scss,html5,eruby,jsp,xml,coffee,jinja,mason,liquid EmmetInstall
 	endfunction
 	call neobundle#untap()
 endif
